@@ -4,8 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="gameBoardPane" prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BlackJack.GameBoardController">
    <children>
       <Label layoutX="41.0" layoutY="19.0" prefHeight="76.0" prefWidth="227.0" text="Super Black Jack" textFill="#ffc83d">
          <font>
