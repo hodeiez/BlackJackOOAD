@@ -2,8 +2,10 @@ package BlackJack;
 
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextAlignment;
 
@@ -16,6 +18,20 @@ import javafx.scene.text.TextAlignment;
  */
 public class CardGraph extends Group {
     CardGraph(String suit,String number){
+        //BUILDING CARDS FROM FOLDER
+//Insert image in CARD class??
+        ImagePattern cardImage=new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/"+number+"_of_"+suit+".png"))));
+        Rectangle rect=new Rectangle();
+        rect.setWidth(80);
+        rect.setHeight(130);
+        rect.setFill(cardImage);
+        this.prefWidth(cardImage.getWidth());
+        this.prefHeight(cardImage.getHeight());
+        this.getChildren().add(rect);
+
+
+        //BUILDING CARDS PROGRAMMATICALLY
+        /*
        Rectangle baserRect=new Rectangle(); //<-the card base
         baserRect.setStyle("-fx-fill:white;-fx-arc-width: 10;-fx-arc-height: 10");
        // this.setFill(Color.WHITE);
@@ -58,5 +74,7 @@ for(int i=0;i<Integer.parseInt(number);i++) {
         this.prefWidth(80);
         this.prefHeight(130);
         this.getChildren().addAll(baserRect,numbL,suitL, numb2L,suit2L,suitsInMiddel);
+
+         */
     }
 }

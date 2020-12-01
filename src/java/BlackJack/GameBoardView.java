@@ -1,14 +1,10 @@
 package BlackJack;
 
+import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 /**
  * Created by Hodei Eceiza
@@ -17,34 +13,14 @@ import java.io.IOException;
  * Project: BlackJackOOAD
  * Copyright: MIT
  */
-public class GameBoardView extends Parent {
+public class GameBoardView extends Application {
+    @Override
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("/GameBoard.fxml"));
+        stage.setTitle("Black Jack");
 
-    Pane mainPane;
-    public GameBoardView(Pane mainPane) {
-        this.mainPane = mainPane;
-        Parent pane = null;
-        try {
-            pane = FXMLLoader.load(getClass().getResource("/GameBoard.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Stage primaryStage = (Stage) mainPane.getScene().getWindow();
-        primaryStage.getScene().setRoot(pane);
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
-
-    /*
-    GameBoardView(){
-        try {
-
-         //   FXMLLoader load= FXMLLoader.load(getClass().getResource("/GameBoard.fxml"));
-          FXMLLoader.load(getClass().getResource("/GameBoard.fxml"));
-          //loader.setController(new GameBoardController());
-        //  load.setController(new GameBoardController());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-     */
 }
