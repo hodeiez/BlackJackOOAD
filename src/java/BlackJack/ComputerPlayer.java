@@ -7,5 +7,5 @@ package BlackJack;
  * Project: BlackJackOOAD
  * Copyright: MIT
  **/
-public class ComputerPlayer {
+public class ComputerPlayer extends Player {
 }

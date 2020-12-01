@@ -7,5 +7,5 @@ package BlackJack;
  * Project: BlackJackOOAD
  * Copyright: MIT
  **/
-public class IHasCards {
+public interface IHasCards {
 }
