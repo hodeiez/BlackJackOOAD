@@ -11,8 +11,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        //Parent root=new GameBoardView();
-        //primaryStage.setTitle("BlackJack");
+       // Parent root=new GameBoardView();
+       // primaryStage.setTitle("BlackJack");
         //primaryStage.setScene(new Scene(root));
         //primaryStage.show();
         Parent root = FXMLLoader.load(getClass().getResource("/GameBoard.fxml"));

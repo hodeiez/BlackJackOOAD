@@ -18,6 +18,7 @@ import java.io.IOException;
  * Copyright: MIT
  */
 public class GameBoardView extends Parent {
+
     Pane mainPane;
     public GameBoardView(Pane mainPane) {
         this.mainPane = mainPane;

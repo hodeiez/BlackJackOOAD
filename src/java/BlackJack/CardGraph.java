@@ -1,7 +1,11 @@
 package BlackJack;
 
+import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.TextAlignment;
 
 /**
  * Created by Hodei Eceiza
@@ -10,13 +14,49 @@ import javafx.scene.layout.AnchorPane;
  * Project: BlackJackOOAD
  * Copyright: MIT
  */
-public class CardGraph extends AnchorPane {
-    CardGraph(String suite,String number){
-        this.setStyle("-fx-background-color: white");
+public class CardGraph extends Group {
+    CardGraph(String suit,String number){
+       Rectangle baserRect=new Rectangle(); //<-the card base
+        baserRect.setStyle("-fx-fill:white;-fx-arc-width: 10;-fx-arc-height: 10");
+       // this.setFill(Color.WHITE);
 
-        this.setWidth(80);
-        this.setHeight(130);
-        this.setPrefSize(80,130);
-        this.getChildren().add(new Label(number + "\n"+suite));
+        baserRect.setWidth(80);
+        baserRect.setHeight(130);
+
+
+        Label numbL=new Label(number);//label up left
+        Label suitL=new Label("\u2663");//label up left
+        //this.setPrefSize(80,130);
+        numbL.setTranslateY(0);
+        numbL.setTranslateX(0);
+        suitL.setTranslateY(10);
+        suitL.setTranslateX(0);
+
+        Label numb2L=new Label(number);//label down right
+        Label suit2L=new Label("\u2663");//label down right
+        //this.setPrefSize(80,130);
+        numb2L.setRotate(180);
+        suit2L.setRotate(180);
+        numb2L.setTranslateY(115);
+        numb2L.setTranslateX(70);
+        suit2L.setTranslateY(105);
+        suit2L.setTranslateX(70);
+
+        Group suitsInMiddel=new Group();
+for(int i=0;i<Integer.parseInt(number);i++) {
+
+    Label suitMiddle = new Label("\u2663");
+    suitMiddle.setTextAlignment(TextAlignment.CENTER);
+    suitMiddle.setPrefSize(0, 0);
+    suitMiddle.setWrapText(true);
+    suitMiddle.setScaleX(1.2);
+    suitMiddle.setScaleY(1.2);
+    suitMiddle.setTranslateX((80/2));
+    suitMiddle.setTranslateY((20)+i*20);
+    suitsInMiddel.getChildren().add(suitMiddle);
+}
+        this.prefWidth(80);
+        this.prefHeight(130);
+        this.getChildren().addAll(baserRect,numbL,suitL, numb2L,suit2L,suitsInMiddel);
     }
 }
