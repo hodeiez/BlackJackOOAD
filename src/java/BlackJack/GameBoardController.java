@@ -4,12 +4,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
@@ -40,25 +45,37 @@ public class GameBoardController {
             });
             i.consume();
         });
-
+        HBox testBox = new HBox();
         HandGraph graph = new HandGraph();
         ArrayList<CardGraph> list = graph.getCards();
         int i = 1;
         for (CardGraph card : list) {
-            card.setTranslateX(i++ * 20);
-            gameBoardPane.getChildren().add(card);
+            //card.setTranslateX(i++ * 20);
+            // gameBoardPane.getChildren().add(card);
         }
 
         ObservableList<CardGraph> observableList = FXCollections.observableList(list);
+        //  gameBoardPane.getChildren().add((Node) observableList);
         observableList.addListener(new ListChangeListener() {
             @Override
             public void onChanged(Change change) {
                 System.out.println("it changed");
-               list.remove(1);
             }
         });
-        rules.setOnAction(e -> observableList.remove(1));
+        //  gameBoardPane.getChildren().add(new VBox(observableList));
 
+
+        rules.setOnAction(e -> {
+            list.add(new CardGraph("spades", "ace"));
+            testBox.getChildren().add(observableList.get(observableList.size()-1));
+        });
+        end.setOnAction(e->{
+           list.remove(list.size()-1);
+            testBox.getChildren().remove(observableList.get(observableList.size()-1));
+
+        });
+        testBox.getChildren().addAll(observableList);
+        gameBoardPane.getChildren().add(testBox);
 //ORACLE INFO TO LEARN OBSERVABLE LIST
         /*
         // Use Java Collections to create the List.
