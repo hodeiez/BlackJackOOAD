@@ -1,6 +1,6 @@
-.button {
-    background-color: red;
-    min-width: 1200px;
-    -fx-width: 200px;
-    height:100px;
+.buttons {
+    -fx-background-color:linear-gradient(to top, #c8c814, #edf303);;
+    -fx-pref-width: 80;
+    -fx-pref-height: 30;
+   -fx-background-radius: 10;
 }

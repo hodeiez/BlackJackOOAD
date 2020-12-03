@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.util.ResourceBundle;
+
 /**
  * Created by Hodei Eceiza
  * Date: 11/30/2020
@@ -28,7 +30,7 @@ public class GameBoardView extends Application {
         stage.setTitle("Black Jack");
         Parent root=loader.load();
         stage.setScene(new Scene(root));
-       stage.getScene().getStylesheets().getClass().getResource("/blackJack.css");
+       stage.getScene().getStylesheets().add(getClass().getResource("/blackJack.css").toExternalForm());
      //  getClass().getClassLoader().getResource("/blackJack.css");
         stage.show();
         stage.setOnCloseRequest(e -> {
