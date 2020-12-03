@@ -17,28 +17,36 @@ import javafx.scene.shape.Rectangle;
  * Project: BlackJackOOAD
  * Copyright: MIT
  */
-public class CardGraph extends Group {
+public class CardGraph extends Rectangle {
+    ImagePattern cardImage;
 
-
-    CardGraph(String suit,String number, boolean faceUp){ //logic can create a graph its time
+    CardGraph(String suit, String number, boolean faceUp) { //logic can create a graph its time
         //BUILDING CARDS FROM FOLDER
 //Insert image in CARD class??
-        ImagePattern cardImage=new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/"+number+"_of_"+suit+".png"))));
-        Rectangle rect=new Rectangle();
-        rect.setWidth(80);
-        rect.setHeight(130);
-
+        cardImage = new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/" + number + "_of_" + suit + ".png"))));
+        // Rectangle rect = new Rectangle();
+        // rect.setWidth(80);
+        // rect.setHeight(130);
+        this.setWidth(80);
+        this.setHeight(130);
         if ((faceUp)) {
-            rect.setFill(cardImage);
+            // rect.setFill(cardImage);
+            this.setFill(cardImage);
         } else {
-            rect.setFill(Color.PURPLE);
+            this.setFill(Color.PURPLE);
+            // rect.setFill(Color.PURPLE);
         }
         this.prefWidth(cardImage.getWidth());
         this.prefHeight(cardImage.getHeight());
-        this.getChildren().add(rect);
+        //  this.getChildren().add(rect);
 
+    }
 
-        //BUILDING CARDS PROGRAMMATICALLY
+    public ImagePattern getImgPattern() {
+        return cardImage;
+    }
+
+    //BUILDING CARDS PROGRAMMATICALLY
         /*
        Rectangle baserRect=new Rectangle(); //<-the card base
         baserRect.setStyle("-fx-fill:white;-fx-arc-width: 10;-fx-arc-height: 10");
@@ -83,6 +91,8 @@ for(int i=0;i<Integer.parseInt(number);i++) {
         this.prefHeight(130);
         this.getChildren().addAll(baserRect,numbL,suitL, numb2L,suit2L,suitsInMiddel);
 
-         */
+
     }
+     */
+
 }
