@@ -32,7 +32,10 @@ public class BlackJackLogic {
     private void playRound(){
        while (true){
         isItTimeToShuffle();
-        dealHands():
+        dealHands();
+           for (Player p: players) {
+               if(p.)
+           }
 
     }}
 
@@ -54,6 +57,50 @@ public class BlackJackLogic {
 
         }
         dealer1.hand.add(deck1.drawCard());
+        dealer1.hand.add(deck1.drawCard());
+    }
+
+    public void computerPlayerTurn(Player player){
+        while (player.getHandValue() <=21){
+            player.hand.add(deck1.drawCard());
+            if (player.getHandValue() <=16){
+                break;
+            }
+
+        }
+    }
+
+    //Den här metoden räknar ut värdet av en spelares hand. Den tar till vara på om ifall en spelare har Ess
+    //Vanliga kort har värde 1-13 ess har värde 0, eller -1 beroende på om en vill att det ska vara värt
+    //11 eller 1 poäng.
+    public static int getHandValue(ArrayList hand) {
+        int lenght = hand.size();
+        int total = 0;
+        for (int i = 0; i < lenght; i++) {
+            Card temp = (Card) hand.get(i);
+            if (temp.getNumber() >= 10) total = total + 10;//Alla kort från tio och upp är värda 10
+            if (temp.getNumber() < 10 && temp.getNumber() > 0) total = total + temp.getNumber();//kortets värde läggs till totalen
+            if (temp.getNumber() == 0) total = total + 11;//Ess är värda elva
+            if (temp.getNumber() == -1) total = total + 1;//Ess kan vara värda 1
+            if (total > 21) {
+                //Om vi har mer än 21 kollar denna loop igenom ifall vi har Ess, om vi har det sätter vi ässet till att
+                //vara värt ett istället för elva och börjar om räkningen.
+                for (int j = 0; j < lenght; j++) {
+                    Card temp2 = (Card) hand.get(j);
+                    if (temp2.getNumber() == 0) {
+                        hand.set(j, new Card(temp2.getSuit(), -1));
+                        i = -1;
+                        total = 0;
+                        j = lenght;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < hand.size(); i++) { //Skriver ut korten till konsolen.
+            System.out.println(hand.get(i));
+        }
+        System.out.println("Totalt värde: " + total); // Skriver ut handens totala värde.
+        return total;
     }
 
 }
