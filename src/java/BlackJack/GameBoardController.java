@@ -44,8 +44,8 @@ public class GameBoardController {
 
         IntegerProperty intValue=new SimpleIntegerProperty();
         HandGraph hand=new HandGraph();
-       // HBox sp=new HBox();
-      ListView sp=new ListView();
+        HBox sp=new HBox();
+     // ListView sp=new ListView();
        // GridPane sp=new GridPane();
         sp.setStyle("-fx-fill: white");
         hand.observableList.addListener(new ListChangeListener(){
@@ -56,7 +56,7 @@ public class GameBoardController {
             }
         });
 
-        sp.setItems(hand.observableList);
+        sp.getChildren().addAll(hand.observableList);
        // sp.getChildren().addAll(hand.observableList);
         rules.setOnAction(e->hand.removeFromObser());
         end.setOnAction(e->hand.observableList.add(new CardGraph("clubs","7",true)));
