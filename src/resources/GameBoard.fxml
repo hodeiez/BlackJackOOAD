@@ -13,10 +13,10 @@
             <Font name="Linux Libertine G Display Regular" size="31.0" />
          </font>
       </Label>
-      <Button fx:id="hit" layoutX="730.0" layoutY="666.0" mnemonicParsing="false" text="HIT" />
-      <Button fx:id="stay" layoutX="1069.0" layoutY="663.0" mnemonicParsing="false" text="STAY" />
-      <Button fx:id="rules" layoutX="1204.0" layoutY="664.0" mnemonicParsing="false" text="RULES" />
-      <Button fx:id="end" layoutX="1208.0" layoutY="16.0" mnemonicParsing="false" text="END" />
+      <Button fx:id="hit" layoutX="730.0" layoutY="666.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@blackJack.css" text="HIT" />
+      <Button fx:id="stay" layoutX="1069.0" layoutY="663.0" mnemonicParsing="false" stylesheets="@blackJack.css" text="STAY" />
+      <Button fx:id="rules" layoutX="1204.0" layoutY="664.0" mnemonicParsing="false" stylesheets="@blackJack.css" text="RULES" />
+      <Button fx:id="end" layoutX="1208.0" layoutY="16.0" mnemonicParsing="false" stylesheets="@blackJack.css" text="END" />
       <Label fx:id="balance" layoutX="916.0" layoutY="34.0" text="BALANCE" textFill="#ffdc08">
          <font>
             <Font size="41.0" />

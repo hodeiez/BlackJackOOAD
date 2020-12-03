@@ -59,8 +59,8 @@ public class ModelTest implements Runnable {
                 Platform.runLater(() ->
 
                         setBalance(String.valueOf(i[0]++)));
-                System.out.println(i);
-                setCard(new CardGraph("spades", String.valueOf(i[0] +2), true).getImgPattern());
+                        System.out.println(i);
+                         setCard(new CardGraph("spades", String.valueOf(i[0] +2), true).getImgPattern());
 
 
 
