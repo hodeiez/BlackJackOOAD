@@ -35,10 +35,23 @@ public class GameBoardController {
     public Button rules;
     public Button end;
     public Label balance;
+    public HBox dealerBox;
+    public HBox activePlayer;
+    public HBox player2;
     @FXML
     private AnchorPane gameBoardPane;
+    private ModelTest modelTest;
 
+
+public GameBoardController(ModelTest modelTest){
+    this.modelTest=modelTest;
+}
     public void initialize() {
+       balance.textProperty().bind(modelTest.balanceProperty());
+        stay.setOnAction(e->modelTest.setBalance("NEW BALANCE"));
+
+
+//NOIZE DOWN HERE!!!
         ImageView view=new ImageView();
         Group gr=new Group();
 
@@ -63,67 +76,6 @@ public class GameBoardController {
 
 
         gameBoardPane.getChildren().add(sp);
-        //ObservableList<CardGraph>observableArray=FXCollections.observableArrayList(hand.cards);
-        //ObservableList<CardGraph> observableList = FXCollections.observableList(hand.cards);
-       // .bind(Bindings.createObjectBinding(()->(hand.cards.get(intValue.getValue())));
 
-
-
-
-      //  sp.getChildren().addAll(observableList);
-        //gameBoardPane.getChildren().add(sp);
-
-
-        //add a card and drag it
-        /*
-        Node aCard = new CardGraph("hearts", "king",true);
-
-        gameBoardPane.getChildren().add(aCard);
-        aCard.setOnDragDetected(i -> {
-            gameBoardPane.setOnMouseMoved(e -> {
-                aCard.setTranslateX(e.getX());
-                aCard.setTranslateY(e.getY());
-            });
-            i.consume();
-        });
-
-         */
-
-        //testing to add a list of cards and add listeners
-        /*
-        StackPane testBox = new StackPane();
-        testBox.setLayoutX(720);
-        HandGraph graph = new HandGraph();
-        ArrayList<CardGraph> list = graph.getCards();
-        int i = 1;
-        for (CardGraph card : list) {
-            card.setTranslateX(i++ * 20);
-             gameBoardPane.getChildren().add(card);
-        }
-
-        ObservableList<CardGraph> observableList = FXCollections.observableList(list);
-        //  gameBoardPane.getChildren().add((Node) observableList);
-        observableList.addListener(new ListChangeListener() {
-            @Override
-            public void onChanged(Change change) {
-                System.out.println("it changed");
-            }
-        });
-        //  gameBoardPane.getChildren().add(new VBox(observableList));
-
-
-        rules.setOnAction(e -> {
-            list.add(new CardGraph("spades", "ace",true));
-            testBox.getChildren().add(observableList.get(observableList.size()-1));
-        });
-        end.setOnAction(e->{
-           list.remove(list.size()-1);
-            testBox.getChildren().remove(observableList.get(observableList.size()-1));
-
-        });
-        testBox.getChildren().addAll(observableList);
-        gameBoardPane.getChildren().add(testBox);
-
-         */
     }
 }

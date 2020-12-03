@@ -20,7 +20,7 @@ import javafx.scene.shape.Rectangle;
 public class CardGraph extends Group {
 
 
-    CardGraph(String suit,String number, boolean faceUp){
+    CardGraph(String suit,String number, boolean faceUp){ //logic can create a graph its time
         //BUILDING CARDS FROM FOLDER
 //Insert image in CARD class??
         ImagePattern cardImage=new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/"+number+"_of_"+suit+".png"))));
