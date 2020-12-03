@@ -1,5 +1,6 @@
 package BlackJack;
 
+import javafx.collections.ObservableArray;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -7,7 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.TextAlignment;
+
 
 /**
  * Created by Hodei Eceiza
@@ -17,14 +18,21 @@ import javafx.scene.text.TextAlignment;
  * Copyright: MIT
  */
 public class CardGraph extends Group {
-    CardGraph(String suit,String number){
+
+
+    CardGraph(String suit,String number, boolean faceUp){
         //BUILDING CARDS FROM FOLDER
 //Insert image in CARD class??
         ImagePattern cardImage=new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/"+number+"_of_"+suit+".png"))));
         Rectangle rect=new Rectangle();
         rect.setWidth(80);
         rect.setHeight(130);
-        rect.setFill(cardImage);
+
+        if ((faceUp)) {
+            rect.setFill(cardImage);
+        } else {
+            rect.setFill(Color.PURPLE);
+        }
         this.prefWidth(cardImage.getWidth());
         this.prefHeight(cardImage.getHeight());
         this.getChildren().add(rect);
