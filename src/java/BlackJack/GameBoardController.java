@@ -51,6 +51,7 @@ public GameBoardController(ModelTest modelTest){
     this.modelTest=modelTest;
 }
     public void initialize() {
+
        balance.textProperty().bind(modelTest.balanceProperty());
         stay.setOnAction(e->modelTest.setBalance("NEW BALANCE"));
         rect.setWidth(80);

@@ -28,8 +28,8 @@ public class GameBoardView extends Application {
         stage.setTitle("Black Jack");
         Parent root=loader.load();
         stage.setScene(new Scene(root));
-      // stage.getScene().getStylesheets().getClass().getResource("/blackJack.css");
-       getClass().getClassLoader().getResource("/blackJack.css");
+       stage.getScene().getStylesheets().getClass().getResource("/blackJack.css");
+     //  getClass().getClassLoader().getResource("/blackJack.css");
         stage.show();
         stage.setOnCloseRequest(e -> {
             Platform.exit();
