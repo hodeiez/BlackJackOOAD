@@ -3,4 +3,8 @@
     -fx-pref-width: 80;
     -fx-pref-height: 30;
    -fx-background-radius: 10;
+
+}
+.buttons:pressed{
+    -fx-background-color:linear-gradient(to top, #c86814, #edf303);;
 }

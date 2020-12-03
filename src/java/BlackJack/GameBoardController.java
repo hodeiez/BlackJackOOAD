@@ -62,21 +62,14 @@ public GameBoardController(ModelTest modelTest){
        // rect.setHeight(130);
         dealerBox.getChildren().add(rect);
 
-        Rectangle bat=new Rectangle();
-        bat.setFill(new CardGraph("spades","ace",true).getImgPattern());
-        bat.setWidth(80);
-        bat.setHeight(130);
-        gameBoardPane.getChildren().add(bat);
-      //  rect.fillProperty().bind(modelTest.cardProperty());
-       // gameBoardPane.getChildren().add(rect);
-//NOIZE DOWN HERE!!!
-        ImageView view=new ImageView();
-        Group gr=new Group();
 
-//   IntegerProperty intValue=new SimpleIntegerProperty();
+
+//NOIZE DOWN HERE!!!
+
+
         HandGraph hand=new HandGraph();
-        HBox sp=new HBox();
-     // ListView sp=new ListView();
+       // HBox sp=new HBox();
+      ListView sp=new ListView();
        // GridPane sp=new GridPane();
         dealerBox.setStyle("-fx-background-color: green");
         hand.observableList.addListener(new ListChangeListener(){
@@ -88,7 +81,9 @@ public GameBoardController(ModelTest modelTest){
         });
 
        dealerBox.getChildren().addAll(hand.observableList);
-        sp.getChildren().addAll(hand.observableList);
+       // dealerBox.getChildren().add(sp); //<-
+       //sp.getChildren().add(hand.observableList);
+        sp.setItems(hand.observableList);
        rules.setOnAction(e->hand.removeFromObser());
         end.setOnAction(e->hand.observableList.add(new CardGraph("clubs","7",true)));
 
