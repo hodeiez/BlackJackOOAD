@@ -16,16 +16,22 @@ public class Player implements IHasCards{
      * Increases the players balance
      */
     public void increaseBalance(){
-        setBalance(getBalance()+getCurrentBet()*2);
+        setBalance(getBalance()+getCurrentBet());
     }
 
-    // TODO: 12/1/2020 : Lukas : add decrease player balance?
+    /**
+     * Decreases the players balance
+     */
+    public void decreaseBalance(){
+        setBalance(getBalance()-getCurrentBet());
+    }
 
     /**
      * sets the currentBet based on user input
      */
     public void bet(int bet){
-        // TODO: 12/2/2020 maybe add a max bet ?
+
+        // TODO: 12/4/2020 : Lukas : maybe add a max bet here
         setCurrentBet(bet);
     }
 
