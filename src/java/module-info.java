@@ -4,7 +4,8 @@
  * Time: 20:25
  * Project: JavaFxMaven
  * Copyright: MIT
- */module BlackJackOOAD {
+ */
+module BlackJackOOAD {
      requires javafx.controls;
      requires javafx.fxml;
      requires javafx.graphics;
