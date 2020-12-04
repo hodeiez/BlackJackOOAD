@@ -1,12 +1,13 @@
 package BlackJack;
 
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+
+import java.util.ArrayList;
 
 /**
  * Created by Hodei Eceiza
@@ -17,7 +18,10 @@ import javafx.scene.shape.Rectangle;
  */
 public class ModelTest implements Runnable {
     private StringProperty balance = new SimpleStringProperty("blank");
+  //  private ListProperty activePlayerHand=new SimpleListProperty();
 
+    private ArrayList<CardGraph> handTest=new ArrayList<CardGraph>();
+    public ObservableList activePlayerHand= FXCollections.observableArrayList(handTest);
     private Rectangle rect;
 
     private ObjectProperty card = new SimpleObjectProperty(rect);
@@ -27,8 +31,14 @@ public class ModelTest implements Runnable {
         rect = new Rectangle(80, 130);
         rect.setFill(new CardGraph("spades", "ace", true).getImgPattern());
     }
-
-
+    public void setHandTest(CardGraph card){
+        handTest.add(card);
+    }
+    public ArrayList<CardGraph> getHandTest(){
+        return handTest;
+    }
+   // public ListProperty activePlayerProperty(){return activePlayerHand;}
+    //public void setActivePlayerHand(CardGraph card){activePlayerProperty().add(card);}
     public ObjectProperty cardProperty() {
         return card;
     }
@@ -52,15 +62,17 @@ public class ModelTest implements Runnable {
 
     @Override
     public void run() {
-       final int[] i = {0};
+      // final int[] i = {0};
         {
             while (true) {
 
-                Platform.runLater(() ->
+                Platform.runLater(() ->{
+                        setHandTest(new CardGraph("spades","ace",true));
+                        setHandTest(new CardGraph("spades","king",true));});
                       //  setBalance("new Balance"));
-                       setBalance(String.valueOf(i[0]++)));
-                        System.out.println(i);
-                         setCard(new CardGraph("spades", String.valueOf(i[0] +2), true).getImgPattern());
+                       //setBalance(String.valueOf(i[0]++)));
+                      //  System.out.println(i);
+                        // setCard(new CardGraph("spades", String.valueOf(i[0] +2), true).getImgPattern());
 
 
 

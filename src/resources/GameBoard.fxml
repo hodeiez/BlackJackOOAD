@@ -28,7 +28,8 @@
          </font>
       </Label>
       <HBox fx:id="dealerBox" layoutX="411.0" layoutY="36.0" prefHeight="226.0" prefWidth="476.0" />
-      <HBox fx:id="activePlayer" layoutX="673.0" layoutY="402.0" prefHeight="226.0" prefWidth="476.0" />
-      <HBox fx:id="player2" layoutX="72.0" layoutY="390.0" prefHeight="226.0" prefWidth="476.0" />
+      <HBox fx:id="activePlayer" layoutX="805.0" layoutY="404.0" prefHeight="226.0" prefWidth="364.0" />
+      <HBox fx:id="player2" layoutX="37.0" layoutY="408.0" prefHeight="226.0" prefWidth="348.0" />
+      <HBox fx:id="player3" layoutX="445.0" layoutY="408.0" prefHeight="226.0" prefWidth="348.0" />
    </children>
 </AnchorPane>
