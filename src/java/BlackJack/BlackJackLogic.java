@@ -8,22 +8,22 @@ import java.util.List;
 
 public class BlackJackLogic {
     private List<Player> players = new ArrayList<>();
-    private Dealer dealer1 = new Dealer;
-    private Deck deck1 = new Deck(); //lugnt om deck1 är tom här, isåfall så fixas det ihop ny lek i början av första rundan
-    private Player activePlayer = new Player;
+    private Dealer dealer1 = new Dealer();
+    private Deck deck1 = new Deck(6); //lugnt om deck1 är tom här, isåfall så fixas det ihop ny lek i början av första rundan
+    private Player activePlayer = new Player();
 
 
     private void setUpGame() {
         players.add(activePlayer);
-        players.add(new Player);
-        players.add(new Player);
+        players.add(new Player());
+        players.add(new Player());
         setStartingBalance(1000);
         playRound();
 
     }
 
     private void isItTimeToShuffle() {
-        if (deck1.cardList.size() <= 30) {
+        if (deck1.getCardDeck().size() <= 30) {
             deck1 = new Deck(6);
 
         }
@@ -44,7 +44,7 @@ public class BlackJackLogic {
     }
 
     private void isPlayerBroke(Player player) {
-        if (player.getBalace <= 0) {
+        if (player.getBalance() <= 0) {
             player.setBroke(true);
 
         }
@@ -82,18 +82,18 @@ public class BlackJackLogic {
         dealer1.hand.get(1).isFaceUp(true);
         while (dealer1.getHandValue() < 21) {
             if (dealer1.getHandValue() <= activePlayer.getHandValue()) {
-                dealer1.hand.add(deck1.drawCard);
+                dealer1.hand.add(deck1.drawCard());
             }
-            if (dealerTotal > 21) {
+            if (dealer1.getHandValue() > 21) {
                 System.out.println("Dealern är bust! Du vinner.");
 
-            } else if (dealerTotal > playerTotal) {
+            } else if (dealer1.getHandValue() > activePlayer.getHandValue()) {
                 System.out.println("Dealern vinner!");
 
-            } else if (dealerTotal == playerTotal) {
+            } else if (dealer1.getHandValue() == activePlayer.getHandValue()) {
                 System.out.println("Oavgjort!");
 
-            } else if (dealerTotal < playerTotal) {
+            } else if (dealer1.getHandValue() < activePlayer.getHandValue()) {
                 System.out.println("Du vinner!");
 
             }
