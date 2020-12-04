@@ -33,4 +33,12 @@ public class Card {
         CLUBS,
         DIAMONDS
     }
+
+    @Override
+    public String toString() {
+        return "Card{" +
+                "suit=" + suit +
+                ", rank=" + rank +
+                '}';
+    }
 }
