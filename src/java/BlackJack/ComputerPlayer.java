@@ -18,7 +18,7 @@ public class ComputerPlayer extends Player {
 
     // TODO: 12/1/2020 : Lukas :  add bot stopValue for easier properties later?
 
-    public ComputerPlayer(){
+    public ComputerPlayer() {
         String bot = generateRandomName();
 
         System.out.println(bot);
@@ -27,15 +27,16 @@ public class ComputerPlayer extends Player {
 
     /**
      * Returns a random name for the ComputerPlayer
+     *
      * @return a random generated name from a text file
      */
-    private String generateRandomName(){
+    private String generateRandomName() {
         ArrayList<String> botNames = new ArrayList<>();
         //BotNames.txt contains the names of the easy bots from cs (testing)
-        try(Scanner FileScan = new Scanner(new File("src/java/BlackJack/BotNames.txt"))){
+        try (Scanner FileScan = new Scanner(new File("src/java/BlackJack/BotNames.txt"))) {
             while (FileScan.hasNext()) //for each line in the txt file
                 botNames.add(FileScan.nextLine()); //adds to botNames
-        } catch (Exception e ){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         // TODO: 12/2/2020 : Lukas : add a check for already taken playerNames  (need BlackJackLogic)
@@ -45,27 +46,13 @@ public class ComputerPlayer extends Player {
 
     /**
      * a check if the ComputerPlayer Should pickup cards or not
+     *
      * @return the ComputerPlayer should pickup a card or not
      */
-    private boolean shouldHit(){
+    private boolean shouldHit() {
 
 
         return true;
     }
-
-    /**
-     * Getter For broke
-     * @return if the ComputerPlayer is all out of balance (gets removed form the game)
-     */
-    public boolean isBroke() {
-        return broke;
-    }
-
-    /**
-     * Setter for broke
-     * @param broke if the ComputerPlayer is all out of balance (gets removed form the game)
-     */
-    public void setBroke(boolean broke) {
-        this.broke = broke;
-    }
 }
+
