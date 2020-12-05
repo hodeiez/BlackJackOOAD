@@ -1,5 +1,7 @@
 package BlackJack;
 
+import java.util.ArrayList;
+
 /**
  * Created by Lukas Aronsson
  * Date: 01/12/2020
@@ -12,6 +14,9 @@ public class Player implements IHasCards{
     private int balance = 0; //the amount of balance the player has currently
     private int currentBet = 0; //the amount of balance the player have decided to bet this round
     private boolean broke = false;
+public Player (){
+    ArrayList<Card> hand = new ArrayList<>();
+}
 
     /**
      * Increases the players balance

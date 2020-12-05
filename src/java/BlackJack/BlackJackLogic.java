@@ -42,6 +42,8 @@ public class BlackJackLogic {
         }
     }
     public void playRoundConsoleVersion() {
+
+        Deck deck1 = new Deck(1);
         players.add(activePlayer);
         while (true) {
             isItTimeToShuffle();
@@ -72,45 +74,60 @@ public class BlackJackLogic {
     }
 
     private void dealHands() {
+        Deck deck1 = new Deck(1);
         for (Player p : players) {
+            System.out.println(p.hand.size());
             p.hand.add(deck1.drawCard());
-//            p.hand.add(deck1.drawCard());
-            System.out.println(p);
+            p.hand.add(deck1.drawCard());
+
         }
 
-//        dealer1.hand.add(deck1.drawCard());
         dealer1.hand.add(deck1.drawCard());
+        System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));
+        deck1.cardDeck.remove(0);
+        System.out.println((activePlayer.hand==dealer1.hand));
+        System.out.println(activePlayer.hand.equals(dealer1.hand));
+
     }
 
     private void humanPlayerTurn() {
 
         int choice = 0;
         Scanner scan = new Scanner(System.in);
-        boolean hit = false;
+
         while (true) {
+            boolean hit = false;
             if(+activePlayer.getHandValue()>21){
                 humanBust = true;
                 break;
             }
+            System.out.println("Du drog: " +activePlayer.hand.get(activePlayer.hand.size()-2));
+            System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
             System.out.println("Din hand är värd: "+activePlayer.getHandValue());
             choice=Integer.parseInt(scan.nextLine());//Input från användaren Hit/Stay
-            if (choice!=1){
+            System.out.println("Val: "+choice);
+            if (choice==1){
                 hit = true;
             }
             if (hit) {
                 activePlayer.hand.add(deck1.drawCard());
-            } else break;
+                System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
+            } else {
+                System.out.println("Sluta dra");
+                break;
+                }
 
         }
     }
 
     private void dealerTurn() {
         if (humanBust){
-            System.out.println("Du är bust! Dealern vinner!");
+            System.out.println("Din hand är värd: "+activePlayer.getHandValue()+"Du är bust! Dealern vinner!");
         }else{
         boolean dealerWin;
         dealer1.hand.get(1).setFaceUp(true);
-        while (dealer1.getHandValue() < 21&&dealer1.getHandValue() <= activePlayer.getHandValue()) {
+        System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));
+        while (dealer1.getHandValue() < 21&&dealer1.getHandValue() < activePlayer.getHandValue()) {
             dealer1.hand.add(deck1.drawCard());}
 
             if (dealer1.getHandValue() > 21) {
