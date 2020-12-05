@@ -1,5 +1,6 @@
 package BlackJack;
 
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -41,18 +42,23 @@ public class GameBoardController {
             while (change.next()) {
                 if (change.wasAdded()) {
                     activePlayer.getChildren().add(change.getAddedSubList().get(0));
-                    System.out.println(modelTest.activePlayerHandArr.size());
+                   // System.out.println(modelTest.activePlayerHandArr.size());
+                    System.out.println(modelTest.activePlayerHand.size());
                 } else if (change.wasRemoved()) {
                     activePlayer.getChildren().clear();
                 }
-                else if(change.wasUpdated())
-                    ((CardGraph) activePlayer.getChildren().get(1)).setFaceUp(false);
+                else if(change.wasUpdated()) {
+                    for(int i=change.getFrom();i<change.getTo();i++){
+                        ((CardGraph) modelTest.activePlayerHand.get(i)).changeFace(false);
+                        System.out.println(i+"changed!");}
+                    //  ((CardGraph) activePlayer.getChildren().get(0)).setFaceUp(false);
+                }
             }
         });
         CardGraph cardTest=new CardGraph("diamonds","ace",true);
         cardTest.setTranslateX(-50);
         hit.setOnAction(e-> modelTest.addCardActPlayer(cardTest));
-        stay.setOnAction(e->((CardGraph)modelTest.activePlayerHand.get(1)).setFaceUp(false));
+        stay.setOnAction(e->Platform.runLater (()->((CardGraph) modelTest.activePlayerHandArr.get(1)).setFaceUp(false)));
 
 
 

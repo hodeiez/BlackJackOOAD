@@ -33,6 +33,7 @@ public class GameBoardView extends Application {
        stage.getScene().getStylesheets().add(getClass().getResource("/blackJack.css").toExternalForm());
      //  getClass().getClassLoader().getResource("/blackJack.css");
         stage.show();
+        stage.setResizable(false);
         stage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);

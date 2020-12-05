@@ -1,9 +1,11 @@
 package BlackJack;
 
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -22,7 +24,19 @@ public class ModelTest implements Runnable {
     private String bet;
 
     public ArrayList<CardGraph> activePlayerHandArr= new ArrayList<>();
-    public ObservableList activePlayerHand = FXCollections.observableArrayList(activePlayerHandArr); //instead of new ArrayList put activeHand
+ //   public ObservableList activePlayerHand = FXCollections.observableArrayList(activePlayerHandArr); //instead of new ArrayList put activeHand
+
+
+    public ObservableList activePlayerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
+        @Override
+        public Observable[] call(CardGraph cardGraph) {
+            return new Observable[]{
+                    cardGraph.faceUpProperty()
+            };
+        }
+    });//,activePlayerHandArr);
+
+
 
     public ObservableList player2Hand = FXCollections.observableArrayList(new ArrayList<CardGraph>());
     public ObservableList dealerHand=FXCollections.observableArrayList(new ArrayList<CardGraph>());
@@ -69,12 +83,13 @@ public class ModelTest implements Runnable {
     @Override
     public void run() {
         {
-            //while (true) {
+            while (true) {
 
                 Platform.runLater(() -> {
                     Random rnd =new Random();
-                    addCardActPlayer(new CardGraph("spades", "ace", true));
+                   // addCardActPlayer(new CardGraph("spades", "ace", true));
                     addCardActPlayer(new CardGraph("spades", String.valueOf(rnd.nextInt(8)+2), true));
+
                 });
 
 
@@ -83,8 +98,8 @@ public class ModelTest implements Runnable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-              // Platform.runLater(()-> clearActPlayerHand());
-           // }
+            //   Platform.runLater(()-> clearActPlayerHand());
+            }
         }
 
     }
