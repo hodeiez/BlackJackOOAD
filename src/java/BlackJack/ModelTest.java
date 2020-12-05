@@ -20,7 +20,10 @@ import static java.lang.Thread.sleep;
 public class ModelTest implements Runnable {
     private StringProperty balance = new SimpleStringProperty("blank");
     private String bet;
-    public ObservableList activePlayerHand = FXCollections.observableArrayList(new ArrayList<CardGraph>());
+
+    public ArrayList<CardGraph> activePlayerHandArr= new ArrayList<>();
+    public ObservableList activePlayerHand = FXCollections.observableArrayList(activePlayerHandArr); //instead of new ArrayList put activeHand
+
     public ObservableList player2Hand = FXCollections.observableArrayList(new ArrayList<CardGraph>());
     public ObservableList dealerHand=FXCollections.observableArrayList(new ArrayList<CardGraph>());
 
@@ -31,6 +34,7 @@ public class ModelTest implements Runnable {
     }
 
     public void addCardActPlayer(CardGraph card) {
+       activePlayerHandArr.add(card);
         activePlayerHand.add(card);
     }
 
@@ -65,7 +69,7 @@ public class ModelTest implements Runnable {
     @Override
     public void run() {
         {
-            while (true) {
+            //while (true) {
 
                 Platform.runLater(() -> {
                     Random rnd =new Random();
@@ -79,8 +83,8 @@ public class ModelTest implements Runnable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-               Platform.runLater(()-> clearActPlayerHand());
-            }
+              // Platform.runLater(()-> clearActPlayerHand());
+           // }
         }
 
     }

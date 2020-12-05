@@ -36,20 +36,23 @@ public class GameBoardController {
 
     public void initialize() {
 
-
+//Listens changes of the observableList
         modelTest.activePlayerHand.addListener((ListChangeListener<CardGraph>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
-                    System.out.println("Active--->>" + change.getAddedSubList().get(0));
                     activePlayer.getChildren().add(change.getAddedSubList().get(0));
-                    System.out.println(modelTest.activePlayerHand.size());
+                    System.out.println(modelTest.activePlayerHandArr.size());
                 } else if (change.wasRemoved()) {
-                    System.out.println("CLEARED");
                     activePlayer.getChildren().clear();
                 }
+                else if(change.wasUpdated())
+                    ((CardGraph) activePlayer.getChildren().get(1)).setFaceUp(false);
             }
         });
-        hit.setOnAction(e-> modelTest.addCardActPlayer(new CardGraph("diamonds","ace",true)));
+        CardGraph cardTest=new CardGraph("diamonds","ace",true);
+        cardTest.setTranslateX(-50);
+        hit.setOnAction(e-> modelTest.addCardActPlayer(cardTest));
+        stay.setOnAction(e->((CardGraph)modelTest.activePlayerHand.get(1)).setFaceUp(false));
 
 
 

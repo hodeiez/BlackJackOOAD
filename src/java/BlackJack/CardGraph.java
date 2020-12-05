@@ -21,10 +21,11 @@ public class CardGraph extends Rectangle {
     private ImagePattern cardImage;
     private String suit;
     private String rank;
-
+    private boolean faceUp;
     CardGraph(String suit, String rank, boolean faceUp) {
         this.suit = suit;
         this.rank = rank;
+        this.faceUp=faceUp;
         cardImage = new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/" + rank + "_of_" + suit + ".png"))));
         this.setWidth(80);
         this.setHeight(130);
@@ -37,7 +38,9 @@ public class CardGraph extends Rectangle {
     public ImagePattern getImgPattern() {
         return cardImage;
     }
-
+    public void setFaceUp(boolean faceUp){
+        this.faceUp=true;
+    }
     @Override
     public String toString() {
         return "Suit: " + suit + " number " + rank;
