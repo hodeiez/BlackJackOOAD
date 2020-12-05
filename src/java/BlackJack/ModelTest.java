@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import static java.lang.Thread.sleep;
 
@@ -63,21 +64,14 @@ public class ModelTest implements Runnable {
 
     @Override
     public void run() {
-        // final int[] i = {0};
         {
             while (true) {
 
                 Platform.runLater(() -> {
+                    Random rnd =new Random();
                     addCardActPlayer(new CardGraph("spades", "ace", true));
-                    addCardActPlayer(new CardGraph("spades", "king", true));
-                    addCardPlayer2(new CardGraph("diamonds","queen",true));
-
-                    //activePlayerHand.remove(activePlayerHand.size()-1);
+                    addCardActPlayer(new CardGraph("spades", String.valueOf(rnd.nextInt(8)+2), true));
                 });
-                //  setBalance("new Balance"));
-                //setBalance(String.valueOf(i[0]++)));
-                //  System.out.println(i);
-                // setCard(new CardGraph("spades", String.valueOf(i[0] +2), true).getImgPattern());
 
 
                 try {

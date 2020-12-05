@@ -42,14 +42,17 @@ public class GameBoardController {
                 if (change.wasAdded()) {
                     System.out.println("Active--->>" + change.getAddedSubList().get(0));
                     activePlayer.getChildren().add(change.getAddedSubList().get(0));
+                    System.out.println(modelTest.activePlayerHand.size());
                 } else if (change.wasRemoved()) {
                     System.out.println("CLEARED");
                     activePlayer.getChildren().clear();
-                    activePlayer.getChildren().addAll(modelTest.activePlayerHand);
-                    //modelTest.activePlayerHand.clear();
                 }
             }
         });
+        hit.setOnAction(e-> modelTest.addCardActPlayer(new CardGraph("diamonds","ace",true)));
+
+
+
         modelTest.player2Hand.addListener((ListChangeListener<CardGraph>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
