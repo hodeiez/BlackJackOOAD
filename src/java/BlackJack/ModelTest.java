@@ -4,10 +4,10 @@ import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Created by Hodei Eceiza
@@ -18,35 +18,36 @@ import java.util.ArrayList;
  */
 public class ModelTest implements Runnable {
     private StringProperty balance = new SimpleStringProperty("blank");
-  //  private ListProperty activePlayerHand=new SimpleListProperty();
+    private String bet;
+    public ObservableList activePlayerHand = FXCollections.observableArrayList(new ArrayList<CardGraph>());
+    public ObservableList player2Hand = FXCollections.observableArrayList(new ArrayList<CardGraph>());
+    public ObservableList dealerHand=FXCollections.observableArrayList(new ArrayList<CardGraph>());
 
-    private ArrayList<CardGraph> handTest=new ArrayList<CardGraph>();
-    public ObservableList activePlayerHand= FXCollections.observableArrayList(handTest);
-    private Rectangle rect;
 
-    private ObjectProperty card = new SimpleObjectProperty(rect);
-    String bet;// still have to set
 
     public ModelTest() {
-        rect = new Rectangle(80, 130);
-        rect.setFill(new CardGraph("spades", "ace", true).getImgPattern());
-    }
-    public void setHandTest(CardGraph card){
-        handTest.add(card);
-    }
-    public ArrayList<CardGraph> getHandTest(){
-        return handTest;
-    }
-   // public ListProperty activePlayerProperty(){return activePlayerHand;}
-    //public void setActivePlayerHand(CardGraph card){activePlayerProperty().add(card);}
-    public ObjectProperty cardProperty() {
-        return card;
+
     }
 
-    public void setCard(ImagePattern card) {
-        cardProperty().set(card);
+    public void addCardActPlayer(CardGraph card) {
+        activePlayerHand.add(card);
     }
 
+    public void addCardPlayer2(CardGraph card){
+        player2Hand.add(card);
+    }
+    public void addCardDealer(CardGraph card){
+        dealerHand.add(card);
+    }
+    public void clearDealerHand(){
+        dealerHand.clear();
+    }
+    public void clearActPlayerHand(){
+        activePlayerHand.clear();
+    }
+    public void clearPlayer2Hand(){
+        player2Hand.clear();
+    }
 
     public StringProperty balanceProperty() {
         return balance;
@@ -62,26 +63,29 @@ public class ModelTest implements Runnable {
 
     @Override
     public void run() {
-      // final int[] i = {0};
+        // final int[] i = {0};
         {
             while (true) {
 
-                Platform.runLater(() ->{
-                        setHandTest(new CardGraph("spades","ace",true));
-                        setHandTest(new CardGraph("spades","king",true));});
-                      //  setBalance("new Balance"));
-                       //setBalance(String.valueOf(i[0]++)));
-                      //  System.out.println(i);
-                        // setCard(new CardGraph("spades", String.valueOf(i[0] +2), true).getImgPattern());
+                Platform.runLater(() -> {
+                    addCardActPlayer(new CardGraph("spades", "ace", true));
+                    addCardActPlayer(new CardGraph("spades", "king", true));
+                    addCardPlayer2(new CardGraph("diamonds","queen",true));
 
-
+                    //activePlayerHand.remove(activePlayerHand.size()-1);
+                });
+                //  setBalance("new Balance"));
+                //setBalance(String.valueOf(i[0]++)));
+                //  System.out.println(i);
+                // setCard(new CardGraph("spades", String.valueOf(i[0] +2), true).getImgPattern());
 
 
                 try {
-                    Thread.sleep(500);
+                    sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+               Platform.runLater(()-> clearActPlayerHand());
             }
         }
 
