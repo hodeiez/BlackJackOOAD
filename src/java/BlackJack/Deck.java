@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Deck {
 
-    private List<Card> cardDeck = new LinkedList<>();
+    List<Card> cardDeck = new LinkedList<>();
     private int numberOfCompleteDecks;
 
     public Deck(int numberOfCompleteDecks) {

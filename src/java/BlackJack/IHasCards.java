@@ -41,7 +41,7 @@ public class IHasCards {
             if (temp.getRank() == 1) total = total + 11;//Ess kan vara värda 11
             if (temp.getRank() == 0) total = total + 1;//Ess kan vara värda 1
             if (total > 21) {
-                //Om vi har mer än 21 kollar denna loop igenom ifall vi har Ess, om vi har det sätter vi ässet till att
+                //Om vi har mer än 21 kollar denna loop igenom ifall vi har Ess, om vi har det sätter vi esset till att
                 //vara värt ett istället för elva och börjar om räkningen.
                 for (int j = 0; j < lenght; j++) {
                     Card temp2 = (Card) hand.get(j);
@@ -54,10 +54,10 @@ public class IHasCards {
                 }
             }
         }
-        for (int i = 0; i < hand.size(); i++) { //Skriver ut korten till konsolen.
-            System.out.println(hand.get(i));
-        }
-        System.out.println("Totalt värde: " + total); // Skriver ut handens totala värde.
+//        for (int i = 0; i < hand.size(); i++) { //Skriver ut korten till konsolen.
+//            System.out.println(hand.get(i));
+//        }
+//        System.out.println("Totalt värde: " + total); // Skriver ut handens totala värde.
         return total;
     }
 
