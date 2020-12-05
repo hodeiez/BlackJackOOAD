@@ -21,35 +21,45 @@ import static java.lang.Thread.sleep;
  */
 public class ModelTest implements Runnable {
     private StringProperty balance = new SimpleStringProperty("blank");
+
+
+    public ArrayList<CardGraph> activePlayerHandArr;
+    public ObservableList activePlayerHand;
+    public ArrayList<CardGraph> dealerHandArr;
+    public ObservableList dealerHand;
     private String bet;
 
-    public ArrayList<CardGraph> activePlayerHandArr= new ArrayList<>();
- //   public ObservableList activePlayerHand = FXCollections.observableArrayList(activePlayerHandArr); //instead of new ArrayList put activeHand
-
-
-    public ObservableList activePlayerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
-        @Override
-        public Observable[] call(CardGraph cardGraph) {
-            return new Observable[]{
-                    cardGraph.faceUpProperty()
-            };
-        }
-    });//,activePlayerHandArr);
-
-
-
     public ObservableList player2Hand = FXCollections.observableArrayList(new ArrayList<CardGraph>());
-    public ObservableList dealerHand=FXCollections.observableArrayList(new ArrayList<CardGraph>());
-
-
 
     public ModelTest() {
-
+        setUpModel();
     }
+    public void setUpModel(){
+        activePlayerHandArr= new ArrayList<>();
+        activePlayerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
+            @Override
+            public Observable[] call(CardGraph cardGraph) {
+                return new Observable[]{
+                        cardGraph.faceUpProperty()
+                };
+            }
+        },activePlayerHandArr);
 
+        dealerHandArr= new ArrayList<>();
+        dealerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
+            @Override
+            public Observable[] call(CardGraph cardGraph) {
+                return new Observable[]{
+                        cardGraph.faceUpProperty()
+                };
+            }
+        },activePlayerHandArr);
+    }
     public void addCardActPlayer(CardGraph card) {
-       activePlayerHandArr.add(card);
         activePlayerHand.add(card);
+    }
+    public void addCardActDealer(CardGraph card) {
+        dealerHand.add(card);
     }
 
     public void addCardPlayer2(CardGraph card){
@@ -87,9 +97,9 @@ public class ModelTest implements Runnable {
 
                 Platform.runLater(() -> {
                     Random rnd =new Random();
-                   // addCardActPlayer(new CardGraph("spades", "ace", true));
+
                     addCardActPlayer(new CardGraph("spades", String.valueOf(rnd.nextInt(8)+2), true));
-                   // activePlayerHandArr.get(0).setFaceUp(false);
+                    addCardActDealer(new CardGraph("diamonds", String.valueOf(rnd.nextInt(8)+2), true));
                 });
 
 
@@ -98,7 +108,7 @@ public class ModelTest implements Runnable {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            //   Platform.runLater(()-> clearActPlayerHand());
+
             }
         }
 

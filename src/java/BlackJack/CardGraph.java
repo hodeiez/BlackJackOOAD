@@ -2,11 +2,7 @@ package BlackJack;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.collections.ObservableArray;
-import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -29,15 +25,10 @@ public class CardGraph extends Rectangle {
         this.suit = suit;
         this.rank = rank;
         this.faceUpProp=new SimpleBooleanProperty(faceUp);
-       // this.faceUp=faceUp;
+
         cardImage = new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/" + rank + "_of_" + suit + ".png"))));
+        setStyling();
 
-
-        this.setWidth(80);
-        this.setHeight(130);
-        this.setFill((faceUp) ? cardImage : Color.PURPLE);
-        this.prefWidth(cardImage.getWidth());
-        this.prefHeight(cardImage.getHeight());
 
     }
     public BooleanProperty faceUpProperty(){
@@ -46,9 +37,20 @@ public class CardGraph extends Rectangle {
     public void setFaceUp(boolean faceUp){
         this.faceUpProperty().set(faceUp);
     }
-    public void changeFace(boolean c){
-        this.faceUp=c;
+    public void changeFace(){
+        this.setFill((faceUp) ? cardImage : Color.PURPLE);
     }
+    public void setStyling(){
+        this.setFill(cardImage);
+        this.setWidth(80);
+        this.setHeight(130);
+        this.prefWidth(cardImage.getWidth());
+        this.prefHeight(cardImage.getHeight());
+        this.setArcHeight(10);
+        this.setArcWidth(10);
+    }
+
+    //For tests and debug
     @Override
     public String toString() {
         return "Suit: " + suit + " number " + rank;

@@ -2,6 +2,7 @@ package BlackJack;
 
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -37,31 +38,38 @@ public class GameBoardController {
     }
 
     public void initialize() {
-
+setListener(modelTest.activePlayerHand,activePlayer);
+setListener(modelTest.dealerHand,dealerBox);
 //Listens changes of the observableList
-        modelTest.activePlayerHand.addListener((ListChangeListener<CardGraph>) change -> {
-            while (change.next()) {
-                if (change.wasAdded()) {
-                    activePlayer.getChildren().add(change.getAddedSubList().get(0));
 
-                } else if (change.wasRemoved()) {
-                    activePlayer.getChildren().clear();
-                }
-                else if(change.wasUpdated()) {
-                      ((CardGraph) activePlayer.getChildren().get(change.getFrom())).setFill(Color.PURPLE);
-                }
-            }
-        });
-
-        //using buttons for test
-        stay.setOnAction(e-> modelTest.activePlayerHandArr.get(0).setFaceUp(false));
-
-
-        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
 
 //balance its binded, should do a double bind? or call method from logic to change the balance?
         balance.textProperty().bind(modelTest.balanceProperty());
 
 
+
+        //using buttons for test
+        stay.setOnAction(e-> modelTest.activePlayerHandArr.get(0).changeFace());
+
+
+        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
+
+
+
+    }
+    public void setListener(ObservableList<CardGraph> observable, HBox playerBox){
+        observable.addListener((ListChangeListener<CardGraph>) change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    playerBox.getChildren().add(change.getAddedSubList().get(0));
+
+                } else if (change.wasRemoved()) {
+                    playerBox.getChildren().clear();
+                }
+                else if(change.wasUpdated()) {
+                    ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
+                }
+            }
+        });
     }
 }

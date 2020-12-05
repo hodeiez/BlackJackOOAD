@@ -1,6 +1,13 @@
 package BlackJack;
 
 
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.util.Callback;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +18,37 @@ public class BlackJackLogicModel {
     private Player activePlayer = new Player();
 
 
+
+    //Graphics side
+    public ArrayList<CardGraph> activePlayerHandArr;
+    public ObservableList activePlayerHand;
+    public ArrayList<CardGraph> dealerHandArr;
+    public ObservableList dealerHand;
+
+    public BlackJackLogicModel(){
+        setUpModel();
+    }
+    public void setUpModel(){
+        activePlayerHandArr= new ArrayList<>();
+        activePlayerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
+            @Override
+            public Observable[] call(CardGraph cardGraph) {
+                return new Observable[]{
+                        cardGraph.faceUpProperty()
+                };
+            }
+        },activePlayerHandArr);
+
+        dealerHandArr= new ArrayList<>();
+        dealerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
+            @Override
+            public Observable[] call(CardGraph cardGraph) {
+                return new Observable[]{
+                        cardGraph.faceUpProperty()
+                };
+            }
+        },activePlayerHandArr);
+    }
     private void setUpGame() {
         players.add(activePlayer);
         players.add(new Player());
@@ -33,8 +71,8 @@ public class BlackJackLogicModel {
             dealHands();
             dealer1.hand.get(0).setFaceUp(true);
             humanPlayerTurn();
-            computerPlayerTurn(players.get(1));
-            computerPlayerTurn(players.get(2));
+           // computerPlayerTurn(players.get(1));
+            //computerPlayerTurn(players.get(2));
             dealerTurn();
 //            isGameOver();
 
