@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
@@ -42,40 +43,23 @@ public class GameBoardController {
             while (change.next()) {
                 if (change.wasAdded()) {
                     activePlayer.getChildren().add(change.getAddedSubList().get(0));
-                   // System.out.println(modelTest.activePlayerHandArr.size());
-                    System.out.println(modelTest.activePlayerHand.size());
+
                 } else if (change.wasRemoved()) {
                     activePlayer.getChildren().clear();
                 }
                 else if(change.wasUpdated()) {
-                    for(int i=change.getFrom();i<change.getTo();i++){
-                        ((CardGraph) modelTest.activePlayerHand.get(i)).changeFace(false);
-                        System.out.println(i+"changed!");}
-                    //  ((CardGraph) activePlayer.getChildren().get(0)).setFaceUp(false);
+                      ((CardGraph) activePlayer.getChildren().get(change.getFrom())).setFill(Color.PURPLE);
                 }
             }
         });
-        CardGraph cardTest=new CardGraph("diamonds","ace",true);
-        cardTest.setTranslateX(-50);
-        hit.setOnAction(e-> modelTest.addCardActPlayer(cardTest));
-        stay.setOnAction(e->Platform.runLater (()->((CardGraph) modelTest.activePlayerHandArr.get(1)).setFaceUp(false)));
+
+        //using buttons for test
+        stay.setOnAction(e-> modelTest.activePlayerHandArr.get(0).setFaceUp(false));
 
 
-
-        modelTest.player2Hand.addListener((ListChangeListener<CardGraph>) change -> {
-            while (change.next()) {
-                if (change.wasAdded()) {
-                    CardGraph card = change.getAddedSubList().get(0);
-                    card.setTranslateX(110);
-                    player2.getChildren().add(card);
-                } else if (change.wasRemoved()) {
-
-                }
-            }
-        });
         end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
 
-
+//balance its binded, should do a double bind? or call method from logic to change the balance?
         balance.textProperty().bind(modelTest.balanceProperty());
 
 

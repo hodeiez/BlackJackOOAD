@@ -89,7 +89,7 @@ public class ModelTest implements Runnable {
                     Random rnd =new Random();
                    // addCardActPlayer(new CardGraph("spades", "ace", true));
                     addCardActPlayer(new CardGraph("spades", String.valueOf(rnd.nextInt(8)+2), true));
-
+                   // activePlayerHandArr.get(0).setFaceUp(false);
                 });
 
 
