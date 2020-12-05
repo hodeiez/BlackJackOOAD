@@ -22,7 +22,8 @@ public class GameBoardView extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-       ModelTest myTest=new ModelTest(); //here logic model runs
+     //  ModelTest myTest=new ModelTest(); //here logic model runs
+       BlackJackLogicModel myTest=new BlackJackLogicModel(); //here logic model runs
         Thread th=new Thread(myTest);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameBoard.fxml"));
         loader.setController(new GameBoardController(myTest));
@@ -31,7 +32,7 @@ public class GameBoardView extends Application {
         Parent root=loader.load();
         stage.setScene(new Scene(root));
        stage.getScene().getStylesheets().add(getClass().getResource("/blackJack.css").toExternalForm());
-     //  getClass().getClassLoader().getResource("/blackJack.css");
+
         stage.show();
         stage.setResizable(false);
         stage.setOnCloseRequest(e -> {

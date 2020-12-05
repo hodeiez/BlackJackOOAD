@@ -1,6 +1,7 @@
 package BlackJack;
 
 
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -11,7 +12,7 @@ import javafx.util.Callback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BlackJackLogicModel {
+public class BlackJackLogicModel implements Runnable{
     private List<Player> players = new ArrayList<>();
     private Dealer dealer1 = new Dealer();
     private Deck deck1 = new Deck(6); //lugnt om deck1 är tom här, isåfall så fixas det ihop ny lek i början av första rundan
@@ -20,6 +21,8 @@ public class BlackJackLogicModel {
 
 
     //Graphics side
+    private StringProperty handValue = new SimpleStringProperty("");
+    public boolean hit=false;
     public ArrayList<CardGraph> activePlayerHandArr;
     public ObservableList activePlayerHand;
     public ArrayList<CardGraph> dealerHandArr;
@@ -49,10 +52,13 @@ public class BlackJackLogicModel {
             }
         },activePlayerHandArr);
     }
+
+
+    //the original
     private void setUpGame() {
         players.add(activePlayer);
-        players.add(new Player());
-        players.add(new Player());
+      //  players.add(new Player());
+       // players.add(new Player());
         setStartingBalance(1000);
         playRound();
 
@@ -66,17 +72,17 @@ public class BlackJackLogicModel {
     }
 
     private void playRound() {
-        while (true) {
+     //   while (true) {
             isItTimeToShuffle();
             dealHands();
             dealer1.hand.get(0).setFaceUp(true);
-            humanPlayerTurn();
+           // humanPlayerTurn();
            // computerPlayerTurn(players.get(1));
             //computerPlayerTurn(players.get(2));
-            dealerTurn();
+           // dealerTurn();
 //            isGameOver();
 
-        }
+     //  }
     }
 
     private void isPlayerBroke(Player player) {
@@ -93,25 +99,38 @@ public class BlackJackLogicModel {
     }
 
     private void dealHands() {
-        for (Player p : players) {
-            p.hand.add(deck1.drawCard());
-            p.hand.add(deck1.drawCard());
 
-        }
-        dealer1.hand.add(deck1.drawCard());
-        dealer1.hand.add(deck1.drawCard());
+        Card card=deck1.drawCard();
+        activePlayer.hand.add(card);
+        //show card
+        activePlayerHand.add(cardToGraph(card));
+       // activePlayerHand.add()
+        //simplified
+
+        card=deck1.drawCard();
+        dealer1.hand.add(card);
+        dealerHand.add(cardToGraph(card));
+
+
     }
 
     private void humanPlayerTurn() {
-        boolean hit;
+
+       // boolean hit;
+/*
         while (true) {
             System.out.println(activePlayer.getHandValue());
             //Input från användaren Hit/Stay
-            if (hit = true) {
-                activePlayer.hand.add(deck1.drawCard());
+            if (hit) {
+                Card card=deck1.drawCard();
+                activePlayer.hand.add(card);
+                activePlayerHand.add(cardToGraph(card));
+
             } else break;
 
         }
+
+ */
     }
 
     private void dealerTurn() {
@@ -147,7 +166,45 @@ public class BlackJackLogicModel {
 
         }
     }
+//GRAPHIX THINGS
+public StringProperty handValueProperty() {
+    return handValue;
+}
+
+    public String getHandValue() {
+        return handValueProperty().get();
+    }
+
+    public void setHandValue(String balance) {
+        handValueProperty().set(balance);
+    }
+    public void hitListener(){
+        hit=true;
+        Card card=deck1.drawCard();
+        activePlayer.hand.add(card);
+        activePlayerHand.add(cardToGraph(card));
+      //  System.out.println(activePlayer.getHandValue());
+        setHandValue(String.valueOf(activePlayer.getHandValue()));
+    }
 
 
+    //Simple converter to graphical card
+public CardGraph cardToGraph(Card card){
+    String rank=String.valueOf(card.getRank());
+    String suit=String.valueOf(card.getSuit()).toLowerCase();
+    switch (rank){
+    case "1"->rank="ace";
+    case "11"-> rank="jack";
+    case "12"->rank="queen";
+    case "13"->rank="king";
+        default -> rank=rank;
+    }
+    return new CardGraph(suit,rank,true);
+}
 
+    @Override
+    public void run() {
+       Platform.runLater(()->setUpGame());
+
+    }
 }

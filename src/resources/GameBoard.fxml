@@ -31,5 +31,9 @@
       <HBox fx:id="activePlayer" layoutX="824.0" layoutY="406.0" prefHeight="226.0" prefWidth="364.0" />
       <HBox fx:id="player2" layoutX="37.0" layoutY="408.0" prefHeight="226.0" prefWidth="348.0" />
       <HBox fx:id="player3" layoutX="445.0" layoutY="408.0" prefHeight="226.0" prefWidth="348.0" />
+      <Label fx:id="handValue" layoutX="970.0" layoutY="652.0" prefHeight="38.0" prefWidth="68.0" text="Label" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="23.0" />
+         </font></Label>
    </children>
 </AnchorPane>

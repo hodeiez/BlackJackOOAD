@@ -21,6 +21,8 @@ public class CardGraph extends Rectangle {
     private String rank;
     private boolean faceUp;
     private final BooleanProperty faceUpProp;
+
+
     CardGraph(String suit, String rank, boolean faceUp) {
         this.suit = suit;
         this.rank = rank;

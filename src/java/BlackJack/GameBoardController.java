@@ -28,12 +28,20 @@ public class GameBoardController {
     public HBox activePlayer;
     public HBox player2;
     public HBox player3;
+    public Label handValue;
     @FXML
     private AnchorPane gameBoardPane;
-    private ModelTest modelTest;
+  //  private ModelTest modelTest;
+   private BlackJackLogicModel modelTest;
     private Rectangle rect = new Rectangle();
-
+/*
     public GameBoardController(ModelTest modelTest) {
+        this.modelTest = modelTest;
+    }
+
+ */
+     public GameBoardController(BlackJackLogicModel modelTest) {
+
         this.modelTest = modelTest;
     }
 
@@ -44,13 +52,16 @@ setListener(modelTest.dealerHand,dealerBox);
 
 
 //balance its binded, should do a double bind? or call method from logic to change the balance?
-        balance.textProperty().bind(modelTest.balanceProperty());
-
+       // balance.textProperty().bind(modelTest.balanceProperty());
+        handValue.textProperty().bind(modelTest.handValueProperty());
 
 
         //using buttons for test
-        stay.setOnAction(e-> modelTest.activePlayerHandArr.get(0).changeFace());
+        //test for changeFaceUp
+       // stay.setOnAction(e-> modelTest.activePlayerHandArr.get(0).changeFace());
 
+       //testing hit
+        hit.setOnAction(e->modelTest.hitListener());
 
         end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
 
