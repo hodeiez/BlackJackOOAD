@@ -40,7 +40,7 @@ public interface IHasCards {
                 //vara värt ett istället för elva och börjar om räkningen.
                 for (int j = 0; j < lenght; j++) {
                     Card temp2 = (Card) hand.get(j);
-                    if (temp2.getRank() == 0) {
+                    if (temp2.getRank() == 1) {
                         hand.set(j, new Card(temp2.getSuit(), 0));
                         i = -1;
                         total = 0;
