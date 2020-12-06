@@ -125,22 +125,31 @@ public class BlackJackLogic {
             System.out.println("Din hand är värd: "+activePlayer.getHandValue()+"Du är bust! Dealern vinner!");
         }else{
         boolean dealerWin;
-        dealer1.hand.get(1).setFaceUp(true);
+//        dealer1.hand.get(1).setFaceUp(true);
         System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));
         while (dealer1.getHandValue() < 21&&dealer1.getHandValue() < activePlayer.getHandValue()) {
-            dealer1.hand.add(deck1.drawCard());}
+            dealer1.hand.add(deck1.drawCard());
+            System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));}
 
             if (dealer1.getHandValue() > 21) {
+                System.out.println("Din hand är värd: "+activePlayer.getHandValue());
+                System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
                 System.out.println("Dealern är bust! Du vinner.");
 
             } else if (dealer1.getHandValue() > activePlayer.getHandValue()) {
+                System.out.println("Din hand är värd: "+activePlayer.getHandValue());
+                System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
                 System.out.println("Dealern vinner!");
                 dealerWin = true;
 
             } else if (dealer1.getHandValue() == activePlayer.getHandValue()) {
+                System.out.println("Din hand är värd: "+activePlayer.getHandValue());
+                System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
                 System.out.println("Oavgjort!");
 
             } else if (dealer1.getHandValue() < activePlayer.getHandValue()) {
+                System.out.println("Din hand är värd: "+activePlayer.getHandValue());
+                System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
                 System.out.println("Du vinner!");
 
             }}
