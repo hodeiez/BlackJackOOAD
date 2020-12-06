@@ -26,6 +26,7 @@ public class CardGraph extends Rectangle {
     CardGraph(String suit, String rank, boolean faceUp) {
         this.suit = suit;
         this.rank = rank;
+        this.faceUp=true;
         this.faceUpProp=new SimpleBooleanProperty(faceUp);
         cardImage = new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/" + rank + "_of_" + suit + ".png"))));
         setStyling();

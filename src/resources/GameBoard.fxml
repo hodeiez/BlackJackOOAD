@@ -40,15 +40,15 @@
          </font></Label>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="125.0" layoutX="845.0" layoutY="260.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 30; -fx-arc-width: 30;" width="321.0">
          <fill>
-            <LinearGradient endX="0.4427481134429233" endY="0.4770992348212322" startX="0.4427480845505955">
+            <LinearGradient endX="0.4427481134429233" endY="0.4770992348212322" startX="0.4465648566038554">
                <stops>
                   <Stop color="#e5da0bc7" />
-                  <Stop color="#7c5b06" offset="0.9961832061068702" />
-                  <Stop color="#7c5b06" offset="1.0" />
+                  <Stop color="WHITE" offset="0.992380980129363" />
+                  <Stop color="WHITE" offset="1.0" />
                </stops>
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label fx:id="messages" alignment="CENTER" layoutX="850.0" layoutY="272.0" prefHeight="105.0" prefWidth="307.0" text="MESSAGES" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+      <Label fx:id="messages" alignment="CENTER" layoutX="850.0" layoutY="272.0" prefHeight="105.0" prefWidth="307.0" text="MESSAGES" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>
