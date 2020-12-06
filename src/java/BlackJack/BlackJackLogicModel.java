@@ -26,6 +26,8 @@ public class BlackJackLogicModel implements Runnable{
 
     public ObservableList activePlayerHand;
     public ObservableList dealerHand;
+    public ArrayList<CardGraph> activePlayerHandArr;
+    public ArrayList<CardGraph> dealerHandArr;
 
     public BlackJackLogicModel(){
         setUpModel();
@@ -39,7 +41,7 @@ public class BlackJackLogicModel implements Runnable{
                         cardGraph.faceUpProperty()
                 };
             }
-        });
+        },activePlayerHandArr);
         dealerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
             @Override
             public Observable[] call(CardGraph cardGraph) {
@@ -47,7 +49,7 @@ public class BlackJackLogicModel implements Runnable{
                         cardGraph.faceUpProperty()
                 };
             }
-        });
+        },dealerHandArr);
     }
 
 
@@ -57,6 +59,7 @@ public class BlackJackLogicModel implements Runnable{
       //  players.add(new Player());
        // players.add(new Player());
         setStartingBalance(1000);
+
         playRound();
 
     }
@@ -108,7 +111,9 @@ public class BlackJackLogicModel implements Runnable{
         card=deck1.drawCard();
         dealer1.hand.add(card);
         Card dCard=card;
-        Platform.runLater(()->dealerHand.add(cardToGraph(dCard)));
+        CardGraph cardG=cardToGraph(dCard);
+        cardG.changeFace();
+        Platform.runLater(()->dealerHand.add(cardG));
 
 
     }
@@ -149,7 +154,7 @@ while(!hit){
     private void dealerTurn() {
        // dealer1.hand.get(1).setFaceUp(true);
         Platform.runLater(()->((CardGraph)dealerHand.get(0)).changeFace());
-        while (dealer1.getHandValue() < 201) {
+        while (dealer1.getHandValue() < 21) {
          //   if (dealer1.getHandValue() <= activePlayer.getHandValue()) {
                 Card card=deck1.drawCard();
                 dealer1.hand.add(card);
