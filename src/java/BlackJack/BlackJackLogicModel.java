@@ -167,7 +167,7 @@ while(!hit){
            c.setFaceUp(true);
            c.changeFace();
             });
-        while (dealer1.getHandValue() < 51) {
+        while (dealer1.getHandValue() < 21) {
          //   if (dealer1.getHandValue() <= activePlayer.getHandValue()) {
                 Card card=deck1.drawCard();
                 dealer1.hand.add(card);

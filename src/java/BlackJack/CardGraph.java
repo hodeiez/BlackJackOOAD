@@ -21,6 +21,7 @@ public class CardGraph extends Rectangle {
     private String rank;
     private boolean faceUp;
     private final BooleanProperty faceUpProp;
+    private final ImagePattern backCard=new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/cardBack.jpg"))));
 
 
     CardGraph(String suit, String rank, boolean faceUp) {
@@ -41,7 +42,7 @@ public class CardGraph extends Rectangle {
     }
    public boolean getFaceUp(){return this.faceUpProperty().get();}
     public void changeFace(){
-        this.setFill((getFaceUp()) ? cardImage : Color.PURPLE);
+        this.setFill((getFaceUp()) ? cardImage : backCard);
     }
 
 
