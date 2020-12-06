@@ -73,6 +73,7 @@ setListener(modelTest.dealerHand,dealerBox);
         observable.addListener((ListChangeListener<CardGraph>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
+
                     playerBox.getChildren().add(change.getAddedSubList().get(0));
 
                 } else if (change.wasRemoved()) {

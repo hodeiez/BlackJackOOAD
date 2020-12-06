@@ -16,8 +16,23 @@
             <Font name="Linux Libertine G Display Regular" size="31.0" />
          </font>
       </Label>
-      <Button fx:id="hit" layoutX="825.0" layoutY="653.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@blackJack.css" text="HIT" />
-      <Button fx:id="stay" layoutX="1110.0" layoutY="653.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@blackJack.css" text="STAY" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="413.0" layoutX="864.0" layoutY="-1.0" stroke="#391e00" strokeType="INSIDE" strokeWidth="5.0" style="-fx-arc-height: 30; -fx-arc-width: 30;" width="416.0">
+         <fill>
+            <LinearGradient endX="0.9809160669341341" startY="1.0">
+               <stops>
+                  <Stop color="#704d00" />
+                  <Stop color="#513a08" offset="0.17557251908396898" />
+                  <Stop color="#694505" offset="0.42370777028154066" />
+                  <Stop color="#4f3608" offset="0.6212119627731881" />
+                  <Stop color="#694306" offset="0.7797396214577014" />
+                  <Stop color="#4f3708" offset="0.9865993934957651" />
+                  <Stop color="#4f3708" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Rectangle>
+      <Button fx:id="hit" layoutX="843.0" layoutY="650.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@blackJack.css" text="HIT" />
+      <Button fx:id="stay" layoutX="1128.0" layoutY="650.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@blackJack.css" text="STAY" />
       <Button fx:id="rules" layoutX="1183.0" layoutY="67.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@blackJack.css" text="RULES" />
       <Button fx:id="end" layoutX="1183.0" layoutY="18.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@blackJack.css" text="END" />
       <Label fx:id="balance" layoutX="874.0" layoutY="18.0" text="BALANCE" textFill="#ffdc08">
@@ -31,24 +46,27 @@
          </font>
       </Label>
       <HBox fx:id="dealerBox" layoutX="375.0" layoutY="42.0" prefHeight="226.0" prefWidth="476.0" />
-      <HBox fx:id="activePlayer" layoutX="824.0" layoutY="406.0" prefHeight="226.0" prefWidth="364.0" />
-      <HBox fx:id="player2" layoutX="37.0" layoutY="408.0" prefHeight="226.0" prefWidth="348.0" />
-      <HBox fx:id="player3" layoutX="445.0" layoutY="408.0" prefHeight="226.0" prefWidth="348.0" />
-      <Label fx:id="handValue" layoutX="970.0" layoutY="652.0" prefHeight="38.0" prefWidth="68.0" text="Label" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+      <HBox fx:id="activePlayer" layoutX="824.0" layoutY="432.0" prefHeight="226.0" prefWidth="364.0" />
+      <HBox fx:id="player2" layoutX="38.0" layoutY="421.0" prefHeight="217.0" prefWidth="348.0" />
+      <HBox fx:id="player3" layoutX="445.0" layoutY="423.0" prefHeight="226.0" prefWidth="348.0" />
+      <Label fx:id="handValue" layoutX="988.0" layoutY="649.0" prefHeight="38.0" prefWidth="68.0" text="Label" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
          <font>
             <Font size="23.0" />
          </font></Label>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="125.0" layoutX="845.0" layoutY="260.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-arc-height: 30; -fx-arc-width: 30;" width="321.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="125.0" layoutX="912.0" layoutY="259.0" stroke="#878787da" strokeType="INSIDE" style="-fx-arc-height: 30; -fx-arc-width: 30;" width="321.0">
          <fill>
-            <LinearGradient endX="0.4427481134429233" endY="0.4770992348212322" startX="0.4465648566038554">
+            <LinearGradient endX="0.4465649218959663" endY="0.3206107070427814" startX="0.4465648566038554">
                <stops>
-                  <Stop color="#e5da0bc7" />
-                  <Stop color="WHITE" offset="0.992380980129363" />
-                  <Stop color="WHITE" offset="1.0" />
+                  <Stop color="#a2a29ec7" />
+                  <Stop color="#d5d5d5" offset="0.9885932664647471" />
+                  <Stop color="#d5d5d5" offset="1.0" />
                </stops>
             </LinearGradient>
          </fill>
       </Rectangle>
-      <Label fx:id="messages" alignment="CENTER" layoutX="850.0" layoutY="272.0" prefHeight="105.0" prefWidth="307.0" text="MESSAGES" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="messages" alignment="CENTER" layoutX="917.0" layoutY="271.0" prefHeight="105.0" prefWidth="307.0" text="MESSAGES" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
    </children>
 </AnchorPane>

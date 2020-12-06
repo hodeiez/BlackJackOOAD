@@ -49,7 +49,7 @@ public class BlackJackLogicModel implements Runnable{
                         cardGraph.faceUpProperty()
                 };
             }
-        });//,dealerHandArr);
+        });//dealerHandArr);
     }
 
 
@@ -122,18 +122,18 @@ public class BlackJackLogicModel implements Runnable{
 
         dealerHandArr.add(cardG);
 
-
+        Platform.runLater(()->setHandValue(String.valueOf(activePlayer.getHandValue())));
     }
 
     private void humanPlayerTurn() {
+        //created a messy logic, need to test graphic implementations
 int checkSize=activePlayer.hand.size();
 while(!hit){
-    System.out.println("human");
+    System.out.print("");//have to do something inside the loop
     if(checkSize < activePlayer.hand.size()){
         hit=true;
-        System.out.println("human");
+        //System.out.println("human");
         break;
-
     }
 }
     /*
@@ -171,8 +171,8 @@ while(!hit){
          //   if (dealer1.getHandValue() <= activePlayer.getHandValue()) {
                 Card card=deck1.drawCard();
                 dealer1.hand.add(card);
-                Platform.runLater(()->dealerHand.add(cardToGraph(card)));
-                dealerHandArr.add(cardToGraph(card));
+               Platform.runLater(()->dealerHand.add(cardToGraph(card)));
+              //  dealerHandArr.add(cardToGraph(card));
 
 
            // }
@@ -219,14 +219,18 @@ public StringProperty handValueProperty() {
         handValueProperty().set(balance);
     }
     public void hitListener(){
-        System.out.println(hit);
+     //   System.out.println(hit);
         hit=true;
-        System.out.println(hit);
+       // System.out.println(hit);
         Card card=deck1.drawCard();
        activePlayer.hand.add(card);
        Platform.runLater(()-> activePlayerHand.add(cardToGraph(card)));
-      //  System.out.println(activePlayer.getHandValue());
         setHandValue(String.valueOf(activePlayer.getHandValue()));
+
+        //for testing
+        System.out.println("dealer array size "+ dealerHandArr.size());
+        System.out.println("dealer obs size "+ dealerHand.size());
+
     }
 
 
