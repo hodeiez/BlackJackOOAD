@@ -41,7 +41,7 @@ public class BlackJackLogicModel implements Runnable{
                         cardGraph.faceUpProperty()
                 };
             }
-        },activePlayerHandArr);
+        });//,activePlayerHandArr);
         dealerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
             @Override
             public Observable[] call(CardGraph cardGraph) {
@@ -49,7 +49,7 @@ public class BlackJackLogicModel implements Runnable{
                         cardGraph.faceUpProperty()
                 };
             }
-        },dealerHandArr);
+        });//,dealerHandArr);
     }
 
 
