@@ -27,7 +27,7 @@ public class BlackJackLogicModel implements Runnable{
     public ObservableList activePlayerHand;
     public ObservableList dealerHand;
     public ArrayList<CardGraph> activePlayerHandArr;
-    public ArrayList<CardGraph> dealerHandArr;
+    public ArrayList<CardGraph> dealerHandArr=new ArrayList<>();
 
     public BlackJackLogicModel(){
         setUpModel();
@@ -153,12 +153,13 @@ while(!hit){
 
     private void dealerTurn() {
        // dealer1.hand.get(1).setFaceUp(true);
-        Platform.runLater(()->((CardGraph)dealerHand.get(0)).changeFace());
+        Platform.runLater(()->((CardGraph)dealerHandArr.get(0)).changeFace());
         while (dealer1.getHandValue() < 21) {
          //   if (dealer1.getHandValue() <= activePlayer.getHandValue()) {
                 Card card=deck1.drawCard();
                 dealer1.hand.add(card);
                 Platform.runLater(()->dealerHand.add(cardToGraph(card)));
+
 
 
            // }
