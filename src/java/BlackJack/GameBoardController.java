@@ -61,7 +61,8 @@ setListener(modelTest.dealerHand,dealerBox);
        // stay.setOnAction(e-> modelTest.activePlayerHandArr.get(0).changeFace());
 
        //testing hit
-        hit.setOnAction(e->modelTest.hitListener());
+        //hit.setOnAction(e->modelTest.hitListener());
+        hit.setOnAction(e->modelTest.hit=true);
 
         end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
 

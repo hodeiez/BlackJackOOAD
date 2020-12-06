@@ -23,16 +23,15 @@ public class BlackJackLogicModel implements Runnable{
     //Graphics side
     private StringProperty handValue = new SimpleStringProperty("");
     public boolean hit=false;
-    public ArrayList<CardGraph> activePlayerHandArr;
+
     public ObservableList activePlayerHand;
-    public ArrayList<CardGraph> dealerHandArr;
     public ObservableList dealerHand;
 
     public BlackJackLogicModel(){
         setUpModel();
     }
     public void setUpModel(){
-        activePlayerHandArr= new ArrayList<>();
+
         activePlayerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
             @Override
             public Observable[] call(CardGraph cardGraph) {
@@ -40,9 +39,7 @@ public class BlackJackLogicModel implements Runnable{
                         cardGraph.faceUpProperty()
                 };
             }
-        },activePlayerHandArr);
-
-        dealerHandArr= new ArrayList<>();
+        });
         dealerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
             @Override
             public Observable[] call(CardGraph cardGraph) {
@@ -50,7 +47,7 @@ public class BlackJackLogicModel implements Runnable{
                         cardGraph.faceUpProperty()
                 };
             }
-        },activePlayerHandArr);
+        });
     }
 
 
@@ -72,11 +69,11 @@ public class BlackJackLogicModel implements Runnable{
     }
 
     private void playRound() {
-     //   while (true) {
+     //  while (true) {
             isItTimeToShuffle();
             dealHands();
-            dealer1.hand.get(0).setFaceUp(true);
-           // humanPlayerTurn();
+          //  dealer1.hand.get(0).setFaceUp(true);
+            humanPlayerTurn();
            // computerPlayerTurn(players.get(1));
             //computerPlayerTurn(players.get(2));
            // dealerTurn();
@@ -102,14 +99,16 @@ public class BlackJackLogicModel implements Runnable{
 
         Card card=deck1.drawCard();
         activePlayer.hand.add(card);
+        Card pCard=card;
         //show card
-        activePlayerHand.add(cardToGraph(card));
+        Platform.runLater(()->activePlayerHand.add(cardToGraph(pCard)));
        // activePlayerHand.add()
         //simplified
 
         card=deck1.drawCard();
         dealer1.hand.add(card);
-        dealerHand.add(cardToGraph(card));
+        Card dCard=card;
+        Platform.runLater(()->dealerHand.add(cardToGraph(dCard)));
 
 
     }
@@ -117,20 +116,22 @@ public class BlackJackLogicModel implements Runnable{
     private void humanPlayerTurn() {
 
        // boolean hit;
-/*
+        System.out.println("humantTurn");
         while (true) {
             System.out.println(activePlayer.getHandValue());
             //Input från användaren Hit/Stay
             if (hit) {
+                System.out.println("hit true");
                 Card card=deck1.drawCard();
                 activePlayer.hand.add(card);
-                activePlayerHand.add(cardToGraph(card));
-
+               Platform.runLater(()-> activePlayerHand.add(cardToGraph(card)));
+                hit=false;
+                break;
             } else break;
 
         }
 
- */
+
     }
 
     private void dealerTurn() {
@@ -180,9 +181,9 @@ public StringProperty handValueProperty() {
     }
     public void hitListener(){
         hit=true;
-        Card card=deck1.drawCard();
-        activePlayer.hand.add(card);
-        activePlayerHand.add(cardToGraph(card));
+    //    Card card=deck1.drawCard();
+      //  activePlayer.hand.add(card);
+   //    Platform.runLater(()-> activePlayerHand.add(cardToGraph(card)));
       //  System.out.println(activePlayer.getHandValue());
         setHandValue(String.valueOf(activePlayer.getHandValue()));
     }
@@ -204,7 +205,8 @@ public CardGraph cardToGraph(Card card){
 
     @Override
     public void run() {
-       Platform.runLater(()->setUpGame());
+       setUpGame();
+       //Platform.runLater(()->setUpGame());
 
     }
 }
