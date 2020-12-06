@@ -76,7 +76,7 @@ public class BlackJackLogicModel implements Runnable{
             humanPlayerTurn();
            // computerPlayerTurn(players.get(1));
             //computerPlayerTurn(players.get(2));
-           // dealerTurn();
+            dealerTurn();
 //            isGameOver();
 
      //  }
@@ -114,7 +114,17 @@ public class BlackJackLogicModel implements Runnable{
     }
 
     private void humanPlayerTurn() {
+int checkSize=activePlayer.hand.size();
+while(!hit){
+    System.out.println("human");
+    if(checkSize < activePlayer.hand.size()){
+        hit=true;
+        System.out.println("human");
+        break;
 
+    }
+}
+    /*
        // boolean hit;
         System.out.println("humantTurn");
         while (true) {
@@ -131,15 +141,23 @@ public class BlackJackLogicModel implements Runnable{
 
         }
 
+     */
+
 
     }
 
     private void dealerTurn() {
-        dealer1.hand.get(1).setFaceUp(true);
-        while (dealer1.getHandValue() < 21) {
-            if (dealer1.getHandValue() <= activePlayer.getHandValue()) {
-                dealer1.hand.add(deck1.drawCard());
-            }
+       // dealer1.hand.get(1).setFaceUp(true);
+        Platform.runLater(()->((CardGraph)dealerHand.get(0)).changeFace());
+        while (dealer1.getHandValue() < 201) {
+         //   if (dealer1.getHandValue() <= activePlayer.getHandValue()) {
+                Card card=deck1.drawCard();
+                dealer1.hand.add(card);
+                Platform.runLater(()->dealerHand.add(cardToGraph(card)));
+
+
+           // }
+            /*
             if (dealer1.getHandValue() > 21) {
                 System.out.println("Dealern är bust! Du vinner.");
 
@@ -153,6 +171,8 @@ public class BlackJackLogicModel implements Runnable{
                 System.out.println("Du vinner!");
 
             }
+
+             */
 
 
         }
@@ -180,10 +200,12 @@ public StringProperty handValueProperty() {
         handValueProperty().set(balance);
     }
     public void hitListener(){
+        System.out.println(hit);
         hit=true;
-    //    Card card=deck1.drawCard();
-      //  activePlayer.hand.add(card);
-   //    Platform.runLater(()-> activePlayerHand.add(cardToGraph(card)));
+        System.out.println(hit);
+        Card card=deck1.drawCard();
+       activePlayer.hand.add(card);
+       Platform.runLater(()-> activePlayerHand.add(cardToGraph(card)));
       //  System.out.println(activePlayer.getHandValue());
         setHandValue(String.valueOf(activePlayer.getHandValue()));
     }
