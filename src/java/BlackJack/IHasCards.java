@@ -60,6 +60,11 @@ public class IHasCards {
 //        System.out.println("Totalt värde: " + total); // Skriver ut handens totala värde.
         return total;
     }
+    public void clearHand(){
+        for (int i = 0; i < hand.size(); i++) {
+            hand.remove(0);
+        }
+    }
 
 
 }
