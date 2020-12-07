@@ -8,3 +8,6 @@
 .buttons:pressed{
     -fx-background-color:linear-gradient(to top, #c86814, #edf303);;
 }
+.greenGradient{
+    -fx-background-color: radial-gradient(focus-angle 360deg,focus-distance 10%,center 50%50%,radius 30%, #239125, #055b0a);
+}

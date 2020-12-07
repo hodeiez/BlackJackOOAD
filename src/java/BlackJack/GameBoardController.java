@@ -1,30 +1,15 @@
 package BlackJack;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.FXCollections;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-
-import java.util.ArrayList;
 
 /**
  * Created by Hodei Eceiza
@@ -42,53 +27,65 @@ public class GameBoardController {
     public HBox dealerBox;
     public HBox activePlayer;
     public HBox player2;
+    public HBox player3;
+    public Label handValue;
     @FXML
     private AnchorPane gameBoardPane;
-    private ModelTest modelTest;
-    private Rectangle rect=new Rectangle();
-    private GridPane gp;
-public GameBoardController(ModelTest modelTest){
-    this.modelTest=modelTest;
-}
+  //  private ModelTest modelTest;
+   private BlackJackLogicModel modelTest;
+    private Rectangle rect = new Rectangle();
+/*
+    public GameBoardController(ModelTest modelTest) {
+        this.modelTest = modelTest;
+    }
+
+ */
+     public GameBoardController(BlackJackLogicModel modelTest) {
+
+        this.modelTest = modelTest;
+    }
+
     public void initialize() {
-
-       balance.textProperty().bind(modelTest.balanceProperty());
-        stay.setOnAction(e->modelTest.setBalance("NEW BALANCE"));
-        rect.setWidth(80);
-        rect.setHeight(130);
-        rect.setFill(Color.BLACK);
-        rect.fillProperty().bind(modelTest.cardProperty());
-        //rect.setWidth(80);
-       // rect.setHeight(130);
-        dealerBox.getChildren().add(rect);
+setListener(modelTest.activePlayerHand,activePlayer);
+setListener(modelTest.dealerHand,dealerBox);
+//Listens changes of the observableList
 
 
+//balance its binded, should do a double bind? or call method from logic to change the balance?
+       // balance.textProperty().bind(modelTest.balanceProperty());
+        handValue.textProperty().bind(modelTest.handValueProperty());
 
-//NOIZE DOWN HERE!!!
+
+        //using buttons for test
+        //test for changeFaceUp
+       // stay.setOnAction(e-> modelTest.activePlayerHandArr.get(0).changeFace());
+
+       //testing hit
+        //hit.setOnAction(e->modelTest.hitListener());
+        hit.setOnAction(e->modelTest.hitListener());
+
+        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
 
 
-        HandGraph hand=new HandGraph();
-       // HBox sp=new HBox();
-      ListView sp=new ListView();
-       // GridPane sp=new GridPane();
-        dealerBox.setStyle("-fx-background-color: green");
-        hand.observableList.addListener(new ListChangeListener(){
 
-            @Override
-            public void onChanged(Change change) {
-                System.out.println("changed");
+    }
+    public void setListener(ObservableList<CardGraph> observable, HBox playerBox){
+        observable.addListener((ListChangeListener<CardGraph>) change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    CardGraph c=change.getAddedSubList().get(0);
+                    if(observable.size()>1)
+                        c.setTranslateX(-(50*(observable.size()-1)));//this has to be simplified
+                    playerBox.getChildren().add(c);
+
+                } else if (change.wasRemoved()) {
+                    playerBox.getChildren().clear();
+                }
+                else if(change.wasUpdated()) {
+                    System.out.println(change.getList().toString());
+                    ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
+                }
             }
         });
-
-       dealerBox.getChildren().addAll(hand.observableList);
-       // dealerBox.getChildren().add(sp); //<-
-       //sp.getChildren().add(hand.observableList);
-        sp.setItems(hand.observableList);
-       rules.setOnAction(e->hand.removeFromObser());
-        end.setOnAction(e->hand.observableList.add(new CardGraph("clubs","7",true)));
-
-
-        //gameBoardPane.getChildren().add(dealerBox);
-
     }
 }

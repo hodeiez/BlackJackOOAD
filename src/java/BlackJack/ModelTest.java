@@ -1,12 +1,16 @@
 package BlackJack;
 
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Rectangle;
+import javafx.beans.Observable;
+import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.util.Callback;
+
+import java.util.ArrayList;
+import java.util.Random;
+
+import static java.lang.Thread.sleep;
 
 /**
  * Created by Hodei Eceiza
@@ -18,25 +22,61 @@ import javafx.scene.shape.Rectangle;
 public class ModelTest implements Runnable {
     private StringProperty balance = new SimpleStringProperty("blank");
 
-    private Rectangle rect;
 
-    private ObjectProperty card = new SimpleObjectProperty(rect);
-    String bet;// still have to set
+    public ArrayList<CardGraph> activePlayerHandArr;
+    public ObservableList activePlayerHand;
+    public ArrayList<CardGraph> dealerHandArr;
+    public ObservableList dealerHand;
+    private String bet;
+
+    public ObservableList player2Hand = FXCollections.observableArrayList(new ArrayList<CardGraph>());
 
     public ModelTest() {
-        rect = new Rectangle(80, 130);
-        rect.setFill(new CardGraph("spades", "ace", true).getImgPattern());
+        setUpModel();
+    }
+    public void setUpModel(){
+        activePlayerHandArr= new ArrayList<>();
+        activePlayerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
+            @Override
+            public Observable[] call(CardGraph cardGraph) {
+                return new Observable[]{
+                        cardGraph.faceUpProperty()
+                };
+            }
+        },activePlayerHandArr);
+
+        dealerHandArr= new ArrayList<>();
+        dealerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
+            @Override
+            public Observable[] call(CardGraph cardGraph) {
+                return new Observable[]{
+                        cardGraph.faceUpProperty()
+                };
+            }
+        },activePlayerHandArr);
+    }
+    public void addCardActPlayer(CardGraph card) {
+        activePlayerHand.add(card);
+    }
+    public void addCardActDealer(CardGraph card) {
+        dealerHand.add(card);
     }
 
-
-    public ObjectProperty cardProperty() {
-        return card;
+    public void addCardPlayer2(CardGraph card){
+        player2Hand.add(card);
     }
-
-    public void setCard(ImagePattern card) {
-        cardProperty().set(card);
+    public void addCardDealer(CardGraph card){
+        dealerHand.add(card);
     }
-
+    public void clearDealerHand(){
+        dealerHand.clear();
+    }
+    public void clearActPlayerHand(){
+        activePlayerHand.clear();
+    }
+    public void clearPlayer2Hand(){
+        player2Hand.clear();
+    }
 
     public StringProperty balanceProperty() {
         return balance;
@@ -52,24 +92,23 @@ public class ModelTest implements Runnable {
 
     @Override
     public void run() {
-       final int[] i = {0};
         {
             while (true) {
 
-                Platform.runLater(() ->
-//                        setBalance("new Balance"));
-                        setBalance(String.valueOf(i[0]++)));
-                        System.out.println(i);
-                         setCard(new CardGraph("spades", String.valueOf(i[0] +2), true).getImgPattern());
+                Platform.runLater(() -> {
+                    Random rnd =new Random();
 
-
+                    addCardActPlayer(new CardGraph("spades", String.valueOf(rnd.nextInt(8)+2), true));
+                    addCardActDealer(new CardGraph("diamonds", String.valueOf(rnd.nextInt(8)+2), true));
+                });
 
 
                 try {
-                    Thread.sleep(500);
+                    sleep(1500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
             }
         }
 
