@@ -23,7 +23,8 @@ public class GameBoardView extends Application {
     @Override
     public void start(Stage stage) throws Exception {
      //  ModelTest myTest=new ModelTest(); //here logic model runs
-       BlackJackLogicModel myTest=new BlackJackLogicModel(); //here logic model runs
+//       BlackJackLogicModel myTest=new BlackJackLogicModel(); //here logic model runs
+        BlackJackLogic myTest=new BlackJackLogic();
         Thread th=new Thread(myTest);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameBoard.fxml"));
         loader.setController(new GameBoardController(myTest));

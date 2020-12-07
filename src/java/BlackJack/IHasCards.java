@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by Lukas Aronsson
@@ -14,9 +16,10 @@ import java.util.ArrayList;
  **/
 public class IHasCards {
 
+
   //
-  //  ArrayList<Card> hand = new ArrayList<>();
-    ObservableList<Card> hand = FXCollections.observableArrayList();
+    ArrayList<Card> hand = new ArrayList<>();
+    ObservableList<Card> graphicHand = FXCollections.observableArrayList(hand);
 
 
     /**
@@ -52,16 +55,15 @@ public class IHasCards {
                 }
             }
         }
-        for (int i = 0; i < hand.size(); i++) { //Skriver ut korten till konsolen.
-            System.out.println(hand.get(i));
-        }
-        System.out.println("Totalt värde: " + total); // Skriver ut handens totala värde.
+//        for (int i = 0; i < hand.size(); i++) { //Skriver ut korten till konsolen.
+//            System.out.println(hand.get(i));
+//        }
+//        System.out.println("Totalt värde: " + total); // Skriver ut handens totala värde.
         return total;
     }
     public void clearHand(){
-        for (int i = 0; i < hand.size(); i++) {
-            hand.remove(0);
-        }
+         hand.clear();
+
     }
 
 

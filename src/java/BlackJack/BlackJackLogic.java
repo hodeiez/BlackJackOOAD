@@ -4,18 +4,21 @@ package BlackJack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-public class BlackJackLogic {
+public class BlackJackLogic implements Runnable{
     private List<Player> players = new ArrayList<>();
     private Dealer dealer1 = new Dealer();
     private Deck deck1 = new Deck(1);
     private Player activePlayer = new Player();
     boolean humanBust;
+    public static BlockingQueue<Integer> actionQueue = new LinkedBlockingQueue();
 
-    private void setUpGame() {
+    private void setUpGame() throws InterruptedException {
         players.add(activePlayer);
-        players.add(new ComputerPlayer());
-        players.add(new ComputerPlayer());
+//        players.add(new ComputerPlayer());
+//        players.add(new ComputerPlayer());
         setStartingBalance(1000);
         playRound();
 
@@ -28,20 +31,20 @@ public class BlackJackLogic {
         }
     }
 
-    private void playRound() {
+    private void playRound() throws InterruptedException {
         while (true) {
             isItTimeToShuffle();
             dealHands();
             dealer1.hand.get(0).setFaceUp(true);
             humanPlayerTurn();
-            computerPlayerTurn(players.get(1));
-            computerPlayerTurn(players.get(2));
+//            computerPlayerTurn(players.get(1));
+//            computerPlayerTurn(players.get(2));
             dealerTurn();
 //            isGameOver();
 
         }
     }
-    public void playRoundConsoleVersion() {
+    public void playRoundConsoleVersion() throws InterruptedException {
 
         Deck deck1 = new Deck(1);
         players.add(activePlayer);
@@ -90,10 +93,10 @@ public class BlackJackLogic {
 
     }
 
-    private void humanPlayerTurn() {
+    private void humanPlayerTurn() throws InterruptedException {
 
         int choice = 0;
-        Scanner scan = new Scanner(System.in);
+
 
         while (true) {
             boolean hit = false;
@@ -104,10 +107,11 @@ public class BlackJackLogic {
             System.out.println("Du drog: " +activePlayer.hand.get(activePlayer.hand.size()-2));
             System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
             System.out.println("Din hand är värd: "+activePlayer.getHandValue());
-            choice=Integer.parseInt(scan.nextLine());//Input från användaren Hit/Stay
+            choice=(int)BlackJackLogic.actionQueue.take();
             System.out.println("Val: "+choice);
             if (choice==1){
                 hit = true;
+                choice=0;
             }
             if (hit) {
                 activePlayer.hand.add(deck1.drawCard());
@@ -123,6 +127,7 @@ public class BlackJackLogic {
     private void dealerTurn() {
         if (humanBust){
             System.out.println("Din hand är värd: "+activePlayer.getHandValue()+"Du är bust! Dealern vinner!");
+            humanBust=false;
         }else{
         boolean dealerWin;
 //        dealer1.hand.get(1).setFaceUp(true);
@@ -153,6 +158,7 @@ public class BlackJackLogic {
                 System.out.println("Du vinner!");
 
             }}
+        System.out.println("RENSA");
             activePlayer.clearHand();
             dealer1.clearHand();
 
@@ -171,5 +177,12 @@ public class BlackJackLogic {
     }
 
 
-
+    @Override
+    public void run() {
+        try {
+            setUpGame();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }
