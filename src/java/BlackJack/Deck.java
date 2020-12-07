@@ -1,6 +1,5 @@
 package BlackJack;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +14,7 @@ public class Deck {
         for (int i = 0; i < numberOfCompleteDecks; i++) {
             generateDeck();
         }
+        shuffle();
     }
 
     private void generateDeck() {
@@ -24,13 +24,10 @@ public class Deck {
                 cardDeck.add(card);
             }
         }
-        shuffle();
     }
 
     public Card drawCard() {
-        Card temp = cardDeck.get(0);
-        cardDeck.remove(0);
-        return temp;
+        return cardDeck.remove(0);
     }
 
     public void shuffle() {
