@@ -12,13 +12,16 @@ import javafx.util.Callback;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-public class BlackJackLogicModel implements Runnable{
+public class BlackJackLogicModel  implements Runnable{
     private List<Player> players = new ArrayList<>();
     private Dealer dealer1 = new Dealer();
     private Deck deck1 = new Deck(6); //lugnt om deck1 är tom här, isåfall så fixas det ihop ny lek i början av första rundan
     private Player activePlayer = new Player();
     boolean humanBust = false;
+//    public static BlockingQueue<String> test1 = new LinkedBlockingQueue();
 
 
 
@@ -57,7 +60,7 @@ public class BlackJackLogicModel implements Runnable{
 
 
     //the original
-    private void setUpGame() {
+    private void setUpGame() throws InterruptedException {
         players.add(activePlayer);
       //  players.add(new Player());
        // players.add(new Player());
@@ -74,7 +77,7 @@ public class BlackJackLogicModel implements Runnable{
         }
     }
 
-    private void playRound() {
+    private void playRound() throws InterruptedException {
      //  while (true) {
             isItTimeToShuffle();
             dealHands();
@@ -128,7 +131,7 @@ public class BlackJackLogicModel implements Runnable{
         Platform.runLater(()->setHandValue(String.valueOf(activePlayer.getHandValue())));
     }
 
-    private void humanPlayerTurn() {
+    private void humanPlayerTurn() throws InterruptedException {
         int choice = 0;
 //        Scanner scan = new Scanner(System.in);
 
@@ -138,12 +141,12 @@ public class BlackJackLogicModel implements Runnable{
                 humanBust = true;
                 break;
             }
-            System.out.println("Du drog: " +activePlayer.hand.get(activePlayer.hand.size()-2));
-            System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
+//            System.out.println("Du drog: " +activePlayer.hand.get(activePlayer.hand.size()-2));
+//            System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
             System.out.println("Din hand är värd: "+activePlayer.getHandValue());
 //            choice=Integer.parseInt(scan.nextLine());//Input från användaren Hit/Stay
 
-
+//            choice = Integer.parseInt(test1.take());
             if (choice==1){
                 hit = true;
             }
@@ -160,7 +163,7 @@ public class BlackJackLogicModel implements Runnable{
 
 
 
-    }
+
 
     private void dealerTurn() {
        // dealer1.hand.get(1).setFaceUp(true);
@@ -254,8 +257,13 @@ public CardGraph cardToGraph(Card card){
 
     @Override
     public void run() {
-       setUpGame();
-       //Platform.runLater(()->setUpGame());
+        try {
+            setUpGame();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //Platform.runLater(()->setUpGame());
 
     }
+
 }

@@ -11,6 +11,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+
 /**
  * Created by Hodei Eceiza
  * Date: 11/30/2020
@@ -19,6 +22,7 @@ import javafx.scene.shape.Rectangle;
  * Copyright: MIT
  */
 public class GameBoardController {
+
     public Button hit;
     public Button stay;
     public Button rules;
@@ -32,7 +36,7 @@ public class GameBoardController {
     @FXML
     private AnchorPane gameBoardPane;
   //  private ModelTest modelTest;
-   private BlackJackLogicModel modelTest;
+   private BlackJackLogic modelTest;
     private Rectangle rect = new Rectangle();
 /*
     public GameBoardController(ModelTest modelTest) {
@@ -40,20 +44,21 @@ public class GameBoardController {
     }
 
  */
-     public GameBoardController(BlackJackLogicModel modelTest) {
+     public GameBoardController(BlackJackLogic modelTest) {
 
         this.modelTest = modelTest;
     }
 
+
     public void initialize() {
-setListener(modelTest.activePlayerHand,activePlayer);
-setListener(modelTest.dealerHand,dealerBox);
+//setListener(modelTest.activePlayerHand,activePlayer);
+//setListener(modelTest.dealerHand,dealerBox);
 //Listens changes of the observableList
 
 
 //balance its binded, should do a double bind? or call method from logic to change the balance?
        // balance.textProperty().bind(modelTest.balanceProperty());
-        handValue.textProperty().bind(modelTest.handValueProperty());
+//        handValue.textProperty().bind(modelTest.handValueProperty());
 
 
         //using buttons for test
@@ -62,11 +67,9 @@ setListener(modelTest.dealerHand,dealerBox);
 
        //testing hit
         //hit.setOnAction(e->modelTest.hitListener());
-        hit.setOnAction(e->modelTest.hitListener());
-
+        hit.setOnAction(e->BlackJackLogic.actionQueue.add(1));
         end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
-
-
+        stay.setOnAction(e->BlackJackLogic.actionQueue.add(0));
 
     }
     public void setListener(ObservableList<CardGraph> observable, HBox playerBox){
@@ -88,4 +91,6 @@ setListener(modelTest.dealerHand,dealerBox);
             }
         });
     }
+
+
 }
