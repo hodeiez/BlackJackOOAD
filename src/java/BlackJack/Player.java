@@ -7,7 +7,7 @@ package BlackJack;
  * Project: BlackJackOOAD
  * Copyright: MIT
  **/
-public class Player implements IHasCards{
+public class Player extends IHasCards{
     private String name = "Player"; //the players name
     private int balance = 0; //the amount of balance the player has currently
     private int currentBet = 0; //the amount of balance the player have decided to bet this round

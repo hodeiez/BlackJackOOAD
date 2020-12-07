@@ -82,6 +82,7 @@ setListener(modelTest.dealerHand,dealerBox);
                     playerBox.getChildren().clear();
                 }
                 else if(change.wasUpdated()) {
+                    System.out.println(change.getList().toString());
                     ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
                 }
             }

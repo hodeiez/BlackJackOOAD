@@ -33,6 +33,7 @@ public class BlackJackLogicModel implements Runnable{
         setUpModel();
     }
     public void setUpModel(){
+        activePlayerHand=FXCollections.observableArrayList(activePlayer.hand);
 
         activePlayerHand = FXCollections.observableArrayList(new Callback<CardGraph, Observable[]>() {
             @Override

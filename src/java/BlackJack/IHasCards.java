@@ -1,5 +1,8 @@
 package BlackJack;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 /**
@@ -9,9 +12,11 @@ import java.util.ArrayList;
  * Project: BlackJackOOAD
  * Copyright: MIT
  **/
-public interface IHasCards {
+public class IHasCards {
 
-    ArrayList<Card> hand = new ArrayList<>();
+  //
+  //  ArrayList<Card> hand = new ArrayList<>();
+    ObservableList<Card> hand = FXCollections.observableArrayList();
 
 
     /**
@@ -23,7 +28,7 @@ public interface IHasCards {
     //Den här metoden räknar ut värdet av en spelares hand. Den tar till vara på om ifall en spelare har Ess
     //Vanliga kort har värde 1-13 ess har värde 0, eller -1 beroende på om en vill att det ska vara värt
     //11 eller 1 poäng.
-    default int getHandValue() {
+     int getHandValue() {
         int lenght = hand.size();
         int total = 0;
         for (int i = 0; i < lenght; i++) {
