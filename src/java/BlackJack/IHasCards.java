@@ -1,5 +1,8 @@
 package BlackJack;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 /**
@@ -10,7 +13,7 @@ import java.util.ArrayList;
  * Copyright: MIT
  **/
 public interface IHasCards {
-
+//ObservableList hand = new FXCollections()
     ArrayList<Card> hand = new ArrayList<>();
 
 
