@@ -51,8 +51,9 @@ public class GameBoardController {
 
 
     public void initialize() {
-//setListener(modelTest.activePlayerHand,activePlayer);
-//setListener(modelTest.dealerHand,dealerBox);
+setListener(modelTest.activePlayer.hand,activePlayer);
+
+setListener(modelTest.dealer1.hand,dealerBox);
 //Listens changes of the observableList
 
 
@@ -72,11 +73,12 @@ public class GameBoardController {
         stay.setOnAction(e->BlackJackLogic.actionQueue.add(0));
 
     }
-    public void setListener(ObservableList<CardGraph> observable, HBox playerBox){
-        observable.addListener((ListChangeListener<CardGraph>) change -> {
+    public void setListener(ObservableList<Card> observable, HBox playerBox){
+        observable.addListener((ListChangeListener<Card>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
-                    CardGraph c=change.getAddedSubList().get(0);
+                    CardGraph c= cardToGraph(change.getAddedSubList().get(0));
+                  //  CardGraph c=change.getAddedSubList().get(0);
                     if(observable.size()>1)
                         c.setTranslateX(-(50*(observable.size()-1)));//this has to be simplified
                     playerBox.getChildren().add(c);
@@ -84,13 +86,28 @@ public class GameBoardController {
                 } else if (change.wasRemoved()) {
                     playerBox.getChildren().clear();
                 }
+
+                /*
                 else if(change.wasUpdated()) {
                     System.out.println(change.getList().toString());
                     ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
                 }
+
+                 */
             }
         });
     }
 
-
+    public CardGraph cardToGraph(Card card){
+        String rank=String.valueOf(card.getRank());
+        String suit=String.valueOf(card.getSuit()).toLowerCase();
+        switch (rank){
+            case "1"->rank="ace";
+            case "11"-> rank="jack";
+            case "12"->rank="queen";
+            case "13"->rank="king";
+            default -> rank=rank;
+        }
+        return new CardGraph(suit,rank,true);
+    }
 }
