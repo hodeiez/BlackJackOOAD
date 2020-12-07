@@ -85,18 +85,22 @@ public class GameBoardController {
                     if (observable.size() > 1)
                         c.setTranslateX(-(50 * (observable.size() - 1)));//this has to be simplified
                     playerBox.getChildren().add(c);
+                    if(!c.getFaceUp())
+                        ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
 
                 } else if (change.wasRemoved()) {
                     playerBox.getChildren().clear();
                 }
 
-                /*
                 else if(change.wasUpdated()) {
                     System.out.println(change.getList().toString());
                     ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
                 }
 
-                 */
+
+
+
+
             }
         });
     }
@@ -114,6 +118,7 @@ public class GameBoardController {
     public CardGraph cardToGraph(Card card) {
         String rank = String.valueOf(card.getRank());
         String suit = String.valueOf(card.getSuit()).toLowerCase();
+        boolean faceUp=card.isFaceUp();
         switch (rank) {
             case "0" -> rank = "ace";
             case "1" -> rank = "ace";
@@ -122,6 +127,6 @@ public class GameBoardController {
             case "13" -> rank = "king";
             default -> rank = rank;
         }
-        return new CardGraph(suit, rank, true);
+        return new CardGraph(suit, rank, (faceUp));
     }
 }

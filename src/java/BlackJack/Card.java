@@ -9,6 +9,7 @@ public class Card {
     public Card(Suit suit, int rank) {
         this.rank = rank;
         this.suit = suit;
+        faceUp=true;
     }
 
     public Suit getSuit() {

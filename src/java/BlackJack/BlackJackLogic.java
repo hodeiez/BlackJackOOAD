@@ -81,8 +81,10 @@ public class BlackJackLogic implements Runnable {
             p.addCard(deck1.drawCard());
             System.out.println("in BlackJackLogic / dealHands: Player: " + p.getName() + " HandSize: " + p.hand.size());
         }
-        dealer1.addCard(deck1.drawCard());
-        deck1.cardDeck.remove(0);
+        Card faceDown=deck1.drawCard();
+        faceDown.setFaceUp(false);
+        dealer1.addCard(faceDown);
+       // deck1.cardDeck.remove(0);
     }
 
     private void humanPlayerTurn() throws InterruptedException {
@@ -111,6 +113,8 @@ public class BlackJackLogic implements Runnable {
     }
 
     private void dealerTurn() throws InterruptedException {
+        dealer1.hand.get(0).setFaceUp(false);
+
         Thread.sleep(1000);
         dealer1.addCard((deck1.drawCard()));
         Thread.sleep(3);
