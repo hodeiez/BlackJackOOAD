@@ -1,6 +1,8 @@
 package BlackJack;
 
 import javafx.application.Platform;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,7 +39,7 @@ public class GameBoardController {
     private AnchorPane gameBoardPane;
   //  private ModelTest modelTest;
    private BlackJackLogic modelTest;
-    private Rectangle rect = new Rectangle();
+    IntegerProperty choice=new SimpleIntegerProperty();
 /*
     public GameBoardController(ModelTest modelTest) {
         this.modelTest = modelTest;
@@ -58,9 +60,10 @@ setListener(modelTest.dealer1.hand,dealerBox);
 
 
 //balance its binded, should do a double bind? or call method from logic to change the balance?
-       // balance.textProperty().bind(modelTest.balanceProperty());
+        //balance.textProperty().bind(modelTest.balanceProperty);
+        handValue.textProperty().bind(modelTest.activePlayerHandValue);
 //        handValue.textProperty().bind(modelTest.handValueProperty());
-
+choice.bindBidirectional(modelTest.choice);
 
         //using buttons for test
         //test for changeFaceUp
@@ -68,9 +71,11 @@ setListener(modelTest.dealer1.hand,dealerBox);
 
        //testing hit
         //hit.setOnAction(e->modelTest.hitListener());
-        hit.setOnAction(e->BlackJackLogic.actionQueue.add(1));
-        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
-        stay.setOnAction(e->BlackJackLogic.actionQueue.add(0));
+      //  hit.setOnAction(e->BlackJackLogic.actionQueue.add(1));
+        hit.setOnAction(e->choice.set(1));
+     //   end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
+        //stay.setOnAction(e->BlackJackLogic.actionQueue.add(0));
+        stay.setOnAction(e->choice.set(0));
 
     }
     public void setListener(ObservableList<Card> observable, HBox playerBox){

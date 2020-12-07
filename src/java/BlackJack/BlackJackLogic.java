@@ -1,9 +1,13 @@
 package BlackJack;
 
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -13,13 +17,18 @@ public class BlackJackLogic implements Runnable{
     private Deck deck1 = new Deck(1);
      Player activePlayer = new Player();
     boolean humanBust;
-    public static BlockingQueue<Integer> actionQueue = new LinkedBlockingQueue();
+
+
+    //public static BlockingQueue<Integer> actionQueue = new LinkedBlockingQueue();
+    IntegerProperty choice=new SimpleIntegerProperty();
+    StringProperty activePlayerHandValue=new SimpleStringProperty();
+
 
     private void setUpGame() throws InterruptedException {
         players.add(activePlayer);
 //        players.add(new ComputerPlayer());
 //        players.add(new ComputerPlayer());
-        setStartingBalance(1000);
+      //  setStartingBalance(1000);
         playRound();
 
     }
@@ -35,6 +44,7 @@ public class BlackJackLogic implements Runnable{
         while (true) {
             isItTimeToShuffle();
             dealHands();
+
             //dealer1.hand.get(0).setFaceUp(true);
             humanPlayerTurn();
 //            computerPlayerTurn(players.get(1));
@@ -86,8 +96,12 @@ public class BlackJackLogic implements Runnable{
         }
 
         dealer1.addCard(deck1.drawCard());
+        Card faceDown=deck1.drawCard();
+        faceDown.setFaceUp(false);
+        System.out.println();
+        dealer1.addCard(faceDown);
      //   System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));
-        deck1.cardDeck.remove(0);
+     //   deck1.cardDeck.remove(0);
        // System.out.println((activePlayer.hand==dealer1.hand));
        // System.out.println(activePlayer.hand.equals(dealer1.hand));
 
@@ -95,11 +109,11 @@ public class BlackJackLogic implements Runnable{
 
     private void humanPlayerTurn() throws InterruptedException {
 
-        int choice = 0;
+       // int choice = 0;
 
-
+        activePlayerHandValue.setValue(String.valueOf(activePlayer.getHandValue()));
         while (true) {
-            boolean hit = false;
+          //  boolean hit = false;
             if(activePlayer.getHandValue()>21){
                 humanBust = true;
                 break;
@@ -107,12 +121,16 @@ public class BlackJackLogic implements Runnable{
          //   System.out.println("Du drog: " +activePlayer.hand.get(activePlayer.hand.size()-2));
            // System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
            // System.out.println("Din hand är värd: "+activePlayer.getHandValue());
-            choice=(int)BlackJackLogic.actionQueue.take();
-            System.out.println("Val: "+choice);
-            if (choice==1){
-                hit = true;
-                choice=0;
+       //     choice= BlackJackLogic.actionQueue.take();
+           // System.out.println("Val: "+choice);
+            if (choice.getValue()==1){
+             //   hit = true;
+                choice.set(0);
+                activePlayer.addCard(deck1.drawCard());
+                break;
             }
+
+            /*
             if (hit) {
                 activePlayer.addCard(deck1.drawCard());
          //       System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
@@ -121,7 +139,10 @@ public class BlackJackLogic implements Runnable{
                 break;
                 }
 
+             */
+
         }
+
     }
 
     private void dealerTurn() {
@@ -134,6 +155,11 @@ public class BlackJackLogic implements Runnable{
        // System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));
         while (dealer1.getHandValue() < 21&&dealer1.getHandValue() < activePlayer.getHandValue()) {
             dealer1.addCard(deck1.drawCard());
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             //   System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));}
         }
             if (dealer1.getHandValue() > 21) {

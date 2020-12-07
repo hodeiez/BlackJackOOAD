@@ -52,7 +52,8 @@ public class IHasCards {
                 for (int j = 0; j < lenght; j++) {
                     Card temp2 = (Card) hand.get(j);
                     if (temp2.getRank() == 1) {
-                        hand.set(j, new Card(temp2.getSuit(), 0));
+                        int finalJ = j;
+                        Platform.runLater(()-> hand.set(finalJ, new Card(temp2.getSuit(), 0)));
                         i = -1;
                         total = 0;
                         j = lenght;
