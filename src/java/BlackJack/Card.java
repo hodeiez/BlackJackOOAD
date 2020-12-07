@@ -1,15 +1,19 @@
 package BlackJack;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Card {
 
     private final Suit suit;
     private final int rank;
     private boolean faceUp;
-
+    protected BooleanProperty isFaceUpProperty;
     public Card(Suit suit, int rank) {
         this.rank = rank;
         this.suit = suit;
         faceUp=true;
+        isFaceUpProperty=new SimpleBooleanProperty(false);
     }
 
     public Suit getSuit() {
@@ -25,8 +29,13 @@ public class Card {
     }
 
     public void setFaceUp(boolean faceUp) {
-        this.faceUp = faceUp;
+        isFaceUpProperty().set(faceUp);this.faceUp = faceUp;
     }
+    public BooleanProperty isFaceUpProperty(){
+        return isFaceUpProperty;
+    }
+    public boolean getFaceUpProp(){return this.isFaceUpProperty().get();}
+
 
     public enum Suit {
         HEARTS,

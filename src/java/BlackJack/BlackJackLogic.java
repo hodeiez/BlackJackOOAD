@@ -113,7 +113,7 @@ public class BlackJackLogic implements Runnable {
     }
 
     private void dealerTurn() throws InterruptedException {
-        dealer1.hand.get(0).setFaceUp(false);
+        dealer1.hand.get(0).setFaceUp(true);
 
         Thread.sleep(1000);
         dealer1.addCard((deck1.drawCard()));

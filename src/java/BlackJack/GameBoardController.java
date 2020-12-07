@@ -85,8 +85,8 @@ public class GameBoardController {
                     if (observable.size() > 1)
                         c.setTranslateX(-(50 * (observable.size() - 1)));//this has to be simplified
                     playerBox.getChildren().add(c);
-                    if(!c.getFaceUp())
-                        ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
+                   if(!c.getFaceUp())
+                       ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
 
                 } else if (change.wasRemoved()) {
                     playerBox.getChildren().clear();

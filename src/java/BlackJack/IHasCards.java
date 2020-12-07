@@ -1,8 +1,10 @@
 package BlackJack;
 
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +20,12 @@ import java.util.concurrent.LinkedBlockingQueue;
  **/
 public class IHasCards {
 
-    ObservableList<Card> hand = FXCollections.observableArrayList();
+    ObservableList<Card> hand = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {
+        @Override
+        public Observable[] call(Card card) {
+            return new Observable[]{ card.isFaceUpProperty};
+        }
+    });
 
 
     /**

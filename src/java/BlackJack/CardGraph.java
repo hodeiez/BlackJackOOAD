@@ -40,9 +40,10 @@ public class CardGraph extends Rectangle {
     public void setFaceUp(boolean faceUp){
         this.faceUpProperty().set(faceUp);
     }
-   public boolean getFaceUp(){return this.faceUpProperty().get();}
+   public boolean getFaceUpProp(){return this.faceUpProperty().get();}
+   public boolean getFaceUp(){return faceUp;}
     public void changeFace(){
-        this.setFill((getFaceUp()) ? cardImage : backCard);
+        this.setFill((!getFaceUp()) ? cardImage : backCard);
     }
 
 
