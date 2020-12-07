@@ -9,9 +9,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class BlackJackLogic implements Runnable{
     private List<Player> players = new ArrayList<>();
-    private Dealer dealer1 = new Dealer();
+     Dealer dealer1 = new Dealer();
     private Deck deck1 = new Deck(1);
-    private Player activePlayer = new Player();
+     Player activePlayer = new Player();
     boolean humanBust;
     public static BlockingQueue<Integer> actionQueue = new LinkedBlockingQueue();
 
@@ -35,7 +35,7 @@ public class BlackJackLogic implements Runnable{
         while (true) {
             isItTimeToShuffle();
             dealHands();
-            dealer1.hand.get(0).setFaceUp(true);
+            //dealer1.hand.get(0).setFaceUp(true);
             humanPlayerTurn();
 //            computerPlayerTurn(players.get(1));
 //            computerPlayerTurn(players.get(2));
@@ -80,16 +80,16 @@ public class BlackJackLogic implements Runnable{
         Deck deck1 = new Deck(1);
         for (Player p : players) {
             System.out.println(p.hand.size());
-            p.hand.add(deck1.drawCard());
-            p.hand.add(deck1.drawCard());
+            p.addCard(deck1.drawCard());
+            p.addCard(deck1.drawCard());
 
         }
 
-        dealer1.hand.add(deck1.drawCard());
-        System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));
+        dealer1.addCard(deck1.drawCard());
+     //   System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));
         deck1.cardDeck.remove(0);
-        System.out.println((activePlayer.hand==dealer1.hand));
-        System.out.println(activePlayer.hand.equals(dealer1.hand));
+       // System.out.println((activePlayer.hand==dealer1.hand));
+       // System.out.println(activePlayer.hand.equals(dealer1.hand));
 
     }
 
@@ -100,13 +100,13 @@ public class BlackJackLogic implements Runnable{
 
         while (true) {
             boolean hit = false;
-            if(+activePlayer.getHandValue()>21){
+            if(activePlayer.getHandValue()>21){
                 humanBust = true;
                 break;
             }
-            System.out.println("Du drog: " +activePlayer.hand.get(activePlayer.hand.size()-2));
-            System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
-            System.out.println("Din hand är värd: "+activePlayer.getHandValue());
+         //   System.out.println("Du drog: " +activePlayer.hand.get(activePlayer.hand.size()-2));
+           // System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
+           // System.out.println("Din hand är värd: "+activePlayer.getHandValue());
             choice=(int)BlackJackLogic.actionQueue.take();
             System.out.println("Val: "+choice);
             if (choice==1){
@@ -114,10 +114,10 @@ public class BlackJackLogic implements Runnable{
                 choice=0;
             }
             if (hit) {
-                activePlayer.hand.add(deck1.drawCard());
-                System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
+                activePlayer.addCard(deck1.drawCard());
+         //       System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
             } else {
-                System.out.println("Sluta dra");
+           //     System.out.println("Sluta dra");
                 break;
                 }
 
@@ -126,35 +126,35 @@ public class BlackJackLogic implements Runnable{
 
     private void dealerTurn() {
         if (humanBust){
-            System.out.println("Din hand är värd: "+activePlayer.getHandValue()+"Du är bust! Dealern vinner!");
+      //      System.out.println("Din hand är värd: "+activePlayer.getHandValue()+"Du är bust! Dealern vinner!");
             humanBust=false;
         }else{
         boolean dealerWin;
 //        dealer1.hand.get(1).setFaceUp(true);
-        System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));
+       // System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));
         while (dealer1.getHandValue() < 21&&dealer1.getHandValue() < activePlayer.getHandValue()) {
-            dealer1.hand.add(deck1.drawCard());
-            System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));}
+            dealer1.addCard(deck1.drawCard());
+         //   System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));}
 
             if (dealer1.getHandValue() > 21) {
-                System.out.println("Din hand är värd: "+activePlayer.getHandValue());
-                System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
+           //     System.out.println("Din hand är värd: "+activePlayer.getHandValue());
+             //   System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
                 System.out.println("Dealern är bust! Du vinner.");
 
             } else if (dealer1.getHandValue() > activePlayer.getHandValue()) {
-                System.out.println("Din hand är värd: "+activePlayer.getHandValue());
-                System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
+               // System.out.println("Din hand är värd: "+activePlayer.getHandValue());
+               // System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
                 System.out.println("Dealern vinner!");
                 dealerWin = true;
 
             } else if (dealer1.getHandValue() == activePlayer.getHandValue()) {
-                System.out.println("Din hand är värd: "+activePlayer.getHandValue());
-                System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
+               // System.out.println("Din hand är värd: "+activePlayer.getHandValue());
+               // System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
                 System.out.println("Oavgjort!");
 
             } else if (dealer1.getHandValue() < activePlayer.getHandValue()) {
-                System.out.println("Din hand är värd: "+activePlayer.getHandValue());
-                System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
+               // System.out.println("Din hand är värd: "+activePlayer.getHandValue());
+               // System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
                 System.out.println("Du vinner!");
 
             }}
@@ -163,12 +163,12 @@ public class BlackJackLogic implements Runnable{
             dealer1.clearHand();
 
 
-        }
+        }}
 
 
     private void computerPlayerTurn(Player player) {
         while (player.getHandValue() <= 21) {
-            player.hand.add(deck1.drawCard());
+            player.addCard(deck1.drawCard());
             if (player.getHandValue() <= 16) {
                 break;
             }

@@ -1,5 +1,6 @@
 package BlackJack;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -18,8 +19,10 @@ public class IHasCards {
 
 
   //
-    ArrayList<Card> hand = new ArrayList<>();
-    ObservableList<Card> graphicHand = FXCollections.observableArrayList(hand);
+// ArrayList<Card> hand = new ArrayList<>();
+//   ObservableList<Card> graphicHand = FXCollections.observableArrayList(hand);
+ //ArrayList<Card> hand = new ArrayList<>();
+   ObservableList<Card> hand = FXCollections.observableArrayList();
 
 
     /**
@@ -62,8 +65,11 @@ public class IHasCards {
         return total;
     }
     public void clearHand(){
-         hand.clear();
+        Platform.runLater(()-> hand.clear());
 
+    }
+    public void addCard(Card card){
+        Platform.runLater(()->hand.add(card));
     }
 
 
