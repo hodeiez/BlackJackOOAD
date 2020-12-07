@@ -36,15 +36,15 @@ public class IHasCards {
             if (temp.getRank() >= 10) total = total + 10;//Alla kort från tio och upp är värda 10
             if (temp.getRank() < 10 && temp.getRank() > 1)
                 total = total + temp.getRank();//kortets värde läggs till totalen
-            if (temp.getRank() == 0) total = total + 11;//Ess kan vara värda 11
-            if (temp.getRank() == -1) total = total + 1;//Ess kan vara värda 1
+            if (temp.getRank() == 1) total = total + 11;//Ess kan vara värda 11
+            if (temp.getRank() == 0) total = total + 1;//Ess kan vara värda 1
             if (total > 21) {
                 //Om vi har mer än 21 kollar denna loop igenom ifall vi har Ess, om vi har det sätter vi ässet till att
                 //vara värt ett istället för elva och börjar om räkningen.
                 for (int j = 0; j < lenght; j++) {
                     Card temp2 = (Card) hand.get(j);
-                    if (temp2.getRank() == 0) {
-                        hand.set(j, new Card(temp2.getSuit(), -1));
+                    if (temp2.getRank() == 1) {
+                        hand.set(j, new Card(temp2.getSuit(), 0));
                         i = -1;
                         total = 0;
                         j = lenght;
@@ -57,6 +57,11 @@ public class IHasCards {
         }
         System.out.println("Totalt värde: " + total); // Skriver ut handens totala värde.
         return total;
+    }
+    public void clearHand(){
+        for (int i = 0; i < hand.size(); i++) {
+            hand.remove(0);
+        }
     }
 
 

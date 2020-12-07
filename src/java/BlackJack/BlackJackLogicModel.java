@@ -11,12 +11,14 @@ import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class BlackJackLogicModel implements Runnable{
     private List<Player> players = new ArrayList<>();
     private Dealer dealer1 = new Dealer();
     private Deck deck1 = new Deck(6); //lugnt om deck1 är tom här, isåfall så fixas det ihop ny lek i början av första rundan
     private Player activePlayer = new Player();
+    boolean humanBust = false;
 
 
 
@@ -127,34 +129,35 @@ public class BlackJackLogicModel implements Runnable{
     }
 
     private void humanPlayerTurn() {
-        //created a messy logic, need to test graphic implementations
-int checkSize=activePlayer.hand.size();
-while(!hit){
-    System.out.print("");//have to do something inside the loop
-    if(checkSize < activePlayer.hand.size()){
-        hit=true;
-        //System.out.println("human");
-        break;
-    }
-}
-    /*
-       // boolean hit;
-        System.out.println("humantTurn");
+        int choice = 0;
+//        Scanner scan = new Scanner(System.in);
+
         while (true) {
-            System.out.println(activePlayer.getHandValue());
-            //Input från användaren Hit/Stay
-            if (hit) {
-                System.out.println("hit true");
-                Card card=deck1.drawCard();
-                activePlayer.hand.add(card);
-               Platform.runLater(()-> activePlayerHand.add(cardToGraph(card)));
-                hit=false;
+            boolean hit = false;
+            if(+activePlayer.getHandValue()>21){
+                humanBust = true;
                 break;
-            } else break;
+            }
+            System.out.println("Du drog: " +activePlayer.hand.get(activePlayer.hand.size()-2));
+            System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
+            System.out.println("Din hand är värd: "+activePlayer.getHandValue());
+//            choice=Integer.parseInt(scan.nextLine());//Input från användaren Hit/Stay
+
+
+            if (choice==1){
+                hit = true;
+            }
+            if (hit) {
+                activePlayer.hand.add(deck1.drawCard());
+                System.out.println("Du drog: "+ activePlayer.hand.get(activePlayer.hand.size()-1));
+            } else {
+                System.out.println("Sluta dra");
+                break;
+            }
 
         }
+}
 
-     */
 
 
     }
