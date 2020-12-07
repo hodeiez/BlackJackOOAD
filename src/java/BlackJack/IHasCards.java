@@ -61,7 +61,7 @@ public class IHasCards {
 //        for (int i = 0; i < hand.size(); i++) { //Skriver ut korten till konsolen.
 //            System.out.println(hand.get(i));
 //        }
-//        System.out.println("Totalt värde: " + total); // Skriver ut handens totala värde.
+       System.out.println("Totalt värde: " + total); // Skriver ut handens totala värde.
         return total;
     }
     public void clearHand(){

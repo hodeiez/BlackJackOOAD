@@ -79,7 +79,7 @@ public class BlackJackLogic implements Runnable{
     private void dealHands() {
         Deck deck1 = new Deck(1);
         for (Player p : players) {
-            System.out.println(p.hand.size());
+           System.out.println(p.hand.size());
             p.addCard(deck1.drawCard());
             p.addCard(deck1.drawCard());
 
@@ -134,8 +134,8 @@ public class BlackJackLogic implements Runnable{
        // System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));
         while (dealer1.getHandValue() < 21&&dealer1.getHandValue() < activePlayer.getHandValue()) {
             dealer1.addCard(deck1.drawCard());
-         //   System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));}
-
+            //   System.out.println("Dealern drog: "+ dealer1.hand.get(dealer1.hand.size()-1));}
+        }
             if (dealer1.getHandValue() > 21) {
            //     System.out.println("Din hand är värd: "+activePlayer.getHandValue());
              //   System.out.println("Dealerns hand är värd: "+dealer1.getHandValue());
@@ -163,7 +163,7 @@ public class BlackJackLogic implements Runnable{
             dealer1.clearHand();
 
 
-        }}
+        }
 
 
     private void computerPlayerTurn(Player player) {
