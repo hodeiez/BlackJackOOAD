@@ -25,7 +25,7 @@ public class ModelTest implements Runnable {
 
     public ModelTest() {
         rect = new Rectangle(80, 130);
-        rect.setFill(new CardGraph("spades", "ace", true).getImgPattern());
+       // rect.setFill(new CardGraph("spades", "ace", true).getImgPattern());
     }
 
 
@@ -60,7 +60,7 @@ public class ModelTest implements Runnable {
 //                        setBalance("new Balance"));
                         setBalance(String.valueOf(i[0]++)));
                         System.out.println(i);
-                         setCard(new CardGraph("spades", String.valueOf(i[0] +2), true).getImgPattern());
+                       //  setCard(new CardGraph("spades", String.valueOf(i[0] +2), true).getImgPattern());
 
 
 
