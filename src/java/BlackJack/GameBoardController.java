@@ -75,7 +75,7 @@ setListener(modelTest.dealerHand,dealerBox);
                 if (change.wasAdded()) {
                     CardGraph c=change.getAddedSubList().get(0);
                     if(observable.size()>1)
-                        c.setTranslateX(observable.get(observable.size()-1).getTranslateX()-(50*(observable.size()-1)));//this has to be simplified
+                        c.setTranslateX(-(50*(observable.size()-1)));//this has to be simplified
                     playerBox.getChildren().add(c);
 
                 } else if (change.wasRemoved()) {
