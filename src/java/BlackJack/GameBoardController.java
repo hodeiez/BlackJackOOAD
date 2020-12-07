@@ -102,6 +102,7 @@ setListener(modelTest.dealer1.hand,dealerBox);
         String rank=String.valueOf(card.getRank());
         String suit=String.valueOf(card.getSuit()).toLowerCase();
         switch (rank){
+            case "0"->rank="ace";
             case "1"->rank="ace";
             case "11"-> rank="jack";
             case "12"->rank="queen";
