@@ -78,8 +78,8 @@ public class GameBoardController {
         hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
         end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
         stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
-        rules.setOnAction(e ->rulesPanel.setVisible(true));
-        rulesPanel.setOnMouseClicked(e -> rulesPanel.setVisible(false));//maybe change to setOnAction if hovering breaks things
+
+        rules.setOnMouseClicked(e ->rulesPanel.setVisible(!rulesPanel.isVisible()));
 
     }
 
