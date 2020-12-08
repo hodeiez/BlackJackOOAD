@@ -1,6 +1,13 @@
 package BlackJack;
 
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by Lukas Aronsson
@@ -9,9 +16,9 @@ import java.util.ArrayList;
  * Project: BlackJackOOAD
  * Copyright: MIT
  **/
-public interface IHasCards {
+public class IHasCards {
 
-    ArrayList<Card> hand = new ArrayList<>();
+    ObservableList<Card> hand = FXCollections.observableArrayList();
 
 
     /**
@@ -19,39 +26,28 @@ public interface IHasCards {
      *
      * @return the total value of the current hand
      */
+    int getHandValue() {
+        List<Integer> aces = new ArrayList<>();
+        int result = 0;
+        for (Card card : hand) {
+            int i = card.getRank();
+            result += i > 10 ? 10 : i == 1 ? 11 : i; //add all cards to result, ace = 11
+            if (i == 1) aces.add(1);
+        }
+        while (!aces.isEmpty() && result > 21) { //if results is over 21, remove 10 (leave 1) for every ace if needed.
+            result -= 10;
+            aces.remove(0);
+        }
+        return result;
+    }
 
-    //Den här metoden räknar ut värdet av en spelares hand. Den tar till vara på om ifall en spelare har Ess
-    //Vanliga kort har värde 1-13 ess har värde 0, eller -1 beroende på om en vill att det ska vara värt
-    //11 eller 1 poäng.
-    default int getHandValue() {
-        int lenght = hand.size();
-        int total = 0;
-        for (int i = 0; i < lenght; i++) {
-            Card temp = (Card) hand.get(i);
-            if (temp.getRank() >= 10) total = total + 10;//Alla kort från tio och upp är värda 10
-            if (temp.getRank() < 10 && temp.getRank() > 1)
-                total = total + temp.getRank();//kortets värde läggs till totalen
-            if (temp.getRank() == 0) total = total + 11;//Ess kan vara värda 11
-            if (temp.getRank() == -1) total = total + 1;//Ess kan vara värda 1
-            if (total > 21) {
-                //Om vi har mer än 21 kollar denna loop igenom ifall vi har Ess, om vi har det sätter vi ässet till att
-                //vara värt ett istället för elva och börjar om räkningen.
-                for (int j = 0; j < lenght; j++) {
-                    Card temp2 = (Card) hand.get(j);
-                    if (temp2.getRank() == 0) {
-                        hand.set(j, new Card(temp2.getSuit(), -1));
-                        i = -1;
-                        total = 0;
-                        j = lenght;
-                    }
-                }
-            }
-        }
-        for (int i = 0; i < hand.size(); i++) { //Skriver ut korten till konsolen.
-            System.out.println(hand.get(i));
-        }
-        System.out.println("Totalt värde: " + total); // Skriver ut handens totala värde.
-        return total;
+    public void clearHand() {
+        Platform.runLater(() -> hand.clear());
+
+    }
+
+    public void addCard(Card card) {
+        Platform.runLater(() -> hand.add(card));
     }
 
 

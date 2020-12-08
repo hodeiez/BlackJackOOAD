@@ -1,30 +1,15 @@
 package BlackJack;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.FXCollections;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-
-import java.util.ArrayList;
 
 /**
  * Created by Hodei Eceiza
@@ -34,61 +19,109 @@ import java.util.ArrayList;
  * Copyright: MIT
  */
 public class GameBoardController {
+
     public Button hit;
     public Button stay;
     public Button rules;
     public Button end;
     public Label balance;
     public HBox dealerBox;
+    public HBox dealerbackground;
     public HBox activePlayer;
     public HBox player2;
+    public HBox player3;
+    public Label handValue;
     @FXML
     private AnchorPane gameBoardPane;
-    private ModelTest modelTest;
-    private Rectangle rect=new Rectangle();
-    private GridPane gp;
-public GameBoardController(ModelTest modelTest){
-    this.modelTest=modelTest;
-}
+    //  private ModelTest modelTest;
+    private BlackJackLogic modelTest;
+    private Rectangle rect = new Rectangle();
+
+    /*
+        public GameBoardController(ModelTest modelTest) {
+            this.modelTest = modelTest;
+        }
+
+     */
+    public GameBoardController(BlackJackLogic modelTest) {
+
+        this.modelTest = modelTest;
+    }
+
+
     public void initialize() {
+        setListener(modelTest.activePlayer.hand, activePlayer);
 
-       balance.textProperty().bind(modelTest.balanceProperty());
-        stay.setOnAction(e->modelTest.setBalance("NEW BALANCE"));
-        rect.setWidth(80);
-        rect.setHeight(130);
-        rect.setFill(Color.BLACK);
-        rect.fillProperty().bind(modelTest.cardProperty());
-        //rect.setWidth(80);
-       // rect.setHeight(130);
-        dealerBox.getChildren().add(rect);
+        setListener(modelTest.dealer1.hand, dealerBox);
+
+        setButtonListener();
+
+//Listens changes of the observableList
 
 
+//balance its binded, should do a double bind? or call method from logic to change the balance?
+        // balance.textProperty().bind(modelTest.balanceProperty());
+//        handValue.textProperty().bind(modelTest.handValueProperty());
 
-//NOIZE DOWN HERE!!!
 
+        //using buttons for test
+        //test for changeFaceUp
+        // stay.setOnAction(e-> modelTest.activePlayerHandArr.get(0).changeFace());
 
-        HandGraph hand=new HandGraph();
-       // HBox sp=new HBox();
-      ListView sp=new ListView();
-       // GridPane sp=new GridPane();
-        dealerBox.setStyle("-fx-background-color: green");
-        hand.observableList.addListener(new ListChangeListener(){
+        //testing hit
+        //hit.setOnAction(e->modelTest.hitListener());
+        hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
+        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
+        stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
 
-            @Override
-            public void onChanged(Change change) {
-                System.out.println("changed");
+    }
+
+    public void setListener(ObservableList<Card> observable, HBox playerBox) {
+        observable.addListener((ListChangeListener<Card>) change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    CardGraph c = cardToGraph(change.getAddedSubList().get(0));
+                    //  CardGraph c=change.getAddedSubList().get(0);
+                    if (observable.size() > 1)
+                        c.setTranslateX(-(50 * (observable.size() - 1)));//this has to be simplified
+                    playerBox.getChildren().add(c);
+
+                } else if (change.wasRemoved()) {
+                    playerBox.getChildren().clear();
+                }
+
+                /*
+                else if(change.wasUpdated()) {
+                    System.out.println(change.getList().toString());
+                    ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
+                }
+
+                 */
             }
         });
+    }
 
-       dealerBox.getChildren().addAll(hand.observableList);
-       // dealerBox.getChildren().add(sp); //<-
-       //sp.getChildren().add(hand.observableList);
-        sp.setItems(hand.observableList);
-       rules.setOnAction(e->hand.removeFromObser());
-        end.setOnAction(e->hand.observableList.add(new CardGraph("clubs","7",true)));
+    public void setButtonListener(){
+        modelTest.disableButtons.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                hit.setDisable(newValue);
+                stay.setDisable(newValue);
+            }
+        });
+    }
 
-
-        //gameBoardPane.getChildren().add(dealerBox);
-
+    public CardGraph cardToGraph(Card card) {
+        String rank = String.valueOf(card.getRank());
+        String suit = String.valueOf(card.getSuit()).toLowerCase();
+        switch (rank) {
+            case "0" -> rank = "ace";
+            case "1" -> rank = "ace";
+            case "11" -> rank = "jack";
+            case "12" -> rank = "queen";
+            case "13" -> rank = "king";
+            default -> rank = rank;
+        }
+        return new CardGraph(suit, rank, true);
     }
 }

@@ -1,10 +1,8 @@
 package BlackJack;
 
-import javafx.collections.ObservableArray;
-import javafx.scene.Group;
-import javafx.scene.control.Label;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
@@ -18,81 +16,51 @@ import javafx.scene.shape.Rectangle;
  * Copyright: MIT
  */
 public class CardGraph extends Rectangle {
-    ImagePattern cardImage;
+    private ImagePattern cardImage;
+    private String suit;
+    private String rank;
+    private boolean faceUp;
+    private final BooleanProperty faceUpProp;
+    private final ImagePattern backCard=new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/cardBack.jpg"))));
 
-    CardGraph(String suit, String number, boolean faceUp) { //logic can create a graph its time
-        //BUILDING CARDS FROM FOLDER
-//Insert image in CARD class??
-        cardImage = new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/" + number + "_of_" + suit + ".png"))));
-        // Rectangle rect = new Rectangle();
-        // rect.setWidth(80);
-        // rect.setHeight(130);
+
+    CardGraph(String suit, String rank, boolean faceUp) {
+        this.suit = suit;
+        this.rank = rank;
+        this.faceUp=true;
+        this.faceUpProp=new SimpleBooleanProperty(faceUp);
+        cardImage = new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/" + rank + "_of_" + suit + ".png"))));
+        setStyling();
+
+
+    }
+    public BooleanProperty faceUpProperty(){
+        return faceUpProp;
+    }
+    public void setFaceUp(boolean faceUp){
+        this.faceUpProperty().set(faceUp);
+    }
+   public boolean getFaceUp(){return this.faceUpProperty().get();}
+    public void changeFace(){
+        this.setFill((getFaceUp()) ? cardImage : backCard);
+    }
+
+
+
+
+    public void setStyling(){
+        this.setFill(cardImage);
         this.setWidth(80);
         this.setHeight(130);
-        if ((faceUp)) {
-            // rect.setFill(cardImage);
-            this.setFill(cardImage);
-        } else {
-            this.setFill(Color.PURPLE);
-            // rect.setFill(Color.PURPLE);
-        }
         this.prefWidth(cardImage.getWidth());
         this.prefHeight(cardImage.getHeight());
-        //  this.getChildren().add(rect);
-
+        this.setArcHeight(10);
+        this.setArcWidth(10);
     }
 
-    public ImagePattern getImgPattern() {
-        return cardImage;
+    //For tests and debug
+    @Override
+    public String toString() {
+        return "Suit: " + suit + " number " + rank;
     }
-
-    //BUILDING CARDS PROGRAMMATICALLY
-        /*
-       Rectangle baserRect=new Rectangle(); //<-the card base
-        baserRect.setStyle("-fx-fill:white;-fx-arc-width: 10;-fx-arc-height: 10");
-       // this.setFill(Color.WHITE);
-
-        baserRect.setWidth(80);
-        baserRect.setHeight(130);
-
-
-        Label numbL=new Label(number);//label up left
-        Label suitL=new Label("\u2663");//label up left
-        //this.setPrefSize(80,130);
-        numbL.setTranslateY(0);
-        numbL.setTranslateX(0);
-        suitL.setTranslateY(10);
-        suitL.setTranslateX(0);
-
-        Label numb2L=new Label(number);//label down right
-        Label suit2L=new Label("\u2663");//label down right
-        //this.setPrefSize(80,130);
-        numb2L.setRotate(180);
-        suit2L.setRotate(180);
-        numb2L.setTranslateY(115);
-        numb2L.setTranslateX(70);
-        suit2L.setTranslateY(105);
-        suit2L.setTranslateX(70);
-
-        Group suitsInMiddel=new Group();
-for(int i=0;i<Integer.parseInt(number);i++) {
-
-    Label suitMiddle = new Label("\u2663");
-    suitMiddle.setTextAlignment(TextAlignment.CENTER);
-    suitMiddle.setPrefSize(0, 0);
-    suitMiddle.setWrapText(true);
-    suitMiddle.setScaleX(1.2);
-    suitMiddle.setScaleY(1.2);
-    suitMiddle.setTranslateX((80/2));
-    suitMiddle.setTranslateY((20)+i*20);
-    suitsInMiddel.getChildren().add(suitMiddle);
-}
-        this.prefWidth(80);
-        this.prefHeight(130);
-        this.getChildren().addAll(baserRect,numbL,suitL, numb2L,suit2L,suitsInMiddel);
-
-
-    }
-     */
-
 }
