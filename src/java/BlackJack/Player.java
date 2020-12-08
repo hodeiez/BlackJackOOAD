@@ -1,5 +1,10 @@
 package BlackJack;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.util.ArrayList;
 
 /**
@@ -14,7 +19,7 @@ public class Player extends IHasCards {
     int balance = 1000; //the amount of balance the player has currently
     private int currentBet = 0; //the amount of balance the player have decided to bet this round
     private boolean broke = false;
-
+    StringProperty balanceValueProperty = new SimpleStringProperty();
     public Player() {
         ArrayList<Card> hand = new ArrayList<>();
     }
@@ -97,8 +102,9 @@ public class Player extends IHasCards {
         if (currentBet <= balance) {
             this.currentBet = currentBet;
             balance -=  currentBet;
-        }else System.out.println("För lite pengar.");
-    }
+        }else{ System.out.println("För lite pengar.");
+        broke=true;
+    }}
 
     /**
      * Getter For broke

@@ -19,12 +19,12 @@ public class BlackJackLogic implements Runnable {
     BooleanProperty disableButtons = new SimpleBooleanProperty(false);
     boolean humanBust;
     public static BlockingQueue<Integer> actionQueue = new LinkedBlockingQueue();
-    String balance = "";
-    StringProperty balanceValueProperty = new SimpleStringProperty(balance);
+//    String balance;
+//    StringProperty balanceValueProperty = new SimpleStringProperty(balance);
 
 
     private void setUpGame() throws InterruptedException {
-        activePlayer.setBalance(1000);
+        activePlayer.setBalance(300);
         players.add(activePlayer);
         playRound();
     }
@@ -39,6 +39,7 @@ public class BlackJackLogic implements Runnable {
         while (true) {
 
             isItTimeToShuffle();
+
             placeBets();
             updateGraphicBalance();
             dealHands();
@@ -48,12 +49,13 @@ public class BlackJackLogic implements Runnable {
 //            computerPlayerTurn(players.get(1));
 //            computerPlayerTurn(players.get(2));
             dealerTurn();
-//            isGameOver();
+            isGameOver();
         }
     }
 public void updateGraphicBalance(){
-    balance = ""+activePlayer.getBalance();
-    Platform.runLater(() -> balanceValueProperty.set(balance));
+
+    String balance = "Balance: "+activePlayer.getBalance();
+    Platform.runLater(() -> activePlayer.balanceValueProperty.set(balance));
 }
     public void playRoundConsoleVersion() throws InterruptedException {
 
@@ -73,7 +75,7 @@ public void updateGraphicBalance(){
     }
 
     private void isPlayerBroke() {
-        if (activePlayer.getBalance() <= 0) {
+        if (activePlayer.getBalance() < 0) {
             activePlayer.setBroke(true);
         }
     }
@@ -91,7 +93,7 @@ public void updateGraphicBalance(){
     }
 
     private void dealHands() throws InterruptedException {
-        Deck deck1 = new Deck(1);
+        if (!activePlayer.isBroke()) {
         for (Player p : players) {
             p.addCard(deck1.drawCard());
             p.addCard(deck1.drawCard());
@@ -101,7 +103,7 @@ public void updateGraphicBalance(){
         }
         dealer1.addCard(deck1.drawCard());
         deck1.cardDeck.remove(0);
-    }
+    }}
 
     private void humanPlayerTurn() throws InterruptedException {
         isPlayerBroke();
@@ -135,6 +137,7 @@ public void updateGraphicBalance(){
     }}
 
     private void dealerTurn() throws InterruptedException {
+        if(!activePlayer.isBroke()){
         Thread.sleep(1000);
         dealer1.addCard((deck1.drawCard()));
         Thread.sleep(3);
@@ -163,11 +166,12 @@ public void updateGraphicBalance(){
                 activePlayer.increaseBalance();
                 activePlayer.increaseBalance();
             }
-        }
+        }}
         Thread.sleep(1000);
         System.out.println("RENSA");
         activePlayer.clearHand();
         dealer1.clearHand();
+
     }
 
     private void computerPlayerTurn(Player player) {
@@ -176,6 +180,15 @@ public void updateGraphicBalance(){
             if (player.getHandValue() <= 16) {
                 break;
             }
+        }
+    }
+    public void isGameOver(){
+        if(activePlayer.isBroke()){
+            System.out.println("LOOOOOOOOOSEEERRRR!!!!!!!!");
+            activePlayer.clearHand();
+            dealer1.clearHand();
+            activePlayer.setBalance(1000);
+            activePlayer.setBroke(false);
         }
     }
 

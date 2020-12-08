@@ -22,7 +22,7 @@ public abstract class IHasCards {
 
     String handValue = "";
     ObservableList<Card> hand = FXCollections.observableArrayList();
-    StringProperty handValueProperty = new SimpleStringProperty(handValue);
+    StringProperty handValueProperty = new SimpleStringProperty();
 
 
     /**
