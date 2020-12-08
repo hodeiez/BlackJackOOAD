@@ -18,7 +18,8 @@ import java.util.List;
  **/
 public abstract class IHasCards {
 
-    ObservableList<Card> hand = FXCollections.observableArrayList();
+    ArrayList<Card> hand = new ArrayList();
+    ObservableList<Card> handObs = FXCollections.observableArrayList();
     StringProperty handValueSP = new SimpleStringProperty("0");
 
 
@@ -48,12 +49,17 @@ public abstract class IHasCards {
     }
 
     public void clearHand() {
-        Platform.runLater(() -> hand.clear());
+       hand.clear();
+        Platform.runLater(() -> handObs.clear());
 
     }
 
     public void addCard(Card card) {
-        Platform.runLater(() -> hand.add(card));
+
+        hand.add(card);
+        Platform.runLater(() -> handObs.add(card));
+        System.out.println(card);
+      //  System.out.println((hand.size()>0)?"What is the first element?"+ hand.get(0).toString():"Observable is empty");
     }
 
     public StringProperty handValueSPProperty() {

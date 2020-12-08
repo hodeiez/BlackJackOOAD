@@ -1,5 +1,6 @@
 package BlackJack;
 
+import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 /**
  * Created by Hodei Eceiza
@@ -54,9 +56,9 @@ public class GameBoardController {
 
 
     public void initialize() {
-        setListener(modelTest.activePlayer.hand, activePlayer);
+       setListener(modelTest.activePlayer.handObs, activePlayer);
 
-        setListener(modelTest.dealer1.hand, dealerBox);
+        setListener(modelTest.dealer1.handObs, dealerBox);
 
         rulesPanelSettings();
 
@@ -99,11 +101,13 @@ public class GameBoardController {
             while (change.next()) {
                 if (change.wasAdded()) {
                     CardGraph c = cardToGraph(change.getAddedSubList().get(0));
-                    //  CardGraph c=change.getAddedSubList().get(0);
-                    if (observable.size() > 1)
-                        c.setTranslateX(-(50 * (observable.size() - 1)));//this has to be simplified
-                    playerBox.getChildren().add(c);
 
+                    //  CardGraph c=change.getAddedSubList().get(0);
+                    if (observable.size() > 1) {
+                        c.setTranslateX(-(50 * (observable.size() - 1)));//this has to be simplified
+                        fadeTransition(c);
+                    }
+                    playerBox.getChildren().add(c);
                 } else if (change.wasRemoved()) {
                     playerBox.getChildren().clear();
                 }
@@ -175,5 +179,13 @@ public class GameBoardController {
                 "* If the player attains a final sum higher than the dealer and does not bust, the player wins. \n" +
                 "* If both dealer and player receive a blackjack or any other hands with the same sum called a \"push\", no one wins. \n\n" +
                 "Rules Taken from https://en.wikipedia.org/wiki/Blackjack#Rules ");
+    }
+    public void fadeTransition(CardGraph c){
+        FadeTransition ft=new FadeTransition();
+        ft.setDuration(Duration.seconds(1.5));
+        ft.setNode(c);
+        ft.setFromValue(0);
+        ft.setToValue(100);
+        ft.play();
     }
 }
