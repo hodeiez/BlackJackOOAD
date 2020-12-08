@@ -31,6 +31,7 @@ public class GameBoardController {
     public HBox player2;
     public HBox player3;
     public Label handValue;
+    public Label dealerValue;
     @FXML
     private AnchorPane gameBoardPane;
     //  private ModelTest modelTest;
@@ -119,6 +120,12 @@ public class GameBoardController {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 handValue.setText(newValue);
+            }
+        });
+        modelTest.dealer1.handValueProperty.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                dealerValue.setText(newValue);
             }
         });
     }

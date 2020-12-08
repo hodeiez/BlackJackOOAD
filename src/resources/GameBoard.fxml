@@ -46,6 +46,11 @@
          </font>
       </Label>
       <HBox fx:id="dealerBox" layoutX="375.0" layoutY="42.0" prefHeight="226.0" prefWidth="476.0" />
+      <Label fx:id="dealerValue" alignment="CENTER" layoutX="400.0" layoutY="180.0" prefHeight="38.0" prefWidth="68.0" text="0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
       <Label fx:id="handValue" alignment="CENTER" layoutX="465.0" layoutY="600.0" prefHeight="38.0" prefWidth="68.0" text="0" textAlignment="CENTER" textFill="WHITE" wrapText="true">
          <font>
             <Font size="23.0" />

@@ -79,11 +79,14 @@ public class BlackJackLogic implements Runnable {
         for (Player p : players) {
             p.addCard(deck1.drawCard());
             p.addCard(deck1.drawCard());
-            Thread.sleep(70);
-            p.getHandValue();
             System.out.println("in BlackJackLogic / dealHands: Player: " + p.getName() + " HandSize: " + p.hand.size());
         }
         dealer1.addCard(deck1.drawCard());
+        Thread.sleep(200);
+        for(Player p : players){
+            p.getHandValue();
+        }
+        dealer1.getHandValue();
         deck1.cardDeck.remove(0);
     }
 
@@ -115,7 +118,7 @@ public class BlackJackLogic implements Runnable {
     private void dealerTurn() throws InterruptedException {
         Thread.sleep(1000);
         dealer1.addCard((deck1.drawCard()));
-        Thread.sleep(3);
+        Thread.sleep(100);
         if (humanBust) {
             humanBust = false;
         } else {
@@ -124,7 +127,7 @@ public class BlackJackLogic implements Runnable {
             while (dealer1.getHandValue() < 17 && dealer1.getHandValue() < activePlayer.getHandValue()) {
                 Thread.sleep(1000);
                 dealer1.addCard(deck1.drawCard());
-                Thread.sleep(3);
+                Thread.sleep(100);
             }
             if (dealer1.getHandValue() > 21) {
                 System.out.println("Dealern är bust! Du vinner.");
