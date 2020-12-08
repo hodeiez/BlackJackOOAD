@@ -58,6 +58,9 @@ public class GameBoardController {
 
         setPlayerHandValueListener();
 
+        setBalanceValueListener();
+
+
 //Listens changes of the observableList
 
 
@@ -74,11 +77,15 @@ public class GameBoardController {
         //testing hit
         //hit.setOnAction(e->modelTest.hitListener());
         hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
-        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
+//        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
+//        end.setOnAction(e -> balance.setText(BlackJackLogic.test()));
         stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
 
     }
 
+    public void changeBalance(String string){
+        balance.setText(string);
+    }
     public void setListener(ObservableList<Card> observable, HBox playerBox) {
         observable.addListener((ListChangeListener<Card>) change -> {
             while (change.next()) {
@@ -119,6 +126,14 @@ public class GameBoardController {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 handValue.setText(newValue);
+            }
+        });
+    }
+    public void setBalanceValueListener(){
+        modelTest.balanceValueProperty.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                balance.setText(newValue);
             }
         });
     }
