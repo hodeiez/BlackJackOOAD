@@ -52,7 +52,8 @@ public class BlackJackLogic implements Runnable {
         while (true) {
             isItTimeToShuffle();
             dealHands();
-            dealer1.hand.get(0).setFaceUp(true);
+          //  ((Card)dealer1.hand.get(0)).setFaceUp(true);
+
             System.out.println("Dealerns hand är värd: " + dealer1.getHandValue());
             humanPlayerTurn();
 //            computerPlayerTurn(players.get(1));
@@ -113,20 +114,21 @@ public class BlackJackLogic implements Runnable {
     }
 
     private void dealerTurn() throws InterruptedException {
-        dealer1.hand.get(0).setFaceUp(true);
+        dealer1.handBack.get(0).setFaceUp(true);
+       // Platform.runLater(()->((Card)dealer1.hand.subList(0,0).get(0)).setFaceUp(true));
 
-        Thread.sleep(1000);
+        //Thread.sleep(1000);
         dealer1.addCard((deck1.drawCard()));
-        Thread.sleep(3);
+     //   Thread.sleep(3);
         if (humanBust) {
             humanBust = false;
         } else {
             boolean dealerWin;
 //        dealer1.hand.get(1).setFaceUp(true);
             while (dealer1.getHandValue() < 17 && dealer1.getHandValue() < activePlayer.getHandValue()) {
-                Thread.sleep(1000);
+               // Thread.sleep(1000);
                 dealer1.addCard(deck1.drawCard());
-                Thread.sleep(3);
+                //Thread.sleep(3);
             }
             if (dealer1.getHandValue() > 21) {
                 System.out.println("Dealern är bust! Du vinner.");
@@ -139,7 +141,7 @@ public class BlackJackLogic implements Runnable {
                 System.out.println("Du vinner!");
             }
         }
-        Thread.sleep(1000);
+      //  Thread.sleep(1000);
         System.out.println("RENSA");
         activePlayer.clearHand();
         dealer1.clearHand();

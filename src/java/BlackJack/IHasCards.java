@@ -19,13 +19,13 @@ import java.util.concurrent.LinkedBlockingQueue;
  * Copyright: MIT
  **/
 public class IHasCards {
-
-    ObservableList<Card> hand = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {
+    ArrayList <Card> handBack=new ArrayList();
+    ObservableList hand = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {
         @Override
         public Observable[] call(Card card) {
             return new Observable[]{ card.isFaceUpProperty};
         }
-    });
+    },handBack);
 
 
     /**
@@ -36,7 +36,7 @@ public class IHasCards {
     int getHandValue() {
         List<Integer> aces = new ArrayList<>();
         int result = 0;
-        for (Card card : hand) {
+        for (Card card : handBack) {
             int i = card.getRank();
             result += i > 10 ? 10 : i == 1 ? 11 : i; //add all cards to result, ace = 11
             if (i == 1) aces.add(1);
@@ -49,11 +49,15 @@ public class IHasCards {
     }
 
     public void clearHand() {
+        handBack.clear();
         Platform.runLater(() -> hand.clear());
+
 
     }
 
     public void addCard(Card card) {
+        handBack.add(card);
+
         Platform.runLater(() -> hand.add(card));
     }
 
