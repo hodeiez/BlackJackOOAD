@@ -108,13 +108,15 @@ public class GameBoardController {
                     playerBox.getChildren().clear();
                 }
 
-                /*
+
                 else if(change.wasUpdated()) {
+                    System.out.println("HEARD FACE CHANGE!!!!");
                     System.out.println(change.getList().toString());
-                    ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
+
+                   // ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
                 }
 
-                 */
+
             }
         });
     }

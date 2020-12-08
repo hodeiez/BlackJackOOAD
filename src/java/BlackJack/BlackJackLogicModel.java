@@ -16,6 +16,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class BlackJackLogicModel  implements Runnable{
+    /*
     private List<Player> players = new ArrayList<>();
     private Dealer dealer1 = new Dealer();
     private Deck deck1 = new Deck(6); //lugnt om deck1 är tom här, isåfall så fixas det ihop ny lek i början av första rundan
@@ -200,9 +201,10 @@ public class BlackJackLogicModel  implements Runnable{
 
              */
 
-
+/*
         }
     }
+
 
     private void computerPlayerTurn(Player player) {
         while (player.getHandValue() <= 21) {
@@ -254,16 +256,19 @@ public CardGraph cardToGraph(Card card){
     }
     return new CardGraph(suit,rank,true);
 }
-
+*/
     @Override
     public void run() {
+      /*
         try {
             setUpGame();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         //Platform.runLater(()->setUpGame());
-
+*/
     }
+
+
 
 }

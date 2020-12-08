@@ -59,7 +59,7 @@ public void updateGraphicBalance(){
         while (true) {
             isItTimeToShuffle();
             dealHands();
-            dealer1.hand.get(0).setFaceUp(true);
+         //   ((Card)dealer1.hand.get(0)).setIsFaceUp(true);
             System.out.println("Dealerns hand är värd: " + dealer1.getHandValue());
             humanPlayerTurn();
 //            computerPlayerTurn(players.get(1));
@@ -93,6 +93,7 @@ public void updateGraphicBalance(){
             p.addCard(deck1.drawCard());
             System.out.println("in BlackJackLogic / dealHands: Player: " + p.getName() + " HandSize: " + p.hand.size());
         }
+
         dealer1.addCard(deck1.drawCard());
         Thread.sleep(200);
         for(Player p : players){
