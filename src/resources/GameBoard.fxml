@@ -35,12 +35,12 @@
       <Button fx:id="stay" layoutX="740.0" layoutY="650.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@blackJack.css" text="STAY" />
       <Button fx:id="rules" layoutX="1183.0" layoutY="67.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@blackJack.css" text="RULES" />
       <Button fx:id="end" layoutX="1183.0" layoutY="18.0" mnemonicParsing="false" styleClass="buttons" stylesheets="@blackJack.css" text="END" />
-      <Label fx:id="balance" layoutX="874.0" layoutY="18.0" text="BALANCE" textFill="#ffdc08">
+      <Label fx:id="balance" layoutX="874.0" layoutY="18.0" text="Balance: " textFill="#ffdc08">
          <font>
             <Font size="41.0" />
          </font>
       </Label>
-      <Label fx:id="bet" layoutX="1066.0" layoutY="19.0" text="bet" textFill="#ffdc08">
+      <Label fx:id="bet" layoutX="874.0" layoutY="77.0" text="Bet: 100" textFill="#ffdc08">
          <font>
             <Font size="41.0" />
          </font>
