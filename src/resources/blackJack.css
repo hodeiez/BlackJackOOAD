@@ -11,3 +11,10 @@
 .greenGradient{
     -fx-background-color: radial-gradient(focus-angle 360deg,focus-distance 10%,center 50%50%,radius 30%, #239125, #055b0a);
 }
+
+#rulesPanel{
+    -fx-border-style: solid;
+    -fx-border-color: black;
+    -fx-border-width: 3;
+    -fx-font-size: 13;
+}
