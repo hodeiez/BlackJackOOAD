@@ -95,7 +95,7 @@ public void updateGraphicBalance(){
         }
 
         dealer1.addCard(deck1.drawCard());
-        //Thread.sleep(200);
+        Thread.sleep(200);
         for(Player p : players){
             p.getHandValue();
         }
@@ -120,7 +120,7 @@ public void updateGraphicBalance(){
             if (choice == 1) {
                 System.out.println("Före drawCard" + activePlayer.getHandValue());
                 activePlayer.addCard(deck1.drawCard());
-                //Thread.sleep(3);
+                Thread.sleep(3);
                 System.out.println("Efter drawCard" + activePlayer.getHandValue());
             } else {
                 break;
@@ -136,9 +136,9 @@ public void updateGraphicBalance(){
 
     private void dealerTurn() throws InterruptedException {
         if(!activePlayer.isBroke()){
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         dealer1.addCard((deck1.drawCard()));
-        //Thread.sleep(100);
+        Thread.sleep(100);
         dealer1.getHandValue();
         if (humanBust) {
             humanBust = false;
@@ -146,11 +146,11 @@ public void updateGraphicBalance(){
             boolean dealerWin;
 //        dealer1.hand.get(1).setFaceUp(true);
             while (dealer1.getHandValue() < 17 && dealer1.getHandValue() < activePlayer.getHandValue()) {
-                //Thread.sleep(1000);
+                Thread.sleep(1000);
                 dealer1.addCard(deck1.drawCard());
-                //Thread.sleep(100);
+                Thread.sleep(100);
                 dealer1.getHandValue();
-//                //Thread.sleep(100);
+//                Thread.sleep(100);
             }
             if (dealer1.getHandValue() > 21) {
                 System.out.println("Dealern är bust! Du vinner.");
@@ -168,7 +168,7 @@ public void updateGraphicBalance(){
                 activePlayer.increaseBalance();
             }
         }}
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         System.out.println("RENSA");
         activePlayer.clearHand();
         dealer1.clearHand();

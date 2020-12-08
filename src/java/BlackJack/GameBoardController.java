@@ -101,7 +101,7 @@ public class GameBoardController {
             while (change.next()) {
                 if (change.wasAdded()) {
                     CardGraph c = cardToGraph(change.getAddedSubList().get(0));
-
+                    fadeTransition(c);
                     //  CardGraph c=change.getAddedSubList().get(0);
                     if (observable.size() > 1) {
                         c.setTranslateX(-(50 * (observable.size() - 1)));//this has to be simplified
