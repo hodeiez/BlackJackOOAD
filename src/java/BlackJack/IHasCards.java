@@ -19,7 +19,7 @@ import java.util.List;
 public abstract class IHasCards {
 
     ArrayList<Card> hand = new ArrayList();
-    ObservableList<Card> handObs = FXCollections.observableArrayList();
+    ObservableList<Card> handObs = FXCollections.observableArrayList(hand);
     StringProperty handValueSP = new SimpleStringProperty("0");
 
 
@@ -55,7 +55,6 @@ public abstract class IHasCards {
     }
 
     public void addCard(Card card) {
-
         hand.add(card);
         Platform.runLater(() -> handObs.add(card));
         System.out.println(card);
