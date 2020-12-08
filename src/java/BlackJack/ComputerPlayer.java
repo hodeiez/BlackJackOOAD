@@ -51,8 +51,21 @@ public class ComputerPlayer extends Player {
      */
     private boolean shouldHit() {
 
+        return false;
 
-        return true;
     }
+
+
+    /**
+     * sets the current bet as a random number under the balance of the bot
+     */
+    private void bet(){
+
+        Random rand = new Random();
+
+        setCurrentBet(rand.nextInt(getBalance()));
+    }
+
 }
+
 
