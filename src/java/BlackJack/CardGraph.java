@@ -42,8 +42,8 @@ public class CardGraph extends Rectangle {
     }
    public boolean getFaceUpProp(){return this.faceUpProperty().get();}
    public boolean getFaceUp(){return faceUp;}
-    public void changeFace(){
-        this.setFill((!getFaceUp()) ? cardImage : backCard);
+   public void changeFace(){
+        this.setFill((!getFaceUp()) ? cardImage: backCard);
     }
 
 
