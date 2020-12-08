@@ -8,8 +8,6 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * Created by Lukas Aronsson
@@ -20,9 +18,8 @@ import java.util.concurrent.LinkedBlockingQueue;
  **/
 public abstract class IHasCards {
 
-    String handValue = "";
     ObservableList<Card> hand = FXCollections.observableArrayList();
-    StringProperty handValueProperty = new SimpleStringProperty(handValue);
+    StringProperty handValueSP = new SimpleStringProperty("0");
 
 
     /**
@@ -30,7 +27,7 @@ public abstract class IHasCards {
      *
      * @return the total value of the current hand
      */
-    int getHandValue() {
+    synchronized int getHandValue() {
         List<Integer> aces = new ArrayList<>();
         int result = 0;
         for (Card card : hand) {
@@ -42,8 +39,11 @@ public abstract class IHasCards {
             result -= 10;
             aces.remove(0);
         }
-        handValue = result + "";
-        Platform.runLater(() -> handValueProperty.set(handValue));
+
+        int finalResult = result;
+//        setHandValueSP(result + ""); //Får Thread Exception, utanför Java FX-tråd
+//        Platform.runLater(() -> handValueSPProperty().set(finalResult + "")); //Funkar också.
+        Platform.runLater(() -> setHandValueSP(finalResult + ""));
         return result;
     }
 
@@ -56,5 +56,16 @@ public abstract class IHasCards {
         Platform.runLater(() -> hand.add(card));
     }
 
+    public StringProperty handValueSPProperty() {
+        return handValueSP;
+    }
+
+    public String getHandValueSP() {
+        return handValueSPProperty().get();
+    }
+
+    public void setHandValueSP(String handValue) {
+        handValueSPProperty().set(handValue);
+    }
 
 }

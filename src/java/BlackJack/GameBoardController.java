@@ -57,14 +57,14 @@ public class GameBoardController {
 
         setButtonListener();
 
-        setPlayerHandValueListener();
+        setHandValueListeners();
 
 //Listens changes of the observableList
 
 
 //balance its binded, should do a double bind? or call method from logic to change the balance?
         // balance.textProperty().bind(modelTest.balanceProperty());
-//        handValue.textProperty().bind(modelTest.handValueProperty());
+//        handValue.textProperty().bind(modelTest.handValueSPProperty());
 
 
 
@@ -105,7 +105,7 @@ public class GameBoardController {
         });
     }
 
-    public void setButtonListener(){
+    public void setButtonListener() {
         modelTest.disableButtons.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -115,19 +115,9 @@ public class GameBoardController {
         });
     }
 
-    public void setPlayerHandValueListener(){
-        modelTest.activePlayer.handValueProperty.addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                handValue.setText(newValue);
-            }
-        });
-        modelTest.dealer1.handValueProperty.addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                dealerValue.setText(newValue);
-            }
-        });
+    public void setHandValueListeners() {
+        handValue.textProperty().bind(modelTest.activePlayer.handValueSPProperty());
+        dealerValue.textProperty().bind(modelTest.dealer1.handValueSPProperty());
     }
 
     public CardGraph cardToGraph(Card card) {
