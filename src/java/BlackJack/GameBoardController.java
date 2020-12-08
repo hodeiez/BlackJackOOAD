@@ -56,12 +56,15 @@ public class GameBoardController {
 
         setButtonListener();
 
+        setPlayerHandValueListener();
+
 //Listens changes of the observableList
 
 
 //balance its binded, should do a double bind? or call method from logic to change the balance?
         // balance.textProperty().bind(modelTest.balanceProperty());
 //        handValue.textProperty().bind(modelTest.handValueProperty());
+
 
 
         //using buttons for test
@@ -107,6 +110,15 @@ public class GameBoardController {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 hit.setDisable(newValue);
                 stay.setDisable(newValue);
+            }
+        });
+    }
+
+    public void setPlayerHandValueListener(){
+        modelTest.activePlayer.handValueProperty.addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                handValue.setText(newValue);
             }
         });
     }

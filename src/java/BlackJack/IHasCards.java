@@ -1,6 +1,8 @@
 package BlackJack;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -16,9 +18,11 @@ import java.util.concurrent.LinkedBlockingQueue;
  * Project: BlackJackOOAD
  * Copyright: MIT
  **/
-public class IHasCards {
+public abstract class IHasCards {
 
+    String handValue = "";
     ObservableList<Card> hand = FXCollections.observableArrayList();
+    StringProperty handValueProperty = new SimpleStringProperty(handValue);
 
 
     /**
@@ -38,6 +42,8 @@ public class IHasCards {
             result -= 10;
             aces.remove(0);
         }
+        handValue = result + "";
+        Platform.runLater(() -> handValueProperty.set(handValue));
         return result;
     }
 

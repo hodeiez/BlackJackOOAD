@@ -74,11 +74,13 @@ public class BlackJackLogic implements Runnable {
         }
     }
 
-    private void dealHands() {
+    private void dealHands() throws InterruptedException {
         Deck deck1 = new Deck(1);
         for (Player p : players) {
             p.addCard(deck1.drawCard());
             p.addCard(deck1.drawCard());
+            Thread.sleep(70);
+            p.getHandValue();
             System.out.println("in BlackJackLogic / dealHands: Player: " + p.getName() + " HandSize: " + p.hand.size());
         }
         dealer1.addCard(deck1.drawCard());
