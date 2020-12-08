@@ -14,8 +14,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class BlackJackLogic implements Runnable {
     private List<Player> players = new ArrayList<>();
     Dealer dealer1 = new Dealer();
-    private Deck deck1 = new Deck(1);
-    public  Player activePlayer = new Player();
+    private Deck deck1 = new Deck(6);
+    Player activePlayer = new Player();
     BooleanProperty disableButtons = new SimpleBooleanProperty(false);
     boolean humanBust;
     public static BlockingQueue<Integer> actionQueue = new LinkedBlockingQueue();
@@ -138,6 +138,7 @@ public void updateGraphicBalance(){
         Thread.sleep(1000);
         dealer1.addCard((deck1.drawCard()));
         Thread.sleep(100);
+        dealer1.getHandValue();
         if (humanBust) {
             humanBust = false;
         } else {
@@ -147,6 +148,8 @@ public void updateGraphicBalance(){
                 Thread.sleep(1000);
                 dealer1.addCard(deck1.drawCard());
                 Thread.sleep(100);
+                dealer1.getHandValue();
+//                Thread.sleep(100);
             }
             if (dealer1.getHandValue() > 21) {
                 System.out.println("Dealern är bust! Du vinner.");
