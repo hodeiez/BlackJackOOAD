@@ -6,6 +6,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -25,6 +26,7 @@ public class GameBoardController {
     public Button rules;
     public Button end;
     public Label balance;
+    public DialogPane rulesPanel;
     public HBox dealerBox;
     public HBox dealerbackground;
     public HBox activePlayer;
@@ -36,6 +38,7 @@ public class GameBoardController {
     //  private ModelTest modelTest;
     private BlackJackLogic modelTest;
     private Rectangle rect = new Rectangle();
+
 
     /*
         public GameBoardController(ModelTest modelTest) {
@@ -53,6 +56,8 @@ public class GameBoardController {
         setListener(modelTest.activePlayer.hand, activePlayer);
 
         setListener(modelTest.dealer1.hand, dealerBox);
+
+        rulesPanel.setVisible(false);
 
         setButtonListener();
 
@@ -73,6 +78,8 @@ public class GameBoardController {
         hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
         end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
         stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
+        rules.setOnAction(e ->rulesPanel.setVisible(true));
+        rulesPanel.setOnMouseClicked(e -> rulesPanel.setVisible(false));//maybe change to setOnAction if hovering breaks things
 
     }
 
