@@ -103,23 +103,23 @@ public class GameBoardController {
                     CardGraph c = cardToGraph(change.getAddedSubList().get(0));
                     System.out.println(change.getAddedSubList().get(0).isFaceUp());
                     fadeTransition(c);
-                    //  CardGraph c=change.getAddedSubList().get(0);
+
                     if (observable.size() > 1) {
                         c.setTranslateX(-(50 * (observable.size() - 1)));//this has to be simplified
                         fadeTransition(c);
                     }
                     playerBox.getChildren().add(c);
-                    ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
+
                 } else if (change.wasRemoved()) {
                     playerBox.getChildren().clear();
                 }
 
 
                 else if(change.wasUpdated()) {
-                    System.out.println("HEARD FACE CHANGE!!!!");
-                   // System.out.println(change.getList().toString());
-
-                   //((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
+                    System.out.println("UPDATED");
+                    ((CardGraph) playerBox.getChildren().get(change.getFrom())).setFaceUp(true);
+               //here applied changeFace method. gets the card from the box which was updated and swaps face
+                   ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
                 }
 
 
