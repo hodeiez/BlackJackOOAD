@@ -20,6 +20,8 @@ import static java.lang.Thread.sleep;
  * Copyright: MIT
  */
 public class ModelTest implements Runnable {
+
+   /*
     private StringProperty balance = new SimpleStringProperty("blank");
 
 
@@ -89,7 +91,7 @@ public class ModelTest implements Runnable {
     public void setBalance(String balance) {
         balanceProperty().set(balance);
     }
-
+ */
     @Override
     public void run() {
         {
@@ -98,8 +100,8 @@ public class ModelTest implements Runnable {
                 Platform.runLater(() -> {
                     Random rnd =new Random();
 
-                    addCardActPlayer(new CardGraph("spades", String.valueOf(rnd.nextInt(8)+2), true));
-                    addCardActDealer(new CardGraph("diamonds", String.valueOf(rnd.nextInt(8)+2), true));
+                   // addCardActPlayer(new CardGraph("spades", String.valueOf(rnd.nextInt(8)+2), true));
+                    //addCardActDealer(new CardGraph("diamonds", String.valueOf(rnd.nextInt(8)+2), true));
                 });
 
 
@@ -113,4 +115,6 @@ public class ModelTest implements Runnable {
         }
 
     }
+
+
 }

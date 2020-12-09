@@ -20,29 +20,34 @@ public class CardGraph extends Rectangle {
     private String suit;
     private String rank;
     private boolean faceUp;
-    private final BooleanProperty faceUpProp;
+  //  private final BooleanProperty faceUpProp;
     private final ImagePattern backCard=new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/cardBack.jpg"))));
 
 
     CardGraph(String suit, String rank, boolean faceUp) {
         this.suit = suit;
         this.rank = rank;
-        this.faceUp=true;
-        this.faceUpProp=new SimpleBooleanProperty(faceUp);
+        this.faceUp=faceUp;
+      //  this.faceUpProp=new SimpleBooleanProperty(faceUp);
         cardImage = new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/" + rank + "_of_" + suit + ".png"))));
         setStyling();
 
 
     }
-    public BooleanProperty faceUpProperty(){
+  /*  public BooleanProperty faceUpProperty(){
         return faceUpProp;
     }
     public void setFaceUp(boolean faceUp){
         this.faceUpProperty().set(faceUp);
     }
    public boolean getFaceUp(){return this.faceUpProperty().get();}
+
+   */
+    public boolean getFaceUp(){
+        return faceUp;
+    }
     public void changeFace(){
-        this.setFill((getFaceUp()) ?cardImage:  backCard );
+        this.setFill((!getFaceUp()) ?cardImage:  backCard );
     }
 
 

@@ -94,7 +94,7 @@ public void updateGraphicBalance(){
             System.out.println("in BlackJackLogic / dealHands: Player: " + p.getName() + " HandSize: " + p.hand.size());
         }
 
-        dealer1.addCard(deck1.drawCard(),true);
+        dealer1.addCard(deck1.drawCard(),false);
        // dealer1.setObsFaceUp(0,false);
         Thread.sleep(200);
         for(Player p : players){
@@ -105,7 +105,7 @@ public void updateGraphicBalance(){
     }}
 
     private void humanPlayerTurn() throws InterruptedException {
-        dealer1.setObsFaceUp(0,false);
+     //   dealer1.setObsFaceUp(0,true);
 
 
         isPlayerBroke();

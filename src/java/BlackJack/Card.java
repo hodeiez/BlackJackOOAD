@@ -8,7 +8,7 @@ public class Card {
     private final Suit suit;
     private final int rank;
     private boolean faceUp;
-    private BooleanProperty isFaceUp=new SimpleBooleanProperty(true);
+    private BooleanProperty isFaceUp=new SimpleBooleanProperty();
     public Card(Suit suit, int rank) {
         this.rank = rank;
         this.suit = suit;

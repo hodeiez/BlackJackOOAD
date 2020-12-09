@@ -79,7 +79,7 @@ public abstract class IHasCards {
      * @param faceUp sets the face state, true is faceUp
      */
     public void addCard(Card card,boolean faceUp){
-        card.setFaceUp(false);
+        card.setFaceUp(faceUp);
         hand.add(card);
         Platform.runLater(() -> handObs.add(card));
     }

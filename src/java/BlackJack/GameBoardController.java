@@ -101,6 +101,7 @@ public class GameBoardController {
             while (change.next()) {
                 if (change.wasAdded()) {
                     CardGraph c = cardToGraph(change.getAddedSubList().get(0));
+                    System.out.println(change.getAddedSubList().get(0).isFaceUp());
                     fadeTransition(c);
                     //  CardGraph c=change.getAddedSubList().get(0);
                     if (observable.size() > 1) {
@@ -108,6 +109,7 @@ public class GameBoardController {
                         fadeTransition(c);
                     }
                     playerBox.getChildren().add(c);
+                    ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
                 } else if (change.wasRemoved()) {
                     playerBox.getChildren().clear();
                 }
@@ -117,7 +119,7 @@ public class GameBoardController {
                     System.out.println("HEARD FACE CHANGE!!!!");
                    // System.out.println(change.getList().toString());
 
-                  //  ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
+                   //((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
                 }
 
 
@@ -159,6 +161,7 @@ public class GameBoardController {
             case "13" -> rank = "king";
             default -> rank = rank;
         }
+        //System.out.println(card.isFaceUp());
         return new CardGraph(suit, rank, card.isFaceUp());
     }
 
