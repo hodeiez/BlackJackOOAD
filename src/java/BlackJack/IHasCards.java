@@ -1,10 +1,12 @@
 package BlackJack;
 
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,17 @@ import java.util.List;
 public abstract class IHasCards {
 
     ArrayList<Card> hand = new ArrayList();
-    ObservableList<Card> handObs = FXCollections.observableArrayList(hand);
+    ObservableList handObs = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {
+        @Override
+        public Observable[] call(Card card) {
+            return new Observable[]{
+                    card.isFaceUpProp()
+            };
+        }
+    });
+
+
+
     StringProperty handValueSP = new SimpleStringProperty("0");
 
 
@@ -57,8 +69,19 @@ public abstract class IHasCards {
     public void addCard(Card card) {
         hand.add(card);
         Platform.runLater(() -> handObs.add(card));
-        System.out.println(card);
+       // System.out.println(card);
       //  System.out.println((hand.size()>0)?"What is the first element?"+ hand.get(0).toString():"Observable is empty");
+    }
+
+    /**
+     * adds card selecting the faceUp state
+     * @param card the card sent to the list
+     * @param faceUp sets the face state, true is faceUp
+     */
+    public void addCard(Card card,boolean faceUp){
+        card.setFaceUp(false);
+        hand.add(card);
+        Platform.runLater(() -> handObs.add(card));
     }
 
     public StringProperty handValueSPProperty() {
@@ -72,5 +95,16 @@ public abstract class IHasCards {
     public void setHandValueSP(String handValue) {
         handValueSPProperty().set(handValue);
     }
+
+    /**
+     * gets the card from observableList and changes face state
+     * @param index to select index of the card
+     * @param state to select state, true is faceUp
+     */
+    public void setObsFaceUp(int index, boolean state){
+        Platform.runLater(()->((Card)handObs.get(index)).setIsFaceUp(state));
+      //  System.out.println( handObs.get(0).getClass());
+    }
+
 
 }

@@ -94,7 +94,8 @@ public void updateGraphicBalance(){
             System.out.println("in BlackJackLogic / dealHands: Player: " + p.getName() + " HandSize: " + p.hand.size());
         }
 
-        dealer1.addCard(deck1.drawCard());
+        dealer1.addCard(deck1.drawCard(),true);
+       // dealer1.setObsFaceUp(0,false);
         Thread.sleep(200);
         for(Player p : players){
             p.getHandValue();
@@ -104,6 +105,9 @@ public void updateGraphicBalance(){
     }}
 
     private void humanPlayerTurn() throws InterruptedException {
+        dealer1.setObsFaceUp(0,false);
+
+
         isPlayerBroke();
         if(activePlayer.isBroke()){
             System.out.println("Du är pank: "+activePlayer.getBalance());
@@ -135,6 +139,7 @@ public void updateGraphicBalance(){
     }}
 
     private void dealerTurn() throws InterruptedException {
+
         if(!activePlayer.isBroke()){
         Thread.sleep(1000);
         dealer1.addCard((deck1.drawCard()));

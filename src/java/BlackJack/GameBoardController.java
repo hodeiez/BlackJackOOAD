@@ -115,9 +115,9 @@ public class GameBoardController {
 
                 else if(change.wasUpdated()) {
                     System.out.println("HEARD FACE CHANGE!!!!");
-                    System.out.println(change.getList().toString());
+                   // System.out.println(change.getList().toString());
 
-                   // ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
+                  //  ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
                 }
 
 
@@ -159,7 +159,7 @@ public class GameBoardController {
             case "13" -> rank = "king";
             default -> rank = rank;
         }
-        return new CardGraph(suit, rank, true);
+        return new CardGraph(suit, rank, card.isFaceUp());
     }
 
 

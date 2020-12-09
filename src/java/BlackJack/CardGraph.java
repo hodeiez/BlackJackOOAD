@@ -42,7 +42,7 @@ public class CardGraph extends Rectangle {
     }
    public boolean getFaceUp(){return this.faceUpProperty().get();}
     public void changeFace(){
-        this.setFill((getFaceUp()) ? cardImage : backCard);
+        this.setFill((getFaceUp()) ?cardImage:  backCard );
     }
 
 
