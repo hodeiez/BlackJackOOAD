@@ -36,6 +36,7 @@ public class GameBoardController {
     public HBox player3;
     public Label handValue;
     public Label dealerValue;
+    public Label messages;
     @FXML
     private AnchorPane gameBoardPane;
     //  private ModelTest modelTest;
@@ -68,7 +69,7 @@ public class GameBoardController {
 
         setBalanceValueListener();
 
-
+messages.textProperty().bind(modelTest.messages);
 //Listens changes of the observableList
 
 

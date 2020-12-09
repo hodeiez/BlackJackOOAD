@@ -19,6 +19,7 @@ public class BlackJackLogic implements Runnable {
     BooleanProperty disableButtons = new SimpleBooleanProperty(false);
     boolean humanBust;
     public static BlockingQueue<Integer> actionQueue = new LinkedBlockingQueue();
+    StringProperty messages=new SimpleStringProperty();
 
     private void setUpGame() throws InterruptedException {
         activePlayer.setBalance(300);
@@ -61,6 +62,7 @@ public void updateGraphicBalance(){
             dealHands();
          //   ((Card)dealer1.hand.get(0)).setIsFaceUp(true);
             System.out.println("Dealerns hand är värd: " + dealer1.getHandValue());
+            System.out.println("Dealerns hand är värd: " + dealer1.getHandValue());
             humanPlayerTurn();
 //            computerPlayerTurn(players.get(1));
 //            computerPlayerTurn(players.get(2));
@@ -87,11 +89,14 @@ public void updateGraphicBalance(){
     }
 
     private void dealHands() throws InterruptedException {
+        printMessage("Dealer deals cards");
         if (!activePlayer.isBroke()) {
         for (Player p : players) {
             p.addCard(deck1.drawCard());
             p.addCard(deck1.drawCard());
             System.out.println("in BlackJackLogic / dealHands: Player: " + p.getName() + " HandSize: " + p.hand.size());
+          //  printMessage("dealHands: Player: " + p.getName() + " HandSize: " + p.hand.size());
+
         }
 
         dealer1.addCard(deck1.drawCard(),false);
@@ -108,6 +113,7 @@ public void updateGraphicBalance(){
         isPlayerBroke();
         if(activePlayer.isBroke()){
             System.out.println("Du är pank: "+activePlayer.getBalance());
+            printMessage("Du är pank: "+activePlayer.getBalance());
             //Game Over
         }else {
             System.out.println(activePlayer.getBalance());
@@ -156,22 +162,26 @@ public void updateGraphicBalance(){
             }
             if (dealer1.getHandValue() > 21) {
                 System.out.println("Dealern är bust! Du vinner.");
+                printMessage("Dealern är bust! Du vinner.");
                 activePlayer.increaseBalance();
                 activePlayer.increaseBalance();
             } else if (dealer1.getHandValue() > activePlayer.getHandValue()) {
                 System.out.println("Dealern vinner!");
+                printMessage("Dealern vinner!");
 
             } else if (dealer1.getHandValue() == activePlayer.getHandValue()) {
                 System.out.println("Oavgjort!");
+                printMessage("Oavgjort!");
                 activePlayer.increaseBalance();
             } else if (dealer1.getHandValue() < activePlayer.getHandValue()) {
-                System.out.println("Du vinner!");
+                printMessage("Du vinner!");
                 activePlayer.increaseBalance();
                 activePlayer.increaseBalance();
             }
         }}
         Thread.sleep(1000);
         System.out.println("RENSA");
+        printMessage("RENSA");
         activePlayer.clearHand();
         dealer1.clearHand();
     }
@@ -187,13 +197,16 @@ public void updateGraphicBalance(){
     public void isGameOver(){
         if(activePlayer.isBroke()){
             System.out.println("LOOOOOOOOOSEEERRRR!!!!!!!!");
+            printMessage("LOOOOOOOOOSEEERRRR!!!!!!!!");
             activePlayer.clearHand();
             dealer1.clearHand();
             activePlayer.setBalance(1000);
             activePlayer.setBroke(false);
         }
     }
-
+    public void printMessage(String message){
+        Platform.runLater(()->messages.set(message));
+    }
     @Override
     public void run() {
         try {
