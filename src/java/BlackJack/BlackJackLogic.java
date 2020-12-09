@@ -110,6 +110,7 @@ public void updateGraphicBalance(){
     }}
 
     private void humanPlayerTurn() throws InterruptedException {
+        printMessage("your turn!");
         isPlayerBroke();
         if(activePlayer.isBroke()){
             System.out.println("Du är pank: "+activePlayer.getBalance());
@@ -142,6 +143,7 @@ public void updateGraphicBalance(){
     }}
 
     private void dealerTurn() throws InterruptedException {
+        printMessage("dealer deals");
         dealer1.setObsFaceUp(0,true);
         if(!activePlayer.isBroke()){
         Thread.sleep(1000);
