@@ -34,6 +34,7 @@ public class BlackJackLogic implements Runnable {
     }
 
     private void playRound() throws InterruptedException {
+        printMessage(Messages.WELCOME.print());
         while (true) {
             isItTimeToShuffle();
 
@@ -110,7 +111,7 @@ public void updateGraphicBalance(){
     }}
 
     private void humanPlayerTurn() throws InterruptedException {
-        printMessage("your turn!");
+        printMessage(String.format(Messages.PLAYER_TURN.print(),activePlayer.getName()));
         isPlayerBroke();
         if(activePlayer.isBroke()){
             System.out.println("Du är pank: "+activePlayer.getBalance());
