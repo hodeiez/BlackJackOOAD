@@ -117,6 +117,7 @@ public class GameBoardController {
 
                 else if(change.wasUpdated()) {
                     System.out.println("UPDATED");
+                    //Sets the faceUp state to true
                     ((CardGraph) playerBox.getChildren().get(change.getFrom())).setFaceUp(true);
                //here applied changeFace method. gets the card from the box which was updated and swaps face
                    ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();

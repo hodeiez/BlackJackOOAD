@@ -17,6 +17,11 @@ public class Card {
     public BooleanProperty isFaceUpProp(){
         return isFaceUp;
     }
+
+    /**
+     * sets the state for isFaceUp Property
+     * @param state if state true set card face up
+     */
     public final void setIsFaceUp(boolean state){isFaceUp.set(state);}
     public final boolean getIsFaceUp(){return isFaceUp.get();}
     public Suit getSuit() {
