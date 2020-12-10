@@ -1,5 +1,7 @@
-package BlackJack;
+package BlackJack.controller;
 
+import BlackJack.model.Card;
+import BlackJack.view.CardGraph;
 import javafx.animation.FadeTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;

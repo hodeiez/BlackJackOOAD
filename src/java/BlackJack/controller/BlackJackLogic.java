@@ -1,5 +1,9 @@
-package BlackJack;
+package BlackJack.controller;
 
+import BlackJack.model.Dealer;
+import BlackJack.model.Deck;
+import BlackJack.model.Player;
+import BlackJack.view.Messages;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

@@ -1,13 +1,7 @@
-package BlackJack;
+package BlackJack.model;
 
 import javafx.application.Platform;
-import javafx.beans.Observable;
-import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.util.Callback;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import static java.lang.Thread.sleep;

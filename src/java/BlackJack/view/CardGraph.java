@@ -1,9 +1,6 @@
-package BlackJack;
+package BlackJack.view;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
 
@@ -23,7 +20,7 @@ public class CardGraph extends Rectangle {
     private final ImagePattern backCard=new ImagePattern(new Image(String.valueOf(getClass().getResource("/cardsPng/cardBack.jpg"))));
 
 
-    CardGraph(String suit, String rank, boolean faceUp) {
+    public CardGraph(String suit, String rank, boolean faceUp) {
         this.suit = suit;
         this.rank = rank;
         this.faceUp=faceUp;

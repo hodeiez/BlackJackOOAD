@@ -1,4 +1,4 @@
-package BlackJack;
+package BlackJack.model;
 
 /**
  * Created by Lukas Aronsson

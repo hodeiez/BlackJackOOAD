@@ -1,10 +1,9 @@
-package BlackJack;
+package BlackJack.view;
 
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 
 import java.util.ArrayList;
 

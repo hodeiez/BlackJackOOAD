@@ -1,4 +1,4 @@
-package BlackJack;
+package BlackJack.model;
 
 import javafx.application.Platform;
 import javafx.beans.Observable;
@@ -20,8 +20,8 @@ import java.util.List;
  **/
 public abstract class IHasCards {
 
-    ArrayList<Card> hand = new ArrayList();
-    ObservableList handObs = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {
+    public ArrayList<Card> hand = new ArrayList();
+    public ObservableList handObs = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {
         @Override
         public Observable[] call(Card card) {
             return new Observable[]{
@@ -40,7 +40,7 @@ public abstract class IHasCards {
      *
      * @return the total value of the current hand
      */
-    synchronized int getHandValue() {
+    public synchronized int getHandValue() {
         List<Integer> aces = new ArrayList<>();
         int result = 0;
         for (Card card : hand) {

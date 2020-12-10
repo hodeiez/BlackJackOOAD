@@ -1,4 +1,4 @@
-package BlackJack;
+package BlackJack.view;
 
 /**
  * Created by Hodei Eceiza

@@ -1,4 +1,4 @@
-package BlackJack;
+package BlackJack.model;
 
 import java.util.ArrayList;
 import java.util.Collections;

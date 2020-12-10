@@ -1,4 +1,4 @@
-package BlackJack;
+package BlackJack.model;
 
 import java.util.Collections;
 import java.util.LinkedList;
