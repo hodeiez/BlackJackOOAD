@@ -1,5 +1,10 @@
 package BlackJack;
 
+import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,10 +20,32 @@ public class HighScore {
     private static HighScore instance;
     private List<HighScoreObject> list;
     private final int maxListLength = 10;
+    public StringProperty names = new SimpleStringProperty();  //For JavaFX
+    public StringProperty scores = new SimpleStringProperty(); //For JavaFX
+    public StringProperty dates = new SimpleStringProperty();  //For JavaFX
 
     private HighScore() {
         getHighScoresFromFile();
+        updateStrings();
     }
+
+    private void updateStrings(){
+        String names = "";
+        String scores = "";
+        String dates = "";
+        for(var a: list){
+            names += a.getName() + "\n";
+            scores += a.getScore() + "\n";
+            dates += a.getDate() + "\n";
+        }
+        String finalNames = names;
+        String finalScores = scores;
+        String finalDates = dates;
+        Platform.runLater(()-> this.names.set(finalNames));
+        Platform.runLater(()-> this.scores.set(finalScores));
+        Platform.runLater(()-> this.dates.set(finalDates));
+    }
+
 
     public static HighScore getInstance() {
         if (instance == null) {
@@ -35,58 +62,41 @@ public class HighScore {
         if (this.list.size() < maxListLength) {
             list.add(new HighScoreObject(name, score));
         } else {
-            if(score <= list.get(list.size()-1).getScore()){
+            if (score <= list.get(list.size() - 1).getScore()) {
                 return false;
             } else {
-                list.remove(list.size()-1);
+                list.remove(list.size() - 1);
                 list.add(new HighScoreObject(name, score));
             }
         }
         Collections.sort(list);
         Collections.reverse(list);
+        updateStrings();
+        writeHighScoreToFile();
         return true;
-    }
-
-    public List<String> getNames(){
-        List<String> names = new ArrayList<>();
-        for(var a : list){
-            names.add(a.getName());
-        }
-        return names;
-    }
-
-    public List<String> getScore(){
-        List<String> scores = new ArrayList<>();
-        for(var a : list){
-            a.getScore();
-        }
-        return scores;
-    }
-
-    public List<String> getDates(){
-        List<String> dates = new ArrayList<>();
-        for(var a : list){
-            dates.add(a.getDate());
-        }
-        return dates;
     }
 
     private void getHighScoresFromFile() {
         List<String> tempList = IOUtil.readFromFileToList("src/resources/highScore.txt");
         list = new ArrayList<>();
         for (String s : tempList) {
-            int score = Integer.parseInt(s.substring(0, s.indexOf("|")));
-            String name = s.substring(s.indexOf("|") + 1);
-            list.add(new HighScoreObject(name, score));
+            int index = 0;
+            index = s.indexOf("|");
+            int score = Integer.parseInt(s.substring(0, index));
+            index++;
+            String name = s.substring(index, s.indexOf("|", index));
+            index = s.indexOf("|" , index) +1;
+            LocalDate date = LocalDate.parse(s.substring(index));
+            list.add(new HighScoreObject(name, score, date));
         }
         Collections.sort(list);
         Collections.reverse(list);
     }
 
-    public void writeHighScoreToFile(){
+    public void writeHighScoreToFile() {
         List<String> tempList = new ArrayList<>();
-        for(var a : this.list){
-            tempList.add(a.getScore() + "|" + a.getName());
+        for (var a : this.list) {
+            tempList.add(a.getScore() + "|" + a.getName() + "|" + a.getDate());
         }
         IOUtil.writeListToFile(tempList, "src/resources/highScore.txt");
     }

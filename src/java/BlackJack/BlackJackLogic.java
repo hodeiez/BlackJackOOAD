@@ -18,8 +18,10 @@ public class BlackJackLogic implements Runnable {
     Player activePlayer = new Player();
     BooleanProperty disableButtons = new SimpleBooleanProperty(false);
     boolean humanBust;
-    public static BlockingQueue<Integer> actionQueue = new LinkedBlockingQueue();
+    boolean highScoreSet;
+    public static BlockingQueue<Object> actionQueue = new LinkedBlockingQueue();
     StringProperty messages = new SimpleStringProperty();
+    HighScore highScore = HighScore.getInstance();
 
     private void setUpGame() throws InterruptedException {
         activePlayer.setBalance(300);
@@ -75,7 +77,7 @@ public class BlackJackLogic implements Runnable {
     }
 
     private void isPlayerBroke() {
-        if (activePlayer.getBalance() < 0) {
+        if (activePlayer.getBalance() <= 0) {
             activePlayer.setBroke(true);
         }
     }
@@ -122,21 +124,43 @@ public class BlackJackLogic implements Runnable {
         } else {
             System.out.println(activePlayer.getBalance());
             int choice = 0;
+            hitLoop:
             while (true) {
                 boolean hit = false;
                 Platform.runLater(() -> disableButtons.setValue(false));
                 choice = (int) BlackJackLogic.actionQueue.take();
                 Platform.runLater(() -> disableButtons.setValue(true));
                 System.out.println("Val: " + choice);
-                if (choice == 1) {
-                    System.out.println("Före drawCard" + activePlayer.getHandValue());
-                    activePlayer.addCard(deck1.drawCard());
-                    System.out.println("Efter drawCard" + activePlayer.getHandValue());
-                } else {
-                    break;
+                switch(choice){
+                    case 0 -> { //stay, do nothing
+                        System.out.println("Stay");
+                        break hitLoop;
+                    }
+                    case 1 -> { //hit
+                        activePlayer.addCard(deck1.drawCard());
+                    }
+                    case 9 -> { //Pressed submit on highscore
+                        System.out.println("HighScore pushed, acting as a Stay right now");
+                        String name = (String) BlackJackLogic.actionQueue.take();
+                        highScoreSet = highScore.addHighScore(name,activePlayer.balance);
+                        if (highScoreSet) { //Adds highscore if it makes it
+                            System.out.println("HighScore added.");
+                            while(activePlayer.getBalance()>1){
+                                activePlayer.decreaseBalance();
+                            }
+                            isPlayerBroke();
+                        } else {
+                            System.out.println("Highscore to low");
+                        }
+
+                        break hitLoop; //TODO: End game!
+                    }
+                    default -> {
+                        break hitLoop;
+                    }
                 }
 
-                if (activePlayer.getHandValue() > 21) { //TODO borde vara i Player eller HasCards?
+                if (activePlayer.getHandValue() > 21) {
                     System.out.println("in BlackJackLogic / humanPlayerTurn: Player Handvalue: " + activePlayer.getHandValue());
                     humanBust = true;
                     break;
@@ -199,8 +223,12 @@ public class BlackJackLogic implements Runnable {
 
     public void isGameOver() {
         if (activePlayer.isBroke()) {
-            System.out.println("LOOOOOOOOOSEEERRRR!!!!!!!!");
-            printMessage("LOOOOOOOOOSEEERRRR!!!!!!!!");
+            if(highScoreSet){
+                printMessage("You made the highscore!");
+            } else{
+                System.out.println("LOOOOOOOOOSEEERRRR!!!!!!!!");
+                printMessage("LOOOOOOOOOSEEERRRR!!!!!!!!");
+            }
             activePlayer.clearHand();
             dealer1.clearHand();
             activePlayer.setBalance(1000);

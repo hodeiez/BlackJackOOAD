@@ -18,6 +18,12 @@ public class HighScoreObject implements Comparable<HighScoreObject>{
     HighScoreObject(String name, int score){
        this.name = name;
        this.score = score;
+       this.date = LocalDate.now();
+    }
+    HighScoreObject(String name, int score, LocalDate date){
+       this.name = name;
+       this.score = score;
+       this.date = date;
     }
 
     public String getName(){

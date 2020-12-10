@@ -110,14 +110,14 @@
                     </rowConstraints>
                     <children>
                         <Label fx:id="highScoreTitle" alignment="CENTER" prefHeight="17.0" prefWidth="444.0"
-                               text="HighScore" styleClass="highScoreTitle" GridPane.columnIndex="1"/>
+                               text="Local HighScore" styleClass="highScoreTitle" GridPane.columnIndex="1"/>
                         <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <children>
-                                <Label fx:id="labelHSDate" prefHeight="556.0" prefWidth="115.0" text="Label"
+                                <Label fx:id="labelHSDate" prefHeight="556.0" prefWidth="120.0" text="Label"
                                        styleClass="highScoreText"/>
-                                <Label fx:id="labelHSName" prefHeight="533.0" prefWidth="131.0" text="Label"
+                                <Label fx:id="labelHSName" prefHeight="533.0" prefWidth="160.0" text="Label"
                                        styleClass="highScoreText"/>
-                                <Label fx:id="labelHSScore" prefHeight="515.0" prefWidth="173.0" text="Label"
+                                <Label fx:id="labelHSScore" prefHeight="515.0" prefWidth="170.0" text="Label"
                                        styleClass="highScoreText"/>
                             </children>
                         </HBox>
@@ -126,14 +126,14 @@
                                 <HBox prefHeight="100.0" prefWidth="200.0">
                                     <children>
                                         <Pane prefHeight="28.0" prefWidth="120.0"/>
-                                        <TextField fx:id="textFieldHS" prefWidth="200" alignment="CENTER"
+                                        <TextField fx:id="textFieldHS" prefWidth="180" alignment="CENTER"
                                                    promptText="Enter name" styleClass="textFieldHighScore"/>
-                                        <Pane prefHeight="28.0" prefWidth="20.0"/>
+                                        <Pane prefHeight="28.0" prefWidth="50.0"/>
                                         <Button fx:id="buttonHighScore" alignment="CENTER" mnemonicParsing="false"
                                                 text="Submit" styleClass="buttons"/>
                                     </children>
                                 </HBox>
-                                <Label alignment="CENTER" prefHeight="17.0" prefWidth="459.0"
+                                <Label fx:id="highScoreNotice" alignment="CENTER" prefHeight="17.0" prefWidth="459.0"
                                        text="Adding highscore ends current game." styleClass="highScoreNotice"/>
                             </children>
                         </VBox>

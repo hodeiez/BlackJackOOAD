@@ -6,21 +6,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-
-import java.io.IOException;
-import java.nio.channels.Pipe;
-import java.time.LocalDate;
 
 /**
  * Created by Hodei Eceiza
@@ -51,6 +44,7 @@ public class GameBoardController {
     public Label labelHSScore;
     public TextField textFieldHS;
     public Button buttonHighScore;
+    public Label highScoreNotice;
     @FXML
     private AnchorPane gameBoardPane;
     //  private ModelTest modelTest;
@@ -101,8 +95,16 @@ public class GameBoardController {
         //hit.setOnAction(e->modelTest.hitListener());
         hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
 //        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
-        end.setOnAction(e -> endButtonPressed());
+        end.setOnAction(e -> endButtonAction());
         stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
+        buttonHighScore.setOnAction(e -> highScoreButtonAction());
+        textFieldHS.setOnKeyPressed (e -> {
+            highScoreNotice.setText("Adding highscore ends current game.");
+            highScoreNotice.setStyle("-fx-text-fill: white");
+        });
+        labelHSDate.textProperty().bind(modelTest.highScore.dates);
+        labelHSName.textProperty().bind(modelTest.highScore.names);
+        labelHSScore.textProperty().bind(modelTest.highScore.scores);
 
         rules.setOnMouseClicked(e ->rulesPanel.setVisible(!rulesPanel.isVisible()));
 
@@ -151,6 +153,7 @@ public class GameBoardController {
                 hit.setDisable(newValue);
                 stay.setDisable(newValue);
                 end.setDisable(newValue);
+                buttonHighScore.setDisable(newValue);
             }
         });
     }
@@ -186,7 +189,7 @@ public class GameBoardController {
     /**
      * sets up the rulesPanel
      */
-    public void rulesPanelSettings(){
+    private void rulesPanelSettings(){
         rulesPanel.setVisible(false);
         rulesPanel.setHeaderText("Rules"); // TODO: 12/8/2020 : Lukas : figure out how to change font on the header of a dialogPanel
 
@@ -200,7 +203,7 @@ public class GameBoardController {
                 "* If both dealer and player receive a blackjack or any other hands with the same sum called a \"push\", no one wins. \n\n" +
                 "Rules Taken from https://en.wikipedia.org/wiki/Blackjack#Rules ");
     }
-    public void fadeTransition(CardGraph c){
+    private void fadeTransition(CardGraph c){
         FadeTransition ft=new FadeTransition();
         ft.setDuration(Duration.seconds(0.5));
         ft.setNode(c);
@@ -210,12 +213,29 @@ public class GameBoardController {
     }
 
     /**
-     * Show/hide HighScore-panel.
+     * Show/hide HighScore-AnhorPane.
      */
-    public void endButtonPressed(){
+    private void endButtonAction(){
         highScorePane.setVisible(!highScorePane.isVisible());
-        System.out.println(gameBoardPane.getHeight());
-        labelHSDate.setText("NU JÄVLAR!");
+        end.setText(highScorePane.isVisible() ? "RESUME" : "END");
         end.toFront();
+    }
+
+    /**
+     *
+     */
+    private void highScoreButtonAction() {
+        if(textFieldHS.getText().isEmpty()){
+            highScoreNotice.setText("Must enter name to submit!");
+            highScoreNotice.setStyle("-fx-text-fill: pink");
+        } else if(textFieldHS.getText().length() > 30){
+            highScoreNotice.setText("A bit too long, ey? Keep it under 30");
+            highScoreNotice.setStyle("-fx-text-fill: pink");
+            textFieldHS.clear();
+        } else {
+            BlackJackLogic.actionQueue.add(9);
+            BlackJackLogic.actionQueue.add(textFieldHS.getText());
+            textFieldHS.clear();
+        }
     }
 }

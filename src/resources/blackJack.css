@@ -39,6 +39,8 @@
     -fx-text-fill: white;
 }
 .textFieldHighScore{
+    -fx-text-fill: white;
+    -fx-font-size: 14;
     -fx-pref-height: 30;
     -fx-background-color: rgba(0,0,0,0.1);
     -fx-background-radius: 10;
@@ -48,7 +50,7 @@
 }
 .highScoreNotice{
     -fx-text-fill: white;
-    -fx-font-size: 12;
+    -fx-font-size: 14;
 }
 
 .highScoreBackground{
