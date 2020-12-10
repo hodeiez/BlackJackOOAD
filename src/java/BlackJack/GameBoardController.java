@@ -56,7 +56,9 @@ public class GameBoardController {
     }
 
 
-    public void initialize() {
+    public void initialize() throws InterruptedException {
+        modelTest.setUpGame();
+        modelTest.playRound();
        setListener(modelTest.activePlayer.handObs, activePlayer);
 
         setListener(modelTest.dealer1.handObs, dealerBox);
@@ -77,18 +79,12 @@ messages.textProperty().bind(modelTest.messages);
         // balance.textProperty().bind(modelTest.balanceProperty());
 //        handValue.textProperty().bind(modelTest.handValueSPProperty());
 
-
-
-        //using buttons for test
-        //test for changeFaceUp
-        // stay.setOnAction(e-> modelTest.activePlayerHandArr.get(0).changeFace());
-
         //testing hit
         //hit.setOnAction(e->modelTest.hitListener());
-        hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
+        hit.setOnAction(e -> modelTest.userChoice(1));
 //        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
 //        end.setOnAction(e -> balance.setText(BlackJackLogic.test()));
-        stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
+        stay.setOnAction(e -> modelTest.userChoice(0));
 
         rules.setOnMouseClicked(e ->rulesPanel.setVisible(!rulesPanel.isVisible()));
 
