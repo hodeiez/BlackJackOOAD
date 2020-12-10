@@ -47,6 +47,30 @@ public class HighScore {
         return true;
     }
 
+    public List<String> getNames(){
+        List<String> names = new ArrayList<>();
+        for(var a : list){
+            names.add(a.getName());
+        }
+        return names;
+    }
+
+    public List<String> getScore(){
+        List<String> scores = new ArrayList<>();
+        for(var a : list){
+            a.getScore();
+        }
+        return scores;
+    }
+
+    public List<String> getDates(){
+        List<String> dates = new ArrayList<>();
+        for(var a : list){
+            dates.add(a.getDate());
+        }
+        return dates;
+    }
+
     private void getHighScoresFromFile() {
         List<String> tempList = IOUtil.readFromFileToList("src/resources/highScore.txt");
         list = new ArrayList<>();

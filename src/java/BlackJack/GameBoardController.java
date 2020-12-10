@@ -6,13 +6,21 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
+import java.io.IOException;
+import java.nio.channels.Pipe;
+import java.time.LocalDate;
 
 /**
  * Created by Hodei Eceiza
@@ -22,7 +30,7 @@ import javafx.util.Duration;
  * Copyright: MIT
  */
 public class GameBoardController {
-
+    @FXML
     public Button hit;
     public Button stay;
     public Button rules;
@@ -37,6 +45,12 @@ public class GameBoardController {
     public Label handValue;
     public Label dealerValue;
     public Label messages;
+    public AnchorPane highScorePane;
+    public Label labelHSDate;
+    public Label labelHSName;
+    public Label labelHSScore;
+    public TextField textFieldHS;
+    public Button buttonHighScore;
     @FXML
     private AnchorPane gameBoardPane;
     //  private ModelTest modelTest;
@@ -57,7 +71,7 @@ public class GameBoardController {
 
 
     public void initialize() {
-       setListener(modelTest.activePlayer.handObs, activePlayer);
+        setListener(modelTest.activePlayer.handObs, activePlayer);
 
         setListener(modelTest.dealer1.handObs, dealerBox);
 
@@ -69,7 +83,7 @@ public class GameBoardController {
 
         setBalanceValueListener();
 
-messages.textProperty().bind(modelTest.messages);
+        messages.textProperty().bind(modelTest.messages);
 //Listens changes of the observableList
 
 
@@ -87,11 +101,12 @@ messages.textProperty().bind(modelTest.messages);
         //hit.setOnAction(e->modelTest.hitListener());
         hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
 //        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
-//        end.setOnAction(e -> balance.setText(BlackJackLogic.test()));
+        end.setOnAction(e -> endButtonPressed());
         stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
 
         rules.setOnMouseClicked(e ->rulesPanel.setVisible(!rulesPanel.isVisible()));
 
+        highScorePane.setVisible(false);
     }
 
     public void changeBalance(String string){
@@ -135,6 +150,7 @@ messages.textProperty().bind(modelTest.messages);
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 hit.setDisable(newValue);
                 stay.setDisable(newValue);
+                end.setDisable(newValue);
             }
         });
     }
@@ -191,5 +207,15 @@ messages.textProperty().bind(modelTest.messages);
         ft.setFromValue(0);
         ft.setToValue(100);
         ft.play();
+    }
+
+    /**
+     * Show/hide HighScore-panel.
+     */
+    public void endButtonPressed(){
+        highScorePane.setVisible(!highScorePane.isVisible());
+        System.out.println(gameBoardPane.getHeight());
+        labelHSDate.setText("NU JÄVLAR!");
+        end.toFront();
     }
 }
