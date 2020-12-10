@@ -8,22 +8,32 @@ public class Card {
     private final Suit suit;
     private final int rank;
     private boolean faceUp;
-    private BooleanProperty isFaceUp=new SimpleBooleanProperty();
+    private BooleanProperty isFaceUp = new SimpleBooleanProperty();
+
     public Card(Suit suit, int rank) {
         this.rank = rank;
         this.suit = suit;
-        this.faceUp=true;
+        this.faceUp = true;
     }
-    public BooleanProperty isFaceUpProp(){
+
+    public BooleanProperty isFaceUpProp() {
         return isFaceUp;
     }
 
     /**
      * sets the state for isFaceUp Property
+     *
      * @param state if state true set card face up
      */
-    public final void setIsFaceUp(boolean state){isFaceUp.set(state);}
-    public final boolean getIsFaceUp(){return isFaceUp.get();}
+    public final void setIsFaceUp(boolean state) {
+        isFaceUp.set(state);
+        faceUp = state;
+    }
+
+    public final boolean getIsFaceUp() {
+        return isFaceUp.get();
+    }
+
     public Suit getSuit() {
         return suit;
     }

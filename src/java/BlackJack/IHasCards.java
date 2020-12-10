@@ -45,7 +45,9 @@ public abstract class IHasCards {
         int result = 0;
         for (Card card : hand) {
             int i = card.getRank();
-            result += i > 10 ? 10 : i == 1 ? 11 : i; //add all cards to result, ace = 11
+            if (card.isFaceUp()) {
+                result += i > 10 ? 10 : i == 1 ? 11 : i; //add all cards to result, ace = 11
+            }
             if (i == 1) aces.add(1);
         }
         while (!aces.isEmpty() && result > 21) { //if results is over 21, remove 10 (leave 1) for every ace if needed.
@@ -54,8 +56,6 @@ public abstract class IHasCards {
         }
 
         int finalResult = result;
-//        setHandValueSP(result + ""); //Får Thread Exception, utanför Java FX-tråd
-//        Platform.runLater(() -> handValueSPProperty().set(finalResult + "")); //Funkar också.
         Platform.runLater(() -> setHandValueSP(finalResult + ""));
         return result;
     }
@@ -102,8 +102,10 @@ public abstract class IHasCards {
      * @param state to select state, true is faceUp
      */
     public void setObsFaceUp(int index, boolean state){
-        Platform.runLater(()->((Card)handObs.get(index)).setIsFaceUp(state));
-      //  System.out.println( handObs.get(0).getClass());
+        if (handObs.size() > 0) {
+            Platform.runLater(()->((Card)handObs.get(index)).setIsFaceUp(state));
+        }
+        //  System.out.println( handObs.get(0).getClass());
     }
 
 

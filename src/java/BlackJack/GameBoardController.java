@@ -156,7 +156,6 @@ messages.textProperty().bind(modelTest.messages);
         String rank = String.valueOf(card.getRank());
         String suit = String.valueOf(card.getSuit()).toLowerCase();
         switch (rank) {
-            case "0" -> rank = "ace";
             case "1" -> rank = "ace";
             case "11" -> rank = "jack";
             case "12" -> rank = "queen";
@@ -187,7 +186,7 @@ messages.textProperty().bind(modelTest.messages);
     }
     public void fadeTransition(CardGraph c){
         FadeTransition ft=new FadeTransition();
-        ft.setDuration(Duration.seconds(1.5));
+        ft.setDuration(Duration.seconds(0.5));
         ft.setNode(c);
         ft.setFromValue(0);
         ft.setToValue(100);
