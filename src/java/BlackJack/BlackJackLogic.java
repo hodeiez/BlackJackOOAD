@@ -169,7 +169,7 @@ public class BlackJackLogic implements Runnable {
                     System.out.println("Dealern är bust! Du vinner.");
                     printMessage("Dealern är bust! Du vinner.");
                     activePlayer.increaseBalance();
-                    activePlayer.increaseBalance(); //why increase twice???
+                    activePlayer.increaseBalance();
                 } else if (dealer1.getHandValue() > activePlayer.getHandValue()) {
                     System.out.println("Dealern vinner!");
                     printMessage("Dealern vinner!");

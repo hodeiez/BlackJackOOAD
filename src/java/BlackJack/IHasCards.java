@@ -55,8 +55,8 @@ public abstract class IHasCards {
             aces.remove(0);
         }
 
-        //int finalResult = result;
-      //  Platform.runLater(() -> setHandValueSP(finalResult + ""));
+        int finalResult = result;
+
         return result;
     }
 
@@ -108,7 +108,7 @@ public abstract class IHasCards {
         //  System.out.println( handObs.get(0).getClass());
     }
     public void updateHandValue(){
-        Platform.runLater(()->setHandValueSP(getHandValue() + ""));
+        Platform.runLater(() -> setHandValueSP(getHandValue()+ ""));
     }
 
 
