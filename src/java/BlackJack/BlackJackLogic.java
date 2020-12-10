@@ -39,7 +39,7 @@ public class BlackJackLogic implements Runnable {
             isItTimeToShuffle();
 
             placeBets();
-            updateGraphicBalance();
+
             dealHands();
             //dealer1.hand.get(0).setFaceUp(true);
             humanPlayerTurn();
@@ -81,10 +81,10 @@ public class BlackJackLogic implements Runnable {
     }
 
     private void placeBets() {
-        for (Player p : players
-        ) {
+        for (Player p : players) {
             p.setCurrentBet(100);
         }
+        updateGraphicBalance();
     }
 
     private void setStartingBalance(int startCash) {
