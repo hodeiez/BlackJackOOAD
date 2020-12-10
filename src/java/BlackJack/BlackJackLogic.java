@@ -23,6 +23,7 @@ public class BlackJackLogic implements Runnable {
 
     private void setUpGame() throws InterruptedException {
         activePlayer.setBalance(300);
+        activePlayer.setCurrentBet(100);  //starting bet
         players.add(activePlayer);
         playRound();
     }
@@ -81,10 +82,10 @@ public class BlackJackLogic implements Runnable {
     }
 
     private void placeBets() {
-        for (Player p : players) {
-            p.setCurrentBet(100);
-        }
+
+        //sets the bot bet to players bet
         updateGraphicBalance();
+
     }
 
     private void setStartingBalance(int startCash) {
