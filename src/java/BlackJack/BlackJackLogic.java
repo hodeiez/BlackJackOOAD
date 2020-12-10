@@ -107,8 +107,10 @@ public class BlackJackLogic implements Runnable {
             dealer1.addCard(deck1.drawCard());
             for (Player p : players) {
                 p.getHandValue();
+                p.updateHandValue();
             }
             dealer1.getHandValue();
+            dealer1.updateHandValue();
         }
     }
 
@@ -150,6 +152,7 @@ public class BlackJackLogic implements Runnable {
         dealer1.setObsFaceUp(0, true);
         Thread.sleep(200);
         dealer1.getHandValue();
+        dealer1.updateHandValue();
         if (!activePlayer.isBroke()) {
             if (humanBust) {
                 humanBust = false;
@@ -160,12 +163,13 @@ public class BlackJackLogic implements Runnable {
                     Thread.sleep(1000);
                     dealer1.addCard(deck1.drawCard());
                     dealer1.getHandValue();
+                    dealer1.updateHandValue();
                 }
                 if (dealer1.getHandValue() > 21) {
                     System.out.println("Dealern är bust! Du vinner.");
                     printMessage("Dealern är bust! Du vinner.");
                     activePlayer.increaseBalance();
-                    activePlayer.increaseBalance();
+                    activePlayer.increaseBalance(); //why increase twice???
                 } else if (dealer1.getHandValue() > activePlayer.getHandValue()) {
                     System.out.println("Dealern vinner!");
                     printMessage("Dealern vinner!");
