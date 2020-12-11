@@ -1,6 +1,7 @@
 package BlackJack;
 
 import javafx.application.Platform;
+import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -17,13 +18,13 @@ public class BlackJackLogic implements Runnable {
     private Deck deck1 = new Deck(6);
     Player activePlayer = new Player();
     BooleanProperty disableButtons = new SimpleBooleanProperty(false);
+    BooleanProperty bettingScreen = new SimpleBooleanProperty(true);
     boolean humanBust;
-    public static BlockingQueue<Integer> actionQueue = new LinkedBlockingQueue();
+    public static BlockingQueue<Object> actionQueue = new LinkedBlockingQueue();
     StringProperty messages = new SimpleStringProperty();
 
     private void setUpGame() throws InterruptedException {
         activePlayer.setBalance(300);
-        activePlayer.setCurrentBet(100);  //starting bet
         players.add(activePlayer);
         playRound();
     }
@@ -81,10 +82,20 @@ public class BlackJackLogic implements Runnable {
         }
     }
 
-    private void placeBets() {
+    private void placeBets() throws InterruptedException {
+
+        Platform.runLater(() -> bettingScreen.setValue(true));
+
+        updateGraphicBalance();
+
+        Integer bet =  (Integer) actionQueue.take();
+
+        activePlayer.setCurrentBet(bet);
 
         //sets the bot bet to players bet
         updateGraphicBalance();
+
+        Platform.runLater(() -> bettingScreen.setValue(false));
 
     }
 

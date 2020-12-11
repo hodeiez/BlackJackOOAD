@@ -29,6 +29,7 @@ public class GameBoardController {
     public Button rules;
     public Button end;
     public Label balance;
+    public Label bet;
     public DialogPane rulesPanel;
     public HBox dealerBox;
     public HBox dealerbackground;
@@ -72,7 +73,7 @@ public class GameBoardController {
 
         setListener(modelTest.dealer1.handObs, dealerBox);
 
-        bettingScreen();
+        setBettingScreenListener();
 
         rulesPanelSettings();
 
@@ -107,7 +108,7 @@ messages.textProperty().bind(modelTest.messages);
 
         Plus.setOnAction(e-> plus());
         Minus.setOnAction(e-> minus());
-        Bet.setOnAction(e-> betted());
+         Bet.setOnAction(e-> betted());
 
     }
 
@@ -200,19 +201,40 @@ messages.textProperty().bind(modelTest.messages);
                 "* If both dealer and player receive a blackjack or any other hands with the same sum called a \"push\", no one wins. \n\n" +
                 "Rules Taken from https://en.wikipedia.org/wiki/Blackjack#Rules ");
     }
+
+    public void setBettingScreenListener() {
+        modelTest.bettingScreen.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                BettingScreen.setVisible(newValue);
+                bettingScreen();
+            }
+        });
+    }
+
+
     public void bettingScreen(){
         tempBet = modelTest.activePlayer.getCurrentBet();
-        BetAmount.setText("" +tempBet);
-        BettingScreen.setVisible(true);
-        BettingScreen.setDisable(false);
+        if(tempBet > Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1))){
+            BetAmount.setText(String.valueOf(tempBet));
+        }else{
+
+        }
+
+
     }
 
     public void plus(){
-        if(!(tempBet >= 1000)){ //1000 is max bet
+        if(!(tempBet >= 1000) && !(tempBet >= Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1)))){ //1000 is max bet
             tempBet = tempBet + 100; //adds 100 to tempBet
             BetAmount.setText(""+tempBet);
         }else {
-            BettingText.setText("Set your Bet! \n Max bet is 1000");
+            if(tempBet >= 1000){
+                BettingText.setText("Set your Bet! \n Max bet is 1000");
+            } else {
+                BettingText.setText("Set your Bet! \n Bet to large for balance");
+            }
+
         }
     }
 
@@ -225,10 +247,13 @@ messages.textProperty().bind(modelTest.messages);
         }
     }
     public void betted(){
-        BettingText.setText("The user Betted: " + tempBet);
-        //modelTest.activePlayer.setCurrentBet(tempBet); //Sets the bet
+
+        BlackJackLogic.actionQueue.add(tempBet);
+        bet.setText("Bet: "+tempBet);
         BettingScreen.setVisible(false);
-        BettingScreen.setDisable(true);
+        tempBet = 100; //resets the bet to 100
+        BetAmount.setText(""+tempBet); //sets the bet amount to 100
+
     }
 
     public void fadeTransition(CardGraph c){
