@@ -1,12 +1,14 @@
 package BlackJack;
 
 import javafx.animation.FadeTransition;
+import javafx.animation.RotateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -105,7 +107,6 @@ public class GameBoardController {
 //        handValue.textProperty().bind(blackJackLogic.handValueSPProperty());
 
 
-
         //using buttons for test
         //test for changeFaceUp
         // stay.setOnAction(e-> blackJackLogic.activePlayerHandArr.get(0).changeFace());
@@ -117,7 +118,7 @@ public class GameBoardController {
         end.setOnAction(e -> endButtonAction());
         stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
         buttonHighScore.setOnAction(e -> highScoreButtonAction());
-        textFieldHS.setOnKeyPressed (e -> {
+        textFieldHS.setOnKeyPressed(e -> {
             highScoreNotice.setText("Adding highscore ends current game.");
             highScoreNotice.setStyle("-fx-text-fill: white");
         });
@@ -125,20 +126,21 @@ public class GameBoardController {
         labelHSName.textProperty().bind(blackJackLogic.highScore.names);
         labelHSScore.textProperty().bind(blackJackLogic.highScore.scores);
 
-        rules.setOnMouseClicked(e ->rulesPanel.setVisible(!rulesPanel.isVisible()));
+        rules.setOnMouseClicked(e -> rulesPanel.setVisible(!rulesPanel.isVisible()));
 
         highScorePane.setVisible(false);
-        Plus.setOnAction(e-> plus());
-        Minus.setOnAction(e-> minus());
-         Bet.setOnAction(e-> betted());
+        Plus.setOnAction(e -> plus());
+        Minus.setOnAction(e -> minus());
+        Bet.setOnAction(e -> betted());
 
-         welcome.setOnMouseClicked(e->welcome.setVisible(false));
+        welcome.setOnMouseClicked(e -> welcome.setVisible(false));
 
     }
 
-    public void changeBalance(String string){
+    public void changeBalance(String string) {
         balance.setText(string);
     }
+
     public void setListener(ObservableList<Card> observable, HBox playerBox) {
         observable.addListener((ListChangeListener<Card>) change -> {
             while (change.next()) {
@@ -155,15 +157,12 @@ public class GameBoardController {
 
                 } else if (change.wasRemoved()) {
                     playerBox.getChildren().clear();
-                }
-
-
-                else if(change.wasUpdated()) {
+                } else if (change.wasUpdated()) {
                     System.out.println("UPDATED");
                     //Sets the faceUp state to true
                     ((CardGraph) playerBox.getChildren().get(change.getFrom())).setFaceUp(true);
-               //here applied changeFace method. gets the card from the box which was updated and swaps face
-                   ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
+                    //here applied changeFace method. gets the card from the box which was updated and swaps face
+                    ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
                 }
 
 
@@ -187,7 +186,8 @@ public class GameBoardController {
         handValue.textProperty().bind(blackJackLogic.activePlayer.handValueSPProperty());
         dealerValue.textProperty().bind(blackJackLogic.dealer1.handValueSPProperty());
     }
-    public void setBalanceValueListener(){
+
+    public void setBalanceValueListener() {
         blackJackLogic.activePlayer.balanceValueProperty.addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -214,9 +214,9 @@ public class GameBoardController {
     /**
      * sets up the rulesPanel
      */
-    private void rulesPanelSettings(){
+    private void rulesPanelSettings() {
         rulesPanel.setVisible(false);
-        Label rules=new Label("Rules");
+        Label rules = new Label("Rules");
         rules.setStyle("-fx-font-size: 50;-fx-background-color: #a29f9f");
         rulesPanel.setHeader(rules);
         rulesPanel.setContentText(
@@ -234,23 +234,23 @@ public class GameBoardController {
     }
 
 
-    public void bettingScreen(){
+    public void bettingScreen() {
         tempBet = blackJackLogic.activePlayer.getCurrentBet();
-        if(tempBet > Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1))){
+        if (tempBet > Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1))) {
             BetAmount.setText(String.valueOf(tempBet));
-        }else{
+        } else {
 
         }
 
 
     }
 
-    public void plus(){
-        if(!(tempBet >= 1000) && !(tempBet >= Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1)))){ //1000 is max bet
+    public void plus() {
+        if (!(tempBet >= 1000) && !(tempBet >= Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1)))) { //1000 is max bet
             tempBet = tempBet + 100; //adds 100 to tempBet
-            BetAmount.setText(""+tempBet);
-        }else {
-            if(tempBet >= 1000){
+            BetAmount.setText("" + tempBet);
+        } else {
+            if (tempBet >= 1000) {
                 BettingText.setText("Set your Bet! \n Max bet is 1000");
             } else {
                 BettingText.setText("Set your Bet! \n Bet to large for balance");
@@ -259,26 +259,27 @@ public class GameBoardController {
         }
     }
 
-    public void minus(){
-        if(!(tempBet <= 100)){ //100 is min bet
+    public void minus() {
+        if (!(tempBet <= 100)) { //100 is min bet
             tempBet = tempBet - 100;
-            BetAmount.setText(""+tempBet);
+            BetAmount.setText("" + tempBet);
         } else {
             BettingText.setText("Set your Bet! \n Min bet is 100");
         }
     }
-    public void betted(){
+
+    public void betted() {
 
         BlackJackLogic.actionQueue.add(tempBet);
-        bet.setText("Bet: "+tempBet);
+        bet.setText("Bet: " + tempBet);
         BettingScreen.setVisible(false);
         tempBet = 100; //resets the bet to 100
-        BetAmount.setText(""+tempBet); //sets the bet amount to 100
+        BetAmount.setText("" + tempBet); //sets the bet amount to 100
 
     }
 
-    private void fadeTransition(CardGraph c){
-        FadeTransition ft=new FadeTransition();
+    private void fadeTransition(CardGraph c) {
+        FadeTransition ft = new FadeTransition();
         ft.setDuration(Duration.seconds(0.5));
         ft.setNode(c);
         ft.setFromValue(0);
@@ -289,7 +290,7 @@ public class GameBoardController {
     /**
      * Show/hide HighScore-AnhorPane.
      */
-    private void endButtonAction(){
+    private void endButtonAction() {
         highScorePane.setVisible(!highScorePane.isVisible());
         end.setText(highScorePane.isVisible() ? "RESUME" : "END");
         end.toFront();
@@ -299,10 +300,10 @@ public class GameBoardController {
      *
      */
     private void highScoreButtonAction() {
-        if(textFieldHS.getText().isEmpty()){
+        if (textFieldHS.getText().isEmpty()) {
             highScoreNotice.setText("Must enter name to submit!");
             highScoreNotice.setStyle("-fx-text-fill: pink");
-        } else if(textFieldHS.getText().length() > 30){
+        } else if (textFieldHS.getText().length() > 30) {
             highScoreNotice.setText("A bit too long, ey? Keep it under 30");
             highScoreNotice.setStyle("-fx-text-fill: pink");
             textFieldHS.clear();
@@ -312,13 +313,17 @@ public class GameBoardController {
             textFieldHS.clear();
         }
     }
-    private void welcomeAnimation(){
-        Group gr=new Group();
-        Random rnd=new Random();
-        for(int i=0;i<3;i++){
-            gr.getChildren().add(new CardGraph("spades",String.valueOf(rnd.nextInt(10)+2),true));}
-        gr.setTranslateX(welcome.getWidth()/2);
-        gr.setTranslateY(welcome.getHeight()/2);
+
+    private void welcomeAnimation() {
+        Group gr = new Group();
+        Random rnd = new Random();
+        for (int i = 0; i < 3; i++) {
+            Rectangle card=new CardGraph("spades", String.valueOf(rnd.nextInt(9) + 2), true);
+            gr.getChildren().add(card);
+        }
+        gr.setTranslateX(welcome.getPrefWidth()/2);
+        gr.setTranslateY(welcome.getPrefHeight()/2);
         welcome.getChildren().add(gr);
+
     }
 }
