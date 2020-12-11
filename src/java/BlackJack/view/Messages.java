@@ -1,12 +1,5 @@
-package BlackJack;
+package BlackJack.view;
 
-/**
- * Created by Hodei Eceiza
- * Date: 12/9/2020
- * Time: 13:32
- * Project: BlackJackOOAD
- * Copyright: MIT
- */
 public enum Messages {
     WELCOME("Welcome to Super Black Jack"),
     EXIT("See you next time"),
@@ -28,13 +21,14 @@ public enum Messages {
             "* If the dealer exceeds 21 (\"busts\") and the player does not, the player wins. \n" +
             "* If the player attains a final sum higher than the dealer and does not bust, the player wins. \n" +
             "* If both dealer and player receive a blackjack or any other hands with the same sum called a \"push\", no one wins. \n\n" +
-            "Rules Taken from https://en.wikipedia.org/wiki/Blackjack#Rules ")
-    ;
+            "Rules Taken from https://en.wikipedia.org/wiki/Blackjack#Rules ");
     private String message;
+
     Messages(String message) {
-        this.message=message;
+        this.message = message;
     }
-    public String print(){
+
+    public String print() {
         return message;
     }
 }

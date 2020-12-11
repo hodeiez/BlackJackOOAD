@@ -1,17 +1,10 @@
-package BlackJack;
+package BlackJack.model;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-/**
- * Created by Lukas Aronsson
- * Date: 01/12/2020
- * Time: 16:23
- * Project: BlackJackOOAD
- * Copyright: MIT
- **/
 public class ComputerPlayer extends Player {
 
     private boolean broke = false; //if the ComputerPlayer is all out of balance (gets removed form the game)

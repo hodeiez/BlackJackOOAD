@@ -1,23 +1,17 @@
-package BlackJack;
+package BlackJack.model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 import java.util.ArrayList;
 
-/**
- * Created by Lukas Aronsson
- * Date: 01/12/2020
- * Time: 16:23
- * Project: BlackJackOOAD
- * Copyright: MIT
- **/
 public class Player extends Hand {
     private String name = "Player"; //the players name
-    int balance = 1000; //the amount of balance the player has currently
+    public int balance = 1000; //the amount of balance the player has currently
     private int currentBet = 0; //the amount of balance the player have decided to bet this round
     private boolean broke = false;
-    StringProperty balanceValueProperty = new SimpleStringProperty();
+    public StringProperty balanceValueProperty = new SimpleStringProperty();
+
     public Player() {
         ArrayList<Card> hand = new ArrayList<>();
     }
@@ -99,10 +93,12 @@ public class Player extends Hand {
 
         if (currentBet <= balance) {
             this.currentBet = currentBet;
-            balance -=  currentBet;
-        }else{ System.out.println("För lite pengar.");
-        broke=true;
-    }}
+            balance -= currentBet;
+        } else {
+            System.out.println("För lite pengar.");
+            broke = true;
+        }
+    }
 
     /**
      * Getter For broke

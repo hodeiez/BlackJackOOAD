@@ -1,18 +1,12 @@
-package BlackJack;
+package BlackJack.model;
 
-/**
- * Created by Lukas Aronsson
- * Date: 01/12/2020
- * Time: 16:22
- * Project: BlackJackOOAD
- * Copyright: MIT
- **/
 public class Dealer extends Hand {
 
     private int stopValue = 17; //the value of the hand were the dealer will stop drawing cards
 
     /**
      * Should the dealer hit or not? (should the dealer draw a card?
+     *
      * @return returns true if the dealers hand has a value smaller then the stopValue and false if the opposite
      */
     public boolean shouldDealerHit() {
@@ -28,6 +22,7 @@ public class Dealer extends Hand {
 
     /**
      * Getter for stopValue
+     *
      * @return the value of the hand were the dealer will stop drawing cards
      */
     public int getStopValue() {
@@ -36,6 +31,7 @@ public class Dealer extends Hand {
 
     /**
      * Setter for stopValue
+     *
      * @param stopValue the value of the hand were the dealer will stop drawing cards
      */
     public void setStopValue(int stopValue) {

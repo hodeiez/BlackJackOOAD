@@ -1,5 +1,6 @@
 package BlackJack;
 
+import BlackJack.view.GameBoardView;
 import javafx.application.Application;
 
 
