@@ -316,8 +316,7 @@ public class GameBoardController {
         Group gr=new Group();
         Random rnd=new Random();
         for(int i=0;i<3;i++){
-            gr.getChildren().add(new CardGraph("spades",String.valueOf(rnd.nextInt(11)+2),true));
-        }
+            gr.getChildren().add(new CardGraph("spades",String.valueOf(rnd.nextInt(10)+2),true));}
         gr.setTranslateX(welcome.getWidth()/2);
         gr.setTranslateY(welcome.getHeight()/2);
         welcome.getChildren().add(gr);
