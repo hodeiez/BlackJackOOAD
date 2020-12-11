@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.shape.Rectangle;
@@ -23,7 +24,7 @@ import javafx.util.Duration;
  * Copyright: MIT
  */
 public class GameBoardController {
-
+    @FXML
     public Button hit;
     public Button stay;
     public Button rules;
@@ -38,6 +39,13 @@ public class GameBoardController {
     public Label handValue;
     public Label dealerValue;
     public Label messages;
+    public AnchorPane highScorePane;
+    public Label labelHSDate;
+    public Label labelHSName;
+    public Label labelHSScore;
+    public TextField textFieldHS;
+    public Button buttonHighScore;
+    public Label highScoreNotice;
     @FXML
     private AnchorPane gameBoardPane;
     //  private ModelTest modelTest;
@@ -58,7 +66,7 @@ public class GameBoardController {
 
 
     public void initialize() {
-       setListener(modelTest.activePlayer.handObs, activePlayer);
+        setListener(modelTest.activePlayer.handObs, activePlayer);
 
         setListener(modelTest.dealer1.handObs, dealerBox);
 
@@ -70,7 +78,7 @@ public class GameBoardController {
 
         setBalanceValueListener();
 
-messages.textProperty().bind(modelTest.messages);
+        messages.textProperty().bind(modelTest.messages);
 //Listens changes of the observableList
 
 
@@ -88,11 +96,20 @@ messages.textProperty().bind(modelTest.messages);
         //hit.setOnAction(e->modelTest.hitListener());
         hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
 //        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
-//        end.setOnAction(e -> balance.setText(BlackJackLogic.test()));
+        end.setOnAction(e -> endButtonAction());
         stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
+        buttonHighScore.setOnAction(e -> highScoreButtonAction());
+        textFieldHS.setOnKeyPressed (e -> {
+            highScoreNotice.setText("Adding highscore ends current game.");
+            highScoreNotice.setStyle("-fx-text-fill: white");
+        });
+        labelHSDate.textProperty().bind(modelTest.highScore.dates);
+        labelHSName.textProperty().bind(modelTest.highScore.names);
+        labelHSScore.textProperty().bind(modelTest.highScore.scores);
 
         rules.setOnMouseClicked(e ->rulesPanel.setVisible(!rulesPanel.isVisible()));
 
+        highScorePane.setVisible(false);
     }
 
     public void changeBalance(String string){
@@ -136,6 +153,8 @@ messages.textProperty().bind(modelTest.messages);
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 hit.setDisable(newValue);
                 stay.setDisable(newValue);
+                end.setDisable(newValue);
+                buttonHighScore.setDisable(newValue);
             }
         });
     }
@@ -171,7 +190,7 @@ messages.textProperty().bind(modelTest.messages);
     /**
      * sets up the rulesPanel
      */
-    public void rulesPanelSettings(){
+    private void rulesPanelSettings(){
         rulesPanel.setVisible(false);
         Label rules=new Label("Rules");
         rules.setStyle("-fx-font-size: 50;-fx-background-color: #a29f9f");
@@ -179,12 +198,39 @@ messages.textProperty().bind(modelTest.messages);
         rulesPanel.setContentText(
                 Messages.RULES.print());
     }
-    public void fadeTransition(CardGraph c){
+    private void fadeTransition(CardGraph c){
         FadeTransition ft=new FadeTransition();
         ft.setDuration(Duration.seconds(0.5));
         ft.setNode(c);
         ft.setFromValue(0);
         ft.setToValue(100);
         ft.play();
+    }
+
+    /**
+     * Show/hide HighScore-AnhorPane.
+     */
+    private void endButtonAction(){
+        highScorePane.setVisible(!highScorePane.isVisible());
+        end.setText(highScorePane.isVisible() ? "RESUME" : "END");
+        end.toFront();
+    }
+
+    /**
+     *
+     */
+    private void highScoreButtonAction() {
+        if(textFieldHS.getText().isEmpty()){
+            highScoreNotice.setText("Must enter name to submit!");
+            highScoreNotice.setStyle("-fx-text-fill: pink");
+        } else if(textFieldHS.getText().length() > 30){
+            highScoreNotice.setText("A bit too long, ey? Keep it under 30");
+            highScoreNotice.setStyle("-fx-text-fill: pink");
+            textFieldHS.clear();
+        } else {
+            BlackJackLogic.actionQueue.add(9);
+            BlackJackLogic.actionQueue.add(textFieldHS.getText());
+            textFieldHS.clear();
+        }
     }
 }
