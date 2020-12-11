@@ -18,8 +18,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -319,8 +321,10 @@ public class GameBoardController {
         Group gr = new Group();
         Random rnd = new Random();
         for (int i = 0; i < 3; i++) {
-            Rectangle card=new CardGraph("spades", String.valueOf(rnd.nextInt(9) + 2), true);
+            Rectangle card=cardToGraph(new Card(Card.Suit.SPADES,rnd.nextInt(12)+1));
             gr.getChildren().add(card);
+           card.getTransforms().add(new Rotate(3,80,80));
+
         }
         gr.setTranslateX(welcome.getPrefWidth()/2-50);
         gr.setTranslateY(welcome.getPrefHeight()/2);
@@ -332,6 +336,7 @@ public class GameBoardController {
         ts.play();
         //ts.setOnFinished(e -> circleSeq());
         RotateTransition rt=new RotateTransition();
+
         rt.setNode(gr.getChildren().get(0));
         rt.setAxis(new Point3D(0,0,10));
         rt.setToAngle(-30);
@@ -339,9 +344,12 @@ public class GameBoardController {
         rt.setAutoReverse(true);
         rt.setCycleCount(5);
         rt.play();
+
+
         RotateTransition rt2 =new RotateTransition();
         rt2.setNode(gr.getChildren().get(2));
         rt2.setAxis(new Point3D(0,0,80));
+
         rt2.setToAngle(30);
         rt2.setDuration(Duration.seconds(1));
         rt2.setAutoReverse(true);
