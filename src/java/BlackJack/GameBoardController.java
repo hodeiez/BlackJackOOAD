@@ -2,13 +2,14 @@ package BlackJack;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -321,9 +322,30 @@ public class GameBoardController {
             Rectangle card=new CardGraph("spades", String.valueOf(rnd.nextInt(9) + 2), true);
             gr.getChildren().add(card);
         }
-        gr.setTranslateX(welcome.getPrefWidth()/2);
+        gr.setTranslateX(welcome.getPrefWidth()/2-50);
         gr.setTranslateY(welcome.getPrefHeight()/2);
         welcome.getChildren().add(gr);
-
+        TranslateTransition ts = new TranslateTransition(Duration.seconds(1), gr);
+        ts.setFromY(400);
+        ts.setByY(gr.getTranslateY()-500);
+        ts.setAutoReverse(false);
+        ts.play();
+        //ts.setOnFinished(e -> circleSeq());
+        RotateTransition rt=new RotateTransition();
+        rt.setNode(gr.getChildren().get(0));
+        rt.setAxis(new Point3D(0,0,10));
+        rt.setToAngle(-30);
+        rt.setDuration(Duration.seconds(1));
+        rt.setAutoReverse(true);
+        rt.setCycleCount(5);
+        rt.play();
+        RotateTransition rt2 =new RotateTransition();
+        rt2.setNode(gr.getChildren().get(2));
+        rt2.setAxis(new Point3D(0,0,80));
+        rt2.setToAngle(30);
+        rt2.setDuration(Duration.seconds(1));
+        rt2.setAutoReverse(true);
+        rt2.setCycleCount(5);
+        rt2.play();
     }
 }
