@@ -94,7 +94,7 @@ public class BlackJackLogic implements Runnable {
     }
 
     private void dealHands() throws InterruptedException {
-        printMessage("Dealer deals cards");
+        printMessage(Messages.DEALS.print());
         if (!activePlayer.isBroke()) {
             for (Player p : players) {
                 p.addCard(deck1.drawCard());
@@ -117,7 +117,7 @@ public class BlackJackLogic implements Runnable {
         isPlayerBroke();
         if (activePlayer.isBroke()) {
             System.out.println("Du är pank: " + activePlayer.getBalance());
-            printMessage("Du är pank: " + activePlayer.getBalance());
+            printMessage(Messages.YOU_BROKE.print());
             //Game Over
         } else {
             System.out.println(activePlayer.getBalance());
@@ -146,7 +146,7 @@ public class BlackJackLogic implements Runnable {
     }
 
     private void dealerTurn() throws InterruptedException {
-        printMessage("dealer deals");
+        printMessage(Messages.DEALER_TURN.print());
         dealer1.setObsFaceUp(0, true);
         Thread.sleep(200);
         dealer1.getHandValue();
@@ -162,20 +162,20 @@ public class BlackJackLogic implements Runnable {
                     dealer1.getHandValue();
                 }
                 if (dealer1.getHandValue() > 21) {
-                    System.out.println("Dealern är bust! Du vinner.");
-                    printMessage("Dealern är bust! Du vinner.");
+                  //  System.out.println("Dealern är bust! Du vinner.");
+                    printMessage(String.format(Messages.BUST.print(),"Dealer"));
                     activePlayer.increaseBalance();
                     activePlayer.increaseBalance();
                 } else if (dealer1.getHandValue() > activePlayer.getHandValue()) {
                     System.out.println("Dealern vinner!");
-                    printMessage("Dealern vinner!");
+                    printMessage(String.format(Messages.WON.print(),"Dealer"));
 
                 } else if (dealer1.getHandValue() == activePlayer.getHandValue()) {
-                    System.out.println("Oavgjort!");
-                    printMessage("Oavgjort!");
+                   System.out.println("Oavgjort!");
+                    printMessage(Messages.DRAW.print());
                     activePlayer.increaseBalance();
                 } else if (dealer1.getHandValue() < activePlayer.getHandValue()) {
-                    printMessage("Du vinner!");
+                    printMessage(String.format(Messages.WON.print(),"You"));
                     activePlayer.increaseBalance();
                     activePlayer.increaseBalance();
                 }
@@ -183,7 +183,6 @@ public class BlackJackLogic implements Runnable {
         }
         Thread.sleep(1000);
         System.out.println("RENSA");
-        printMessage("RENSA");
         activePlayer.clearHand();
         dealer1.clearHand();
     }
@@ -200,7 +199,7 @@ public class BlackJackLogic implements Runnable {
     public void isGameOver() {
         if (activePlayer.isBroke()) {
             System.out.println("LOOOOOOOOOSEEERRRR!!!!!!!!");
-            printMessage("LOOOOOOOOOSEEERRRR!!!!!!!!");
+            printMessage(Messages.LOOSER.print());
             activePlayer.clearHand();
             dealer1.clearHand();
             activePlayer.setBalance(1000);
