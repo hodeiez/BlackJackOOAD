@@ -224,19 +224,23 @@ public class GameBoardController {
         blackJackLogic.bettingScreen.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+
                 BettingScreen.setVisible(newValue);
 //                if(newValue)BettingScreen.toFront();
-                bettingScreen();
+
+                if(BettingScreen.isVisible()){
+                    betUpdater();
+                }
+
+
             }
         });
     }
 
-
-    public void bettingScreen() {
-        BettingScreen.toFront();
-        tempBet = blackJackLogic.activePlayer.getCurrentBet();
+    public void betUpdater(){
+        tempBet = 0;
         BetAmount.setText(String.valueOf(tempBet));
-
+        bet.setText("Bet: " + tempBet);
 
     }
 
@@ -266,6 +270,7 @@ public class GameBoardController {
     }
 
     public void betted() {
+        //betUpdater();
         if(!(tempBet <= 0)){
             BlackJackLogic.actionQueue.add(tempBet);
             bet.setText("Bet: " + tempBet);

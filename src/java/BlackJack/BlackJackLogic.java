@@ -42,16 +42,18 @@ public class BlackJackLogic implements Runnable {
         while (true) {
             isItTimeToShuffle();
 
-            if(!activePlayer.isBroke()){
-                placeBets();
 
-                dealHands();
-                //dealer1.hand.get(0).setFaceUp(true);
-                humanPlayerTurn();
-//              computerPlayerTurn(players.get(1));
-//              computerPlayerTurn(players.get(2));
-                dealerTurn();
-            }
+            placeBets();
+
+            dealHands();
+            //dealer1.hand.get(0).setFaceUp(true);
+            humanPlayerTurn();
+//          computerPlayerTurn(players.get(1));
+//          computerPlayerTurn(players.get(2));
+            dealerTurn();
+
+
+
             isGameOver();
         }
     }
@@ -87,7 +89,7 @@ public class BlackJackLogic implements Runnable {
 
     private void placeBets() throws InterruptedException {
 
-        if(!activePlayer.isBroke()) {
+
 
             Platform.runLater(() -> bettingScreen.setValue(true));
 
@@ -101,7 +103,7 @@ public class BlackJackLogic implements Runnable {
             updateGraphicBalance();
 
             Platform.runLater(() -> bettingScreen.setValue(false));
-        }
+
 
     }
 

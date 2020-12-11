@@ -133,7 +133,7 @@
                         </Button>
                         <Label fx:id="BettingText" prefHeight="217.0" prefWidth="502.0" style="-fx-alignment: CENTER;" styleClass="popupPanelTitle" text="Set your Bet!" textAlignment="CENTER">
                         </Label>
-                        <Label fx:id="BetAmount" layoutX="193.0" layoutY="222.0" prefHeight="105.0" prefWidth="124.0" style="-fx-alignment: CENTER;" styleClass="popupPanelTitle" textAlignment="CENTER">
+                        <Label fx:id="BetAmount" layoutX="193.0" layoutY="222.0" prefHeight="105.0" prefWidth="124.0" style="-fx-alignment: CENTER;" styleClass="popupPanelTitle" text="0" textAlignment="CENTER">
                         </Label>
                         <Button fx:id="Bet" layoutX="208.0" layoutY="327.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="152.0" styleClass="buttons" text="BET">
                         </Button>
