@@ -23,6 +23,7 @@ public class BlackJackLogic implements Runnable {
     StringProperty messages = new SimpleStringProperty();
     int choice;
     boolean hit = true;
+    boolean clearHands = false;
 
     public void setUpGame() throws InterruptedException {
         activePlayer.setBalance(300);
@@ -86,8 +87,6 @@ public class BlackJackLogic implements Runnable {
             for (Player p : players) {
                 p.addCard(deck1.drawCard());
                 p.addCard(deck1.drawCard());
-                //System.out.println("in BlackJackLogic / dealHands: Player: " + p.getName() + " HandSize: " + p.hand.size());
-                //  printMessage("dealHands: Player: " + p.getName() + " HandSize: " + p.hand.size());
             }
 
             dealer1.addCard(deck1.drawCard(), false);
@@ -107,67 +106,78 @@ public class BlackJackLogic implements Runnable {
                 //System.out.println("Före drawCard" + activePlayer.getHandValue());
                 activePlayer.addCard(deck1.drawCard());
                 activePlayer.updateHandValue();
-                if( activePlayer.getHandValue() > 21) {
+                if (activePlayer.getHandValue() > 21) {
+                    Platform.runLater(() -> disableButtons.setValue(true));
                     new Thread(rundealerTurn).start();
                 }
 
+            } else {
+                Platform.runLater(() -> disableButtons.setValue(true));
+                new Thread(rundealerTurn).start();
             }
+            ;
         } else {
+            Platform.runLater(() -> disableButtons.setValue(true));
             new Thread(rundealerTurn).start();
             System.out.println("HERE");
 
         }
+
     }
 
-        Task<Void> rundealerTurn= new Task() {
-            @Override
-            protected Void call() throws Exception {
-                printMessage("dealer deals");
-                dealer1.setObsFaceUp(0, true);
-                //  Thread.sleep(200);
-                dealer1.getHandValue();
-                dealer1.updateHandValue();
-                if (!activePlayer.isBroke()) {
-                    if (humanBust) {
-                        humanBust = false;
-                    } else {
-                        boolean dealerWin;
-//        dealer1.hand.get(1).setFaceUp(true);
+    private void clearHands() {
+        printMessage("RENSA");
+        activePlayer.clearHand();
+        dealer1.clearHand();
+    }
 
-                        while (dealer1.getHandValue() < 17 && dealer1.getHandValue() < activePlayer.getHandValue()) {
-                            Thread.sleep(1000);
-                            dealer1.addCard(deck1.drawCard());
-                            dealer1.getHandValue();
-                            dealer1.updateHandValue();
-                        }
-                        if (dealer1.getHandValue() > 21) {
-                            //System.out.println("Dealern är bust! Du vinner.");
-                            printMessage("Dealern är bust! Du vinner.");
-                            activePlayer.increaseBalance();
-                            activePlayer.increaseBalance();
-                        } else if (dealer1.getHandValue() > activePlayer.getHandValue()) {
-                            //System.out.println("Dealern vinner!");
-                            printMessage("Dealern vinner!");
+    Task<Void> rundealerTurn = new Task() {
+        @Override
+        protected Void call() throws Exception {
+            printMessage("dealer deals");
+            dealer1.setObsFaceUp(0, true);
+            //  Thread.sleep(200);
+            dealer1.getHandValue();
+            dealer1.updateHandValue();
+            if (!activePlayer.isBroke()) {
+                if (humanBust) {
+                    humanBust = false;
+                } else {
 
-                        } else if (dealer1.getHandValue() == activePlayer.getHandValue()) {
-                            //System.out.println("Oavgjort!");
-                            printMessage("Oavgjort!");
-                            activePlayer.increaseBalance();
-                        } else if (dealer1.getHandValue() < activePlayer.getHandValue()) {
-                            printMessage("Du vinner!");
-                            activePlayer.increaseBalance();
-                            activePlayer.increaseBalance();
-                        }
+                    while (dealer1.getHandValue() < 17 && dealer1.getHandValue() < activePlayer.getHandValue()) {
+                        //Thread.sleep(1000);
+                        dealer1.addCard(deck1.drawCard());
+                        dealer1.getHandValue();
+                        dealer1.updateHandValue();
                     }
-                }
-                // Thread.sleep(1000);
+                    if (dealer1.getHandValue() > 21) {
+                        //System.out.println("Dealern är bust! Du vinner.");
+                        printMessage("Dealern är bust! Du vinner.");
+                        activePlayer.increaseBalance();
+                        activePlayer.increaseBalance();
+                    } else if (dealer1.getHandValue() > activePlayer.getHandValue()) {
+                        //System.out.println("Dealern vinner!");
+                        printMessage("Dealern vinner!");
 
-                printMessage("RENSA");
-                activePlayer.clearHand();
-                dealer1.clearHand();
-                return null;
+                    } else if (dealer1.getHandValue() == activePlayer.getHandValue()) {
+                        //System.out.println("Oavgjort!");
+                        printMessage("Oavgjort!");
+                        activePlayer.increaseBalance();
+                    } else if (dealer1.getHandValue() < activePlayer.getHandValue()) {
+                        printMessage("Du vinner!");
+                        activePlayer.increaseBalance();
+                        activePlayer.increaseBalance();
+                    }
+                    Thread.sleep(dealer1.getHandValue() * 100);
+                    clearHands();
+                }
             }
-        };
+            // Thread.sleep(1000);
+
+
+            return null;
+        }
+    };
 
     private void humanPlayerTurn() throws InterruptedException {
         printMessage(String.format(Messages.PLAYER_TURN.print(), activePlayer.getName()));
@@ -205,7 +215,7 @@ public class BlackJackLogic implements Runnable {
     private void dealerTurn() throws InterruptedException {
         printMessage("dealer deals");
         dealer1.setObsFaceUp(0, true);
-      //  Thread.sleep(200);
+        //  Thread.sleep(200);
         dealer1.getHandValue();
         dealer1.updateHandValue();
         if (!activePlayer.isBroke()) {
@@ -241,7 +251,7 @@ public class BlackJackLogic implements Runnable {
                 }
             }
         }
-       // Thread.sleep(1000);
+        // Thread.sleep(1000);
 
         printMessage("RENSA");
         activePlayer.clearHand();

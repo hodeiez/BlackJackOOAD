@@ -182,7 +182,8 @@ messages.textProperty().bind(modelTest.messages);
     }
     public void fadeTransition(CardGraph c){
         FadeTransition ft=new FadeTransition();
-        ft.setDuration(Duration.seconds(0.5));
+        ft.setDuration(Duration.seconds(1));
+       // ft.setDelay(Duration.seconds(0.6));
         ft.setNode(c);
         ft.setFromValue(0);
         ft.setToValue(100);
