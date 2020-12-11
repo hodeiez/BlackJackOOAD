@@ -293,7 +293,7 @@ public class GameBoardController {
      */
     private void buttonHighScoreAction(){
         highScorePane.setVisible(!highScorePane.isVisible());
-        buttonHighScore.setText(highScorePane.isVisible() ? "RESUME" : "END");
+        buttonHighScore.setText(highScorePane.isVisible() ? "RESUME" : "HIGHSCORE");
         buttonHighScore.toFront();
     }
 
