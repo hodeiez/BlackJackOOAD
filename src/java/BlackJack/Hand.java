@@ -18,7 +18,7 @@ import java.util.List;
  * Project: BlackJackOOAD
  * Copyright: MIT
  **/
-public abstract class IHasCards {
+public abstract class Hand {
 
     ArrayList<Card> hand = new ArrayList();
     ObservableList handObs = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {

@@ -1,10 +1,7 @@
 package BlackJack;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 
 import java.util.ArrayList;
 
@@ -15,7 +12,7 @@ import java.util.ArrayList;
  * Project: BlackJackOOAD
  * Copyright: MIT
  **/
-public class Player extends IHasCards {
+public class Player extends Hand {
     private String name = "Player"; //the players name
     int balance = 1000; //the amount of balance the player has currently
     private int currentBet = 0; //the amount of balance the player have decided to bet this round

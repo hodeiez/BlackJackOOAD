@@ -7,7 +7,7 @@ package BlackJack;
  * Project: BlackJackOOAD
  * Copyright: MIT
  **/
-public class Dealer extends IHasCards {
+public class Dealer extends Hand {
 
     private int stopValue = 17; //the value of the hand were the dealer will stop drawing cards
 

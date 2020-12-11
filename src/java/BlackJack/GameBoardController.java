@@ -14,7 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 /**
@@ -56,29 +55,29 @@ public class GameBoardController {
     public Label BetAmount;
     @FXML
     private AnchorPane gameBoardPane;
-    //  private ModelTest modelTest;
-    private BlackJackLogic modelTest;
+    //  private ModelTest blackJackLogic;
+    private BlackJackLogic blackJackLogic;
     private Rectangle rect = new Rectangle();
 
     int tempBet = 100;
 
 
     /*
-        public GameBoardController(ModelTest modelTest) {
-            this.modelTest = modelTest;
+        public GameBoardController(ModelTest blackJackLogic) {
+            this.blackJackLogic = blackJackLogic;
         }
 
      */
-    public GameBoardController(BlackJackLogic modelTest) {
+    public GameBoardController(BlackJackLogic blackJackLogic) {
 
-        this.modelTest = modelTest;
+        this.blackJackLogic = blackJackLogic;
     }
 
 
     public void initialize() {
-        setListener(modelTest.activePlayer.handObs, activePlayer);
+        setListener(blackJackLogic.activePlayer.handObs, activePlayer);
 
-        setListener(modelTest.dealer1.handObs, dealerBox);
+        setListener(blackJackLogic.dealer1.handObs, dealerBox);
 
         setBettingScreenListener();
 
@@ -90,22 +89,22 @@ public class GameBoardController {
 
         setBalanceValueListener();
 
-        messages.textProperty().bind(modelTest.messages);
+        messages.textProperty().bind(blackJackLogic.messages);
 //Listens changes of the observableList
 
 
 //balance its binded, should do a double bind? or call method from logic to change the balance?
-        // balance.textProperty().bind(modelTest.balanceProperty());
-//        handValue.textProperty().bind(modelTest.handValueSPProperty());
+        // balance.textProperty().bind(blackJackLogic.balanceProperty());
+//        handValue.textProperty().bind(blackJackLogic.handValueSPProperty());
 
 
 
         //using buttons for test
         //test for changeFaceUp
-        // stay.setOnAction(e-> modelTest.activePlayerHandArr.get(0).changeFace());
+        // stay.setOnAction(e-> blackJackLogic.activePlayerHandArr.get(0).changeFace());
 
         //testing hit
-        //hit.setOnAction(e->modelTest.hitListener());
+        //hit.setOnAction(e->blackJackLogic.hitListener());
         hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
 //        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
         end.setOnAction(e -> endButtonAction());
@@ -115,9 +114,9 @@ public class GameBoardController {
             highScoreNotice.setText("Adding highscore ends current game.");
             highScoreNotice.setStyle("-fx-text-fill: white");
         });
-        labelHSDate.textProperty().bind(modelTest.highScore.dates);
-        labelHSName.textProperty().bind(modelTest.highScore.names);
-        labelHSScore.textProperty().bind(modelTest.highScore.scores);
+        labelHSDate.textProperty().bind(blackJackLogic.highScore.dates);
+        labelHSName.textProperty().bind(blackJackLogic.highScore.names);
+        labelHSScore.textProperty().bind(blackJackLogic.highScore.scores);
 
         rules.setOnMouseClicked(e ->rulesPanel.setVisible(!rulesPanel.isVisible()));
 
@@ -164,7 +163,7 @@ public class GameBoardController {
     }
 
     public void setButtonListener() {
-        modelTest.disableButtons.addListener(new ChangeListener<Boolean>() {
+        blackJackLogic.disableButtons.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 hit.setDisable(newValue);
@@ -176,11 +175,11 @@ public class GameBoardController {
     }
 
     public void setHandValueListeners() {
-        handValue.textProperty().bind(modelTest.activePlayer.handValueSPProperty());
-        dealerValue.textProperty().bind(modelTest.dealer1.handValueSPProperty());
+        handValue.textProperty().bind(blackJackLogic.activePlayer.handValueSPProperty());
+        dealerValue.textProperty().bind(blackJackLogic.dealer1.handValueSPProperty());
     }
     public void setBalanceValueListener(){
-        modelTest.activePlayer.balanceValueProperty.addListener(new ChangeListener<String>() {
+        blackJackLogic.activePlayer.balanceValueProperty.addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 balance.setText(newValue);
@@ -216,7 +215,7 @@ public class GameBoardController {
     }
 
     public void setBettingScreenListener() {
-        modelTest.bettingScreen.addListener(new ChangeListener<Boolean>() {
+        blackJackLogic.bettingScreen.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 BettingScreen.setVisible(newValue);
@@ -227,7 +226,7 @@ public class GameBoardController {
 
 
     public void bettingScreen(){
-        tempBet = modelTest.activePlayer.getCurrentBet();
+        tempBet = blackJackLogic.activePlayer.getCurrentBet();
         if(tempBet > Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1))){
             BetAmount.setText(String.valueOf(tempBet));
         }else{
