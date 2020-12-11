@@ -120,9 +120,11 @@ public class BlackJackLogic implements Runnable {
             dealer1.addCard(deck1.drawCard(), false);
             dealer1.addCard(deck1.drawCard());
             for (Player p : players) {
-                p.getHandValue();
+              //  p.getHandValue();
+                p.updateHandValue();
             }
-            dealer1.getHandValue();
+           // dealer1.getHandValue();
+            dealer1.updateHandValue();
         }
     }
 
@@ -150,6 +152,7 @@ public class BlackJackLogic implements Runnable {
                     }
                     case 1 -> { //hit
                         activePlayer.addCard(deck1.drawCard());
+                        activePlayer.updateHandValue();
                     }
                     case 9 -> { //Pressed submit on highscore
                         System.out.println("HighScore pushed, acting as a Stay right now");
@@ -185,7 +188,8 @@ public class BlackJackLogic implements Runnable {
         printMessage(Messages.DEALER_TURN.print());
         dealer1.setObsFaceUp(0, true);
         Thread.sleep(200);
-        dealer1.getHandValue();
+       // dealer1.getHandValue();
+        dealer1.updateHandValue();
         if (!activePlayer.isBroke()) {
             if (humanBust) {
                 humanBust = false;
@@ -195,7 +199,8 @@ public class BlackJackLogic implements Runnable {
                 while (dealer1.getHandValue() < 17 && dealer1.getHandValue() < activePlayer.getHandValue()) {
                     Thread.sleep(1000);
                     dealer1.addCard(deck1.drawCard());
-                    dealer1.getHandValue();
+                //    dealer1.getHandValue();
+                    dealer1.updateHandValue();
                 }
                 if (dealer1.getHandValue() > 21) {
                   //  System.out.println("Dealern är bust! Du vinner.");
