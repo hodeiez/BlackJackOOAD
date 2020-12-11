@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -45,7 +46,7 @@ public class GameBoardController {
     public Label labelHSName;
     public Label labelHSScore;
     public TextField textFieldHS;
-    public Button buttonHighScore;
+    public Button buttonHighScoreSubmit;
     public Label highScoreNotice;
     public Pane BettingScreen;
     public Button Plus;
@@ -53,6 +54,7 @@ public class GameBoardController {
     public Button Bet;
     public Label BettingText;
     public Label BetAmount;
+    public Button buttonHighScore;
     @FXML
     private AnchorPane gameBoardPane;
     //  private ModelTest blackJackLogic;
@@ -107,9 +109,11 @@ public class GameBoardController {
         //hit.setOnAction(e->blackJackLogic.hitListener());
         hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
 //        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
-        end.setOnAction(e -> endButtonAction());
+//        end.setOnAction(e -> endButtonAction());
+        buttonHighScore.setOnAction(e -> buttonHighScoreAction());
+
         stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
-        buttonHighScore.setOnAction(e -> highScoreButtonAction());
+        buttonHighScoreSubmit.setOnAction(e -> buttonHighScoreSubmitAction());
         textFieldHS.setOnKeyPressed (e -> {
             highScoreNotice.setText("Adding highscore ends current game.");
             highScoreNotice.setStyle("-fx-text-fill: white");
@@ -118,7 +122,10 @@ public class GameBoardController {
         labelHSName.textProperty().bind(blackJackLogic.highScore.names);
         labelHSScore.textProperty().bind(blackJackLogic.highScore.scores);
 
-        rules.setOnMouseClicked(e ->rulesPanel.setVisible(!rulesPanel.isVisible()));
+        rules.setOnMouseClicked(e -> {
+            rulesPanel.toFront();
+            rulesPanel.setVisible(!rulesPanel.isVisible());
+        });
 
         highScorePane.setVisible(false);
         Plus.setOnAction(e-> plus());
@@ -169,7 +176,7 @@ public class GameBoardController {
                 hit.setDisable(newValue);
                 stay.setDisable(newValue);
                 end.setDisable(newValue);
-                buttonHighScore.setDisable(newValue);
+                buttonHighScoreSubmit.setDisable(newValue);
             }
         });
     }
@@ -208,7 +215,9 @@ public class GameBoardController {
     private void rulesPanelSettings(){
         rulesPanel.setVisible(false);
         Label rules=new Label("Rules");
-        rules.setStyle("-fx-font-size: 50;-fx-background-color: #a29f9f");
+        rules.setStyle("-fx-font-size: 40px; -fx-background-radius: 10px; -fx-text-fill: white");
+        rules.prefWidth(620);
+        rules.setAlignment(Pos.CENTER);
         rulesPanel.setHeader(rules);
         rulesPanel.setContentText(
                 Messages.RULES.print());
@@ -219,6 +228,7 @@ public class GameBoardController {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 BettingScreen.setVisible(newValue);
+//                if(newValue)BettingScreen.toFront();
                 bettingScreen();
             }
         });
@@ -226,6 +236,7 @@ public class GameBoardController {
 
 
     public void bettingScreen(){
+        BettingScreen.toFront();
         tempBet = blackJackLogic.activePlayer.getCurrentBet();
         if(tempBet > Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1))){
             BetAmount.setText(String.valueOf(tempBet));
@@ -280,16 +291,16 @@ public class GameBoardController {
     /**
      * Show/hide HighScore-AnhorPane.
      */
-    private void endButtonAction(){
+    private void buttonHighScoreAction(){
         highScorePane.setVisible(!highScorePane.isVisible());
-        end.setText(highScorePane.isVisible() ? "RESUME" : "END");
-        end.toFront();
+        buttonHighScore.setText(highScorePane.isVisible() ? "RESUME" : "END");
+        buttonHighScore.toFront();
     }
 
     /**
      *
      */
-    private void highScoreButtonAction() {
+    private void buttonHighScoreSubmitAction() {
         if(textFieldHS.getText().isEmpty()){
             highScoreNotice.setText("Must enter name to submit!");
             highScoreNotice.setStyle("-fx-text-fill: pink");

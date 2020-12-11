@@ -1,6 +1,6 @@
 .buttons {
-    -fx-background-color:linear-gradient(to top, #c8c814, #edf303);;
-    -fx-pref-width: 80;
+    -fx-background-color:linear-gradient(to top, #c8c814, #edf303);
+    -fx-pref-width: 100;
     -fx-pref-height: 30;
    -fx-background-radius: 10;
 }
@@ -9,35 +9,12 @@
     -fx-border-radius: 10px;
 }
 .buttons:pressed{
-    -fx-background-color:linear-gradient(to top, #c86814, #edf303);;
+    -fx-background-color:linear-gradient(to top, #c86814, #edf303);
 }
 .greenGradient{
     -fx-background-color: radial-gradient(focus-angle 360deg,focus-distance 10%,center 50%50%,radius 30%, #239125, #055b0a);
 }
 
-#rulesPanel{
-    -fx-border-style: solid;
-    -fx-border-color: black;
-    -fx-border-width: 3;
-    -fx-font-size: 13;
-}
-
-.highScoreBox{
-    -fx-background-color: rgba(5, 91, 10, 0.9);
-    -fx-background-radius: 10;
-    -fx-border-radius: 10;
-    -fx-border-color: white;
-    -fx-border-width: 2;
-}
-
-.highScoreText{
-    -fx-font-size: 16;
-    -fx-text-fill: white ;
-}
-.highScoreTitle{
-    -fx-font-size: 20;
-    -fx-text-fill: white;
-}
 .textFieldHighScore{
     -fx-text-fill: white;
     -fx-font-size: 14;
@@ -53,6 +30,63 @@
     -fx-font-size: 14;
 }
 
-.highScoreBackground{
+.popupBackground{
     -fx-background-color: rgba(0, 0, 0, 0.3)
+}
+
+.popupPanel{
+    -fx-background-color: rgba(5, 91, 10, 0.9);
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+}
+
+.popupPanelSmallText{
+
+}
+.popupPanelMediumText{
+    -fx-font-size: 16;
+    -fx-text-fill: white ;
+}
+.popupPanelTitle{
+    -fx-font-size: 40px;
+    -fx-text-fill: white;
+}
+
+.rulesPanel{
+    -fx-background-color: rgba(5, 91, 10, 0.9);
+    -fx-background-radius: 10;
+    -fx-border-width: 2;
+    -fx-border-color:white;
+    -fx-border-radius: 10;
+}
+.rulesPanel > *.button-bar > *.container{
+}
+.rulesPanel > *.label.content{
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
+}
+.rulesPanel.header-panel.label{ /*Don't know how to set header style... */
+    -fx-text-fill: white;
+}
+
+.bettingButtons{
+    -fx-font-family: Monospaced;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-font-size: 50;
+    -fx-background-radius: 10;
+    /*
+    -fx-background-color:linear-gradient(to top, #c8c814, #edf303);
+    */
+    -fx-background-color: rgba(0,0,0,0);
+}
+.bettingButtons:hover{
+    -fx-border-color: white;
+    -fx-border-radius: 10;
+}
+
+.bettingButtons:pressed{
+    -fx-background-color:rgba(88, 168, 96, 0.5);
 }

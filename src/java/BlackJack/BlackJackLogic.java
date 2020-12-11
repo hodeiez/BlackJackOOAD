@@ -26,7 +26,7 @@ public class BlackJackLogic implements Runnable {
     HighScore highScore = HighScore.getInstance();
 
     private void setUpGame() throws InterruptedException {
-        activePlayer.setBalance(300);
+        activePlayer.setBalance(1000);
         players.add(activePlayer);
         playRound();
     }
