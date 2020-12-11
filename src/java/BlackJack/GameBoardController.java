@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -15,6 +16,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
+
+import java.util.Random;
 
 /**
  * Created by Hodei Eceiza
@@ -53,6 +56,8 @@ public class GameBoardController {
     public Button Bet;
     public Label BettingText;
     public Label BetAmount;
+    public Pane welcome;
+    public Label welcomeText;
     @FXML
     private AnchorPane gameBoardPane;
     //  private ModelTest blackJackLogic;
@@ -75,6 +80,8 @@ public class GameBoardController {
 
 
     public void initialize() {
+        welcomeAnimation();
+
         setListener(blackJackLogic.activePlayer.handObs, activePlayer);
 
         setListener(blackJackLogic.dealer1.handObs, dealerBox);
@@ -124,6 +131,8 @@ public class GameBoardController {
         Plus.setOnAction(e-> plus());
         Minus.setOnAction(e-> minus());
          Bet.setOnAction(e-> betted());
+
+         welcome.setOnMouseClicked(e->welcome.setVisible(false));
 
     }
 
@@ -302,5 +311,15 @@ public class GameBoardController {
             BlackJackLogic.actionQueue.add(textFieldHS.getText());
             textFieldHS.clear();
         }
+    }
+    private void welcomeAnimation(){
+        Group gr=new Group();
+        Random rnd=new Random();
+        for(int i=0;i<3;i++){
+            gr.getChildren().add(new CardGraph("spades",String.valueOf(rnd.nextInt(11)+2),true));
+        }
+        gr.setTranslateX(welcome.getWidth()/2);
+        gr.setTranslateY(welcome.getHeight()/2);
+        welcome.getChildren().add(gr);
     }
 }
