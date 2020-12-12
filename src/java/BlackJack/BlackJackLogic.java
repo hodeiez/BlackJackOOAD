@@ -38,6 +38,7 @@ public class BlackJackLogic implements Runnable {
     }
 
     private void playRound() throws InterruptedException {
+        activePlayer.setName((String)actionQueue.take());
         printMessage(Messages.WELCOME.print());
         while (true) {
             isItTimeToShuffle();

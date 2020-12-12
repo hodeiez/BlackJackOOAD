@@ -163,6 +163,12 @@
                               <Font name="Linux Libertine G Display Regular" size="16.0" />
                            </font>
                         </Label>
+                        <TextField fx:id="nameField" layoutX="736.0" layoutY="423.0" />
+                        <Label fx:id="nameL" layoutX="768.0" layoutY="404.0" text="Your name" textFill="#ffc83d">
+                           <font>
+                              <Font name="Linux Libertine G Display Regular" size="16.0" />
+                           </font>
+                        </Label>
                      </children>
                   </Pane>
                     </children>

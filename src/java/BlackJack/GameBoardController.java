@@ -64,6 +64,7 @@ public class GameBoardController {
     public Label welcomeText;
     public FadeTransition infiniteFade;
     public Label clickToPlay;
+    public TextField nameField;
     @FXML
    // private AnchorPane gameBoardPane;
     //  private ModelTest blackJackLogic;
@@ -86,8 +87,8 @@ public class GameBoardController {
 
 
     public void initialize() {
-        welcomeAnimation();
-
+      //  welcomeAnimation();
+startGame();
         setListener(blackJackLogic.activePlayer.handObs, activePlayer);
 
         setListener(blackJackLogic.dealer1.handObs, dealerBox);
@@ -103,6 +104,7 @@ public class GameBoardController {
         setBalanceValueListener();
 
         messages.textProperty().bind(blackJackLogic.messages);
+
 //Listens changes of the observableList
 
 
@@ -137,7 +139,7 @@ public class GameBoardController {
         Minus.setOnAction(e -> minus());
         Bet.setOnAction(e -> betted());
 
-        welcome.setOnMouseClicked(e -> welcomeClose());
+
 
     }
 
@@ -377,6 +379,24 @@ public class GameBoardController {
         sc.setDuration(Duration.seconds(1));
         sc.play();
         sc.setOnFinished(e->{welcome.setVisible(false);infiniteFade.stop();});
+    }
+
+    /**
+     * starts the welcome panel and if namefield isn't empty adds name to activePlayer
+     */
+    private void startGame(){
+        welcomeAnimation();
+        welcome.setOnMouseClicked(e ->{
+            if(!nameField.getText().isBlank()){
+                BlackJackLogic.actionQueue.add(nameField.getText());
+                welcomeClose();}
+            else
+                clickToPlay.setText("write your name in the field to start, please.");
+        });
+
+
+
+
     }
 
 }
