@@ -1,8 +1,6 @@
 package BlackJack;
 
-import javafx.animation.FadeTransition;
-import javafx.animation.RotateTransition;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
@@ -10,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Point3D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
@@ -63,8 +62,10 @@ public class GameBoardController {
     public Label BetAmount;
     public Pane welcome;
     public Label welcomeText;
+    public FadeTransition infiniteFade;
+    public Label clickToPlay;
     @FXML
-    private AnchorPane gameBoardPane;
+   // private AnchorPane gameBoardPane;
     //  private ModelTest blackJackLogic;
     private BlackJackLogic blackJackLogic;
     private Rectangle rect = new Rectangle();
@@ -136,7 +137,7 @@ public class GameBoardController {
         Minus.setOnAction(e -> minus());
         Bet.setOnAction(e -> betted());
 
-        welcome.setOnMouseClicked(e -> welcome.setVisible(false));
+        welcome.setOnMouseClicked(e -> welcomeClose());
 
     }
 
@@ -317,43 +318,65 @@ public class GameBoardController {
         }
     }
 
+    /**
+     * animation for welcome panel adds cards, animates them and starts "click here" animation.
+     */
     private void welcomeAnimation() {
         Group gr = new Group();
-        Random rnd = new Random();
-        for (int i = 0; i < 3; i++) {
-            Rectangle card=cardToGraph(new Card(Card.Suit.SPADES,rnd.nextInt(12)+1));
-            gr.getChildren().add(card);
-           card.getTransforms().add(new Rotate(3,80,80));
-
-        }
+        gr.getChildren().add(new CardGraph("diamonds","king",true));
+        gr.getChildren().add(new CardGraph("spades","ace",true));
+        gr.getChildren().add(new CardGraph("hearts","queen",true));
         gr.setTranslateX(welcome.getPrefWidth()/2-50);
         gr.setTranslateY(welcome.getPrefHeight()/2);
         welcome.getChildren().add(gr);
-        TranslateTransition ts = new TranslateTransition(Duration.seconds(1), gr);
+
+        infiniteFade=new FadeTransition();
+        FadeTransition ft = new FadeTransition();
+        ft.setDuration(Duration.seconds(0.5));
+        ft.setNode(clickToPlay);
+        ft.setFromValue(0);
+        ft.setToValue(100);
+        ft.setAutoReverse(true);
+        ft.setCycleCount(Animation.INDEFINITE);
+        ft.play();
+
+        TranslateTransition ts = new TranslateTransition(Duration.seconds(2), gr);
         ts.setFromY(400);
         ts.setByY(gr.getTranslateY()-500);
         ts.setAutoReverse(false);
         ts.play();
-        //ts.setOnFinished(e -> circleSeq());
-        RotateTransition rt=new RotateTransition();
+       // ts.setOnFinished(e -> circleSeq());
+        rotateTransition(gr.getChildren().get(0),-30);
+        rotateTransition(gr.getChildren().get(2),30);
+    }
 
-        rt.setNode(gr.getChildren().get(0));
+    /**
+     * animation to use with cards in welcomeAnimation
+     * @param node the card to animate
+     * @param angle the angle to rotate
+     */
+    private void rotateTransition(Node node,double angle){
+       node.getTransforms().add(new Rotate(0,30,0));
+        RotateTransition rt=new RotateTransition();
+        rt.setNode(node);
         rt.setAxis(new Point3D(0,0,10));
-        rt.setToAngle(-30);
-        rt.setDuration(Duration.seconds(1));
-        rt.setAutoReverse(true);
-        rt.setCycleCount(5);
+        rt.setToAngle(angle);
+        rt.setDuration(Duration.seconds(2));
         rt.play();
 
-
-        RotateTransition rt2 =new RotateTransition();
-        rt2.setNode(gr.getChildren().get(2));
-        rt2.setAxis(new Point3D(0,0,80));
-
-        rt2.setToAngle(30);
-        rt2.setDuration(Duration.seconds(1));
-        rt2.setAutoReverse(true);
-        rt2.setCycleCount(5);
-        rt2.play();
     }
+
+    /**
+     * scale animation when welcome pane is clicked
+     */
+    private void welcomeClose(){
+        ScaleTransition sc=new ScaleTransition();
+        sc.setNode(welcome);
+        sc.setToX(0);
+        sc.setToY(0);
+        sc.setDuration(Duration.seconds(1));
+        sc.play();
+        sc.setOnFinished(e->{welcome.setVisible(false);infiniteFade.stop();});
+    }
+
 }
