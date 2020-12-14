@@ -4,11 +4,10 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 
 public class Card {
-
     private final Suit suit;
     private final int rank;
     private boolean faceUp;
-    private BooleanProperty isFaceUp = new SimpleBooleanProperty();
+    private final BooleanProperty isFaceUp = new SimpleBooleanProperty();
 
     public Card(Suit suit, int rank) {
         this.rank = rank;
@@ -28,10 +27,6 @@ public class Card {
     public final void setIsFaceUp(boolean state) {
         isFaceUp.set(state);
         faceUp = state;
-    }
-
-    public final boolean getIsFaceUp() {
-        return isFaceUp.get();
     }
 
     public Suit getSuit() {

@@ -23,32 +23,27 @@ public class HighScore {
     }
 
     private void updateStrings() {
-        String names = "";
-        String scores = "";
-        String dates = "";
+        StringBuilder names = new StringBuilder();
+        StringBuilder scores = new StringBuilder();
+        StringBuilder dates = new StringBuilder();
         for (var a : list) {
-            names += a.getName() + "\n";
-            scores += a.getScore() + "\n";
-            dates += a.getDate() + "\n";
+            names.append(a.getName()).append("\n");
+            scores.append(a.getScore()).append("\n");
+            dates.append(a.getDate()).append("\n");
         }
-        String finalNames = names;
-        String finalScores = scores;
-        String finalDates = dates;
+        String finalNames = names.toString();
+        String finalScores = scores.toString();
+        String finalDates = dates.toString();
         Platform.runLater(() -> this.names.set(finalNames));
         Platform.runLater(() -> this.scores.set(finalScores));
         Platform.runLater(() -> this.dates.set(finalDates));
     }
-
 
     public static HighScore getInstance() {
         if (instance == null) {
             instance = new HighScore();
         }
         return instance;
-    }
-
-    public List<HighScoreObject> getHighScores() {
-        return this.list;
     }
 
     public boolean addHighScore(String name, int score) {
@@ -84,8 +79,8 @@ public class HighScore {
         }
         Collections.sort(list);
         Collections.reverse(list);
-        while(list.size() > maxListLength){
-            list.remove(list.size()-1);
+        while (list.size() > maxListLength) {
+            list.remove(list.size() - 1);
         }
     }
 
