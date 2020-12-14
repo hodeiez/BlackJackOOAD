@@ -429,7 +429,8 @@ public class GameBoardController {
 
     private void buttonResumeAction() {
         BlackJackLogic.actionQueue.add(0);
-        gameOver.setVisible(false);
+        // gameOver.setVisible(false);
+        blackJackLogic.gameOverPanel.setValue(false);
         highScoreList.setVisible(gameOver.isVisible());
     }
 }
