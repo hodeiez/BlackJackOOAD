@@ -88,9 +88,9 @@ public class GameBoardController {
     public void initialize() {
         welcomeAnimation();
 
-        setListener(blackJackLogic.activePlayer.handObs, activePlayer);
+        setListener(blackJackLogic.activePlayer.hand, activePlayer);
 
-        setListener(blackJackLogic.dealer1.handObs, dealerBox);
+        setListener(blackJackLogic.dealer1.hand, dealerBox);
 
         setBettingScreenListener();
 

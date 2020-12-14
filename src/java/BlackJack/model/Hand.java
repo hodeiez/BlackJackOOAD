@@ -13,8 +13,8 @@ import java.util.List;
 
 public abstract class Hand {
 
-    public ArrayList<Card> hand = new ArrayList();
-    public ObservableList handObs = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {
+  //  public ArrayList<Card> hand = new ArrayList();
+    public ObservableList <Card>hand = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {
         @Override
         public Observable[] call(Card card) {
             return new Observable[]{
@@ -52,14 +52,14 @@ public abstract class Hand {
     }
 
     public void clearHand() {
-        hand.clear();
-        Platform.runLater(() -> handObs.clear());
+       // hand.clear();
+        Platform.runLater(() -> hand.clear());
 
     }
 
     public void addCard(Card card) {
-        hand.add(card);
-        Platform.runLater(() -> handObs.add(card));
+     //   hand.add(card);
+        Platform.runLater(() -> hand.add(card));
         // System.out.println(card);
         //  System.out.println((hand.size()>0)?"What is the first element?"+ hand.get(0).toString():"Observable is empty");
     }
@@ -72,8 +72,8 @@ public abstract class Hand {
      */
     public void addCard(Card card, boolean faceUp) {
         card.setFaceUp(faceUp);
-        hand.add(card);
-        Platform.runLater(() -> handObs.add(card));
+       // hand.add(card);
+        Platform.runLater(() -> hand.add(card));
     }
 
     public StringProperty handValueSPProperty() {
@@ -95,8 +95,8 @@ public abstract class Hand {
      * @param state to select state, true is faceUp
      */
     public void setObsFaceUp(int index, boolean state) {
-        if (handObs.size() > 0) {
-            Platform.runLater(() -> ((Card) handObs.get(index)).setIsFaceUp(state));
+        if (hand.size() > 0) {
+            Platform.runLater(() -> ((Card) hand.get(index)).setIsFaceUp(state));
         }
         //  System.out.println( handObs.get(0).getClass());
     }
