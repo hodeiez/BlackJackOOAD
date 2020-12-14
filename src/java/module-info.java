@@ -1,5 +1,5 @@
 
-module BlackJackOOAD {
+module BlackJackIndividuellUppgift {
      exports BlackJack.view;
      requires javafx.controls;
      requires javafx.fxml;
