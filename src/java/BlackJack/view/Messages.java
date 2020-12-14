@@ -28,6 +28,10 @@ public enum Messages {
         this.message = message;
     }
 
+    /**
+     * shows the enum constants string value
+     * @return string value of enum constant.
+     */
     public String print() {
         return message;
     }

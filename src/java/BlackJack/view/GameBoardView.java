@@ -10,15 +10,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class GameBoardView extends Application {
-
+    /**
+     * initiates BlackJackLogic, Loads fxml file, asigns and initiates GameboardController for fxml file
+     * and sets them into a scene to add to the stage
+     * @param stage the window to show
+     * @throws Exception
+     */
     @Override
     public void start(Stage stage) throws Exception {
-        //  ModelTest myTest=new ModelTest(); //here logic model runs
-//       BlackJackLogicModel myTest=new BlackJackLogicModel(); //here logic model runs
-        BlackJackLogic myTest = new BlackJackLogic();
-        Thread th = new Thread(myTest);
+
+        BlackJackLogic blackJackLogic = new BlackJackLogic();
+        Thread logic = new Thread(blackJackLogic);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/GameBoard.fxml"));
-        loader.setController(new GameBoardController(myTest));
+        loader.setController(new GameBoardController(blackJackLogic));
 
         stage.setTitle("Black Jack");
         Parent root = loader.load();
@@ -32,7 +36,7 @@ public class GameBoardView extends Application {
             System.exit(0);
         });
 
-        th.start();
+        logic.start();
     }
 
 }
