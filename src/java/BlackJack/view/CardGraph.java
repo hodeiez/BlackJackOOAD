@@ -53,7 +53,7 @@ public class CardGraph extends Rectangle {
 
     /**
      * prints the suit and the rank of the card, for debugging use.
-     * @return
+     * @return CardGraphs suit and rank string value
      */
     @Override
     public String toString() {
