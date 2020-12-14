@@ -38,8 +38,10 @@ public class CardGraph extends Rectangle {
         this.setFill((getFaceUp()) ? cardImage : backCard);
     }
 
-
-    public void setStyling() {
+    /**
+     * Sets the styling for the graphic
+     */
+    private void setStyling() {
         this.setFill(cardImage);
         this.setWidth(80);
         this.setHeight(130);
@@ -49,7 +51,10 @@ public class CardGraph extends Rectangle {
         this.setArcWidth(10);
     }
 
-    //For tests and debug
+    /**
+     * prints the suit and the rank of the card, for debugging use.
+     * @return
+     */
     @Override
     public String toString() {
         return "Suit: " + suit + " number " + rank;
