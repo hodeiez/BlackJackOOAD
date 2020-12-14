@@ -26,22 +26,14 @@ public class Player extends Hand {
      * Increases the players balance
      */
     public void increaseBalance() {
-        setBalance(getBalance() + getCurrentBet());
-    }
+        setBalance(getBalance() + (getCurrentBet()*2));
 
-    /**
-     * Decreases the players balance
-     */
-    public void decreaseBalance() {
-        setBalance(getBalance() - getCurrentBet());
+        setCurrentBet(0);
     }
-
     /**
      * sets the currentBet based on user input
      */
     public void bet(int bet) {
-
-
         setCurrentBet(bet);
     }
 

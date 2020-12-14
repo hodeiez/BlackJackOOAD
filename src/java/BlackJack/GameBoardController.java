@@ -70,13 +70,12 @@ public class GameBoardController {
     public Button buttonQuit;
     public Button buttonResume;
     public AnchorPane highScoreList;
+    int tempBet = 0;
     @FXML
     private AnchorPane gameBoardPane;
     //  private ModelTest blackJackLogic;
-    private BlackJackLogic blackJackLogic;
-    private Rectangle rect = new Rectangle();
-
-    int tempBet = 100;
+    private final BlackJackLogic blackJackLogic;
+    private final Rectangle rect = new Rectangle();
 
 
     /*
@@ -152,7 +151,7 @@ public class GameBoardController {
         welcome.setOnMouseClicked(e -> welcomeClose());
     }
 
-    public void changeBalance(String string){
+    public void changeBalance(String string) {
         balance.setText(string);
     }
 
@@ -229,7 +228,7 @@ public class GameBoardController {
     /**
      * sets up the rulesPanel
      */
-    private void rulesPanelSettings(){
+    private void rulesPanelSettings() {
         rulesPanel.setVisible(false);
         Label rules = new Label("Rules");
         rules.setStyle("-fx-font-size: 40px; -fx-background-radius: 10px; -fx-text-fill: white");
@@ -246,30 +245,31 @@ public class GameBoardController {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 BettingScreen.setVisible(newValue);
 //                if(newValue)BettingScreen.toFront();
-                bettingScreen();
+
+                if(BettingScreen.isVisible()){
+                    betUpdater();
+                }
+
+
             }
         });
     }
 
-
-    public void bettingScreen() {
+    public void betUpdater(){
         BettingScreen.toFront();
-        tempBet = blackJackLogic.activePlayer.getCurrentBet();
-        if (tempBet > Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1))) {
-            BetAmount.setText(String.valueOf(tempBet));
-        } else {
-
-        }
-
+        tempBet = 0;
+        BetAmount.setText(String.valueOf(tempBet));
+        bet.setText("Bet: " + tempBet);
 
     }
 
-    public void plus(){
-        if(!(tempBet >= 1000) && !(tempBet >= Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1)))){ //1000 is max bet
+    public void plus() {
+        if (!(tempBet >= 1000) && !(tempBet >= Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1)))) { //1000 is max bet
             tempBet = tempBet + 100; //adds 100 to tempBet
-            BetAmount.setText(""+tempBet);
-        }else {
-            if(tempBet >= 1000){
+            BetAmount.setText("" + tempBet);
+            BettingText.setText("Set your Bet!");
+        } else {
+            if (tempBet >= 1000) {
                 BettingText.setText("Set your Bet! \n Max bet is 1000");
             } else {
                 BettingText.setText("Set your Bet! \n Bet to large for balance");
@@ -278,27 +278,31 @@ public class GameBoardController {
         }
     }
 
-    public void minus(){
-        if(!(tempBet <= 100)){ //100 is min bet
+    public void minus() {
+        if (!(tempBet <= 100)) { //100 is min bet
             tempBet = tempBet - 100;
-            BetAmount.setText(""+tempBet);
+            BetAmount.setText("" + tempBet);
+            BettingText.setText("Set your Bet!");
         } else {
             BettingText.setText("Set your Bet! \n Min bet is 100");
         }
     }
 
-    public void betted(){
-
-        BlackJackLogic.actionQueue.add(tempBet);
-        bet.setText("Bet: "+tempBet);
-        BettingScreen.setVisible(false);
-        tempBet = 100; //resets the bet to 100
-        BetAmount.setText(""+tempBet); //sets the bet amount to 100
+    public void betted() {
+        //betUpdater();
+        if(!(tempBet <= 0)){
+            BlackJackLogic.actionQueue.add(tempBet);
+            bet.setText("Bet: " + tempBet);
+            BetAmount.setText("" + tempBet);
+            BettingScreen.setVisible(false);
+        } else{
+            BettingText.setText("Set your Bet! \n Min bet is 100 !!!!!!!!!!!!!!!!!!!");
+        }
 
     }
 
-    private void fadeTransition(CardGraph c){
-        FadeTransition ft=new FadeTransition();
+    private void fadeTransition(CardGraph c) {
+        FadeTransition ft = new FadeTransition();
         ft.setDuration(Duration.seconds(0.5));
         ft.setNode(c);
         ft.setFromValue(0);
@@ -324,7 +328,7 @@ public class GameBoardController {
         if (textFieldHS.getText().isEmpty()) {
             highScoreNotice.setText("Must enter name to submit!");
             highScoreNotice.setStyle("-fx-text-fill: pink");
-        } else if(textFieldHS.getText().length() > 30){
+        } else if (textFieldHS.getText().length() > 30) {
             highScoreNotice.setText("A bit too long, ey? Keep it under 30");
             highScoreNotice.setStyle("-fx-text-fill: pink");
             textFieldHS.clear();
