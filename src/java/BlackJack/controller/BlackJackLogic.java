@@ -121,7 +121,6 @@ public class BlackJackLogic implements Runnable {
             printMessage(Messages.YOU_BROKE.print());
             //Game Over
         } else {
-            System.out.println(activePlayer.getBalance());
             int choice = 0;
             hitLoop:
             while (true) {
