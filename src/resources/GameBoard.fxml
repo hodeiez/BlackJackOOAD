@@ -147,21 +147,21 @@
                 </Pane>
             </children>
         </AnchorPane>
-        <Pane fx:id="welcome" layoutX="-205.0" layoutY="-42.0" prefHeight="509.0" prefWidth="966.0" styleClass="greenGradient">
+        <Pane fx:id="welcome" prefHeight="720" prefWidth="1280" styleClass="greenGradient">
             <children>
-                <Label fx:id="welcomeText" layoutX="161.0" layoutY="15.0" prefHeight="109.0" prefWidth="724.0" text="WELCOME TO SUPER BLACK JACK" textFill="#ffc83d">
+                <Label fx:id="welcomeText" prefHeight="109.0" prefWidth="1280" textAlignment="CENTER" alignment="CENTER" text="WELCOME TO SUPER BLACK JACK" textFill="#ffc83d">
                     <font>
                         <Font name="Linux Libertine G Display Regular" size="43.0" />
                     </font>
                 </Label>
-                <Label fx:id="clickToPlay" layoutX="413.0" layoutY="426.0" text="CLICK HERE TO PLAY" textFill="#ffc83d">
+                <Label fx:id="clickToPlay" layoutY="426.0" prefHeight="109.0" prefWidth="1280" textAlignment="CENTER" alignment="CENTER" text="CLICK HERE TO PLAY" textFill="#ffc83d">
                     <font>
                         <Font name="Linux Libertine G Display Regular" size="16.0" />
                     </font>
                 </Label>
             </children>
         </Pane>
-        <AnchorPane fx:id="gameOver" prefHeight="720" prefWidth="1280" styleClass="highScoreBackground">
+        <AnchorPane fx:id="gameOver" prefHeight="720" prefWidth="1280" styleClass="highScoreBackground" visible="false">
             <children>
                 <Pane layoutX="163.0" layoutY="120.0" prefHeight="509.0" prefWidth="966.0" styleClass="popupPanel">
                     <children>
@@ -172,7 +172,7 @@
                 </Pane>
             </children>
         </AnchorPane>
-      <AnchorPane fx:id="highScoreList" prefHeight="530.0" prefWidth="1280.0" visible="true">
+      <AnchorPane fx:id="highScoreList" prefHeight="530.0" prefWidth="1280.0" visible="false">
          <children>
                   <HBox layoutX="466.0" layoutY="180.0" prefHeight="350.0" prefWidth="348.0">
                       <children>
