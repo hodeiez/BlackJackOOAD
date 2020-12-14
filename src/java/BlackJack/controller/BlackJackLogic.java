@@ -227,8 +227,12 @@ public class BlackJackLogic implements Runnable {
                 activePlayer.setBalance(activePlayer.getBalance() + activePlayer.getCurrentBet());
             } else if (dealer1.getHandValue() < activePlayer.getHandValue()) {
                 printMessage(String.format(Messages.WON.print(), "You"));
+                int tempBet = activePlayer.getCurrentBet();
                 activePlayer.increaseBalance();
-                activePlayer.increaseBalance();
+                if(activePlayer.getHandValue() == 21){
+                    System.out.println("Black jack!");
+                    activePlayer.setBalance(activePlayer.getBalance()+tempBet);
+                }
             }
         } else {
             printMessage(Messages.YOU_BUST.print());
