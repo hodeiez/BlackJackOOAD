@@ -57,7 +57,7 @@
                 <Font size="41.0"/>
             </font>
         </Label>
-        <Label fx:id="bet" layoutX="874.0" layoutY="77.0" text="Bet: 100" textFill="#ffdc08">
+        <Label fx:id="bet" layoutX="874.0" layoutY="77.0" text="Bet: 0" textFill="#ffdc08">
             <font>
                 <Font size="41.0"/>
             </font>

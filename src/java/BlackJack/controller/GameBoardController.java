@@ -102,6 +102,9 @@ public class GameBoardController {
 
         setBalanceValueListener();
 
+        setGameOverPanelListener();
+        setHighScoreListener();
+
         messages.textProperty().bind(blackJackLogic.messages);
 //Listens changes of the observableList
 
@@ -187,6 +190,19 @@ public class GameBoardController {
                 stay.setDisable(newValue);
                 end.setDisable(newValue);
                 buttonHighScoreSubmit.setDisable(newValue);
+            }
+        });
+    }
+
+    public void setHighScoreListener() {
+        blackJackLogic.highScorePanel.addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+                highScoreList.setVisible(newValue);
+                highScorePane.setVisible(newValue);
+                highScorePane.toFront();
+                highScoreList.toFront();
+                buttonHighScore.toFront();
             }
         });
     }
@@ -309,11 +325,12 @@ public class GameBoardController {
      * Show/hide HighScore-AnhorPane.
      */
     private void buttonHighScoreAction() {
-        highScorePane.setVisible(!highScorePane.isVisible());
+        blackJackLogic.highScorePanel.setValue(!blackJackLogic.highScorePanel.getValue());
+//        highScoreList.setVisible(blackJackLogic.highScorePanel.getValue());
+//        highScorePane.setVisible(!highScorePane.isVisible());
         buttonHighScore.setText(highScorePane.isVisible() ? "RESUME" : "HIGHSCORE");
-        highScoreList.toFront();
-        highScoreList.setVisible(highScorePane.isVisible());
-        buttonHighScore.toFront();
+//        buttonHighScore.toFront();
+//        highScoreList.toFront();
     }
 
     /**
@@ -411,6 +428,7 @@ public class GameBoardController {
     }
 
     private void buttonResumeAction() {
+        BlackJackLogic.actionQueue.add(0);
         gameOver.setVisible(false);
         highScoreList.setVisible(gameOver.isVisible());
     }
