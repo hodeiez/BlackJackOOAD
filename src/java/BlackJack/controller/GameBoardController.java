@@ -20,137 +20,99 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-import java.util.Objects;
-import java.util.Random;
 
 public class GameBoardController {
     @FXML
     public Button hit;
+    public Label welcomeText;
+
+    public Pane welcome;
+    public Label clickToPlay;
+
     public Button stay;
     public Button rules;
     public Button end;
+    public Button highScore;
     public Label balance;
     public Label bet;
-    public DialogPane rulesPanel;
     public HBox dealerBox;
-    public HBox dealerbackground;
     public HBox activePlayer;
-    public HBox player2;
-    public HBox player3;
+    public HBox player2; //Cards-space for Future AI#1
+    public HBox player3; //Cards-space for future AI#2
     public Label handValue;
     public Label dealerValue;
     public Label messages;
+
+    public DialogPane rulesPanel;
+
     public AnchorPane highScorePane;
-    public Label labelHSDate;
-    public Label labelHSName;
-    public Label labelHSScore;
+    public Label highScoreDate;
+    public Label highScoreName;
+    public Label highScoreScore;
     public TextField textFieldHS;
-    public Button buttonHighScoreSubmit;
+    public Button highScoreSubmit;
     public Label highScoreNotice;
+
     public Pane BettingScreen;
+    public Label BettingText;
+    public Label BetAmount;
     public Button Plus;
     public Button Minus;
     public Button Bet;
-    public Label BettingText;
-    public Label BetAmount;
-    public Pane welcome;
-    public Label welcomeText;
+
     public FadeTransition infiniteFade;
-    public Label clickToPlay;
-    public Button buttonHighScore;
     public AnchorPane gameOver;
     public Button buttonQuit;
     public Button buttonResume;
     public AnchorPane highScoreList;
-    int tempBet = 0;
     @FXML
-    private AnchorPane gameBoardPane;
-    //  private ModelTest blackJackLogic;
+
     private final BlackJackLogic blackJackLogic;
-    private final Rectangle rect = new Rectangle();
+    int tempBet = 0;
 
-
-    /*
-        public GameBoardController(ModelTest blackJackLogic) {
-            this.blackJackLogic = blackJackLogic;
-        }
-
-     */
     public GameBoardController(BlackJackLogic blackJackLogic) {
-
         this.blackJackLogic = blackJackLogic;
     }
-
 
     public void initialize() {
         welcomeAnimation();
 
         setListener(blackJackLogic.activePlayer.handObs, activePlayer);
-
         setListener(blackJackLogic.dealer1.handObs, dealerBox);
-
         setBettingScreenListener();
-
         rulesPanelSettings();
-
         setButtonListener();
-
         setHandValueListeners();
-
         setBalanceValueListener();
-
         setGameOverPanelListener();
         setHighScoreListener();
-
         messages.textProperty().bind(blackJackLogic.messages);
-//Listens changes of the observableList
+        highScoreDate.textProperty().bind(blackJackLogic.highScore.dates);
+        highScoreName.textProperty().bind(blackJackLogic.highScore.names);
+        highScoreScore.textProperty().bind(blackJackLogic.highScore.scores);
 
-
-//balance its binded, should do a double bind? or call method from logic to change the balance?
-        // balance.textProperty().bind(blackJackLogic.balanceProperty());
-//        handValue.textProperty().bind(blackJackLogic.handValueSPProperty());
-
-
-        //using buttons for test
-        //test for changeFaceUp
-        // stay.setOnAction(e-> blackJackLogic.activePlayerHandArr.get(0).changeFace());
-
-        //testing hit
-        //hit.setOnAction(e->blackJackLogic.hitListener());
         hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
-//        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
         end.setOnAction(e -> System.exit(0));
-        buttonHighScore.setOnAction(e -> buttonHighScoreAction());
-
+        highScore.setOnAction(e -> buttonHighScoreAction());
         stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
-        buttonHighScoreSubmit.setOnAction(e -> buttonHighScoreSubmitAction());
+        highScoreSubmit.setOnAction(e -> buttonHighScoreSubmitAction());
         textFieldHS.setOnKeyPressed(e -> {
             highScoreNotice.setText("Adding highscore ends current game.");
             highScoreNotice.setStyle("-fx-text-fill: white");
         });
-        labelHSDate.textProperty().bind(blackJackLogic.highScore.dates);
-        labelHSName.textProperty().bind(blackJackLogic.highScore.names);
-        labelHSScore.textProperty().bind(blackJackLogic.highScore.scores);
-
         rules.setOnMouseClicked(e -> {
             rulesPanel.toFront();
             rulesPanel.setVisible(!rulesPanel.isVisible());
         });
-
         Plus.setOnAction(e -> plus());
         Minus.setOnAction(e -> minus());
         Bet.setOnAction(e -> betted());
-
         buttonQuit.setOnAction(e -> buttonQuitAction());
         buttonResume.setOnAction(e -> buttonResumeAction());
-        welcome.setOnMouseClicked(e -> welcomeClose());
-    }
 
-    public void changeBalance(String string) {
-        balance.setText(string);
+        welcome.setOnMouseClicked(e -> welcomeClose());
     }
 
     public void setListener(ObservableList<Card> observable, HBox playerBox) {
@@ -176,24 +138,22 @@ public class GameBoardController {
                     //here applied changeFace method. gets the card from the box which was updated and swaps face
                     ((CardGraph) playerBox.getChildren().get(change.getFrom())).changeFace();
                 }
-
-
             }
         });
     }
 
-    public void setButtonListener() {
+    private void setButtonListener() {
         blackJackLogic.disableButtons.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 hit.setDisable(newValue);
                 stay.setDisable(newValue);
-                buttonHighScoreSubmit.setDisable(newValue);
+                highScoreSubmit.setDisable(newValue);
             }
         });
     }
 
-    public void setHighScoreListener() {
+    private void setHighScoreListener() {
         blackJackLogic.highScorePanel.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
@@ -201,17 +161,17 @@ public class GameBoardController {
                 highScorePane.setVisible(newValue);
                 highScorePane.toFront();
                 highScoreList.toFront();
-                buttonHighScore.toFront();
+                highScore.toFront();
             }
         });
     }
 
-    public void setHandValueListeners() {
+    private void setHandValueListeners() {
         handValue.textProperty().bind(blackJackLogic.activePlayer.handValueSPProperty());
         dealerValue.textProperty().bind(blackJackLogic.dealer1.handValueSPProperty());
     }
 
-    public void setBalanceValueListener() {
+    private void setBalanceValueListener() {
         blackJackLogic.activePlayer.balanceValueProperty.addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -220,7 +180,7 @@ public class GameBoardController {
         });
     }
 
-    public CardGraph cardToGraph(Card card) {
+    private CardGraph cardToGraph(Card card) {
         String rank = String.valueOf(card.getRank());
         String suit = String.valueOf(card.getSuit()).toLowerCase();
         switch (rank) {
@@ -230,66 +190,53 @@ public class GameBoardController {
             case "13" -> rank = "king";
             default -> rank = rank;
         }
-        //System.out.println(card.isFaceUp());
         return new CardGraph(suit, rank, card.isFaceUp());
     }
 
-
-    /**
-     * sets up the rulesPanel
-     */
     private void rulesPanelSettings() {
-        rulesPanel.setVisible(false);
         Label rules = new Label("Rules");
         rules.setStyle("-fx-font-size: 40px; -fx-background-radius: 10px; -fx-text-fill: white");
         rules.prefWidth(620);
         rules.setAlignment(Pos.CENTER);
         rulesPanel.setHeader(rules);
-        rulesPanel.setContentText(
-                Messages.RULES.print());
+        rulesPanel.setContentText(Messages.RULES.print());
     }
 
-    public void setBettingScreenListener() {
+    private void setBettingScreenListener() {
         blackJackLogic.bettingScreen.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 BettingScreen.setVisible(newValue);
-//                if(newValue)BettingScreen.toFront();
-
-                if(BettingScreen.isVisible()){
+                if (BettingScreen.isVisible()) {
                     betUpdater();
                 }
-
-
             }
         });
     }
 
-    public void betUpdater(){
+    private void betUpdater() {
         BettingScreen.toFront();
         tempBet = 0;
         BetAmount.setText(String.valueOf(tempBet));
         bet.setText("Bet: " + tempBet);
-
     }
 
-    public void plus() {
+    private void plus() {
         if (!(tempBet >= 1000) && !(tempBet >= Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1)))) { //1000 is max bet
-            tempBet = tempBet + 100; //adds 100 to tempBet
+            tempBet = tempBet + 100;
             BetAmount.setText("" + tempBet);
             BettingText.setText("Set your Bet!");
         } else {
             if (tempBet >= 1000) {
-                BettingText.setText("Set your Bet! \n Max bet is 1000");
+                BettingText.setText("Set your Bet!\nMax bet is 1000");
             } else {
-                BettingText.setText("Set your Bet! \n Bet to large for balance");
+                BettingText.setText("Set your Bet!\nBet to large for balance");
             }
-
         }
     }
 
-    public void minus() {
-        if (!(tempBet <= 100)) { //100 is min bet
+    private void minus() {
+        if (!(tempBet <= 100)) {
             tempBet = tempBet - 100;
             BetAmount.setText("" + tempBet);
             BettingText.setText("Set your Bet!");
@@ -298,17 +245,15 @@ public class GameBoardController {
         }
     }
 
-    public void betted() {
-        //betUpdater();
-        if(!(tempBet <= 0)){
+    private void betted() {
+        if (!(tempBet <= 0)) {
             BlackJackLogic.actionQueue.add(tempBet);
             bet.setText("Bet: " + tempBet);
             BetAmount.setText("" + tempBet);
             BettingScreen.setVisible(false);
-        } else{
-            BettingText.setText("Set your Bet! \n Min bet is 100 !!!!!!!!!!!!!!!!!!!");
+        } else {
+            BettingText.setText("Set your Bet!\nMin bet is 100 !!!!!!!!!!!!!!!!!!!");
         }
-
     }
 
     private void fadeTransition(CardGraph c) {
@@ -320,27 +265,17 @@ public class GameBoardController {
         ft.play();
     }
 
-    /**
-     * Show/hide HighScore-AnhorPane.
-     */
     private void buttonHighScoreAction() {
         blackJackLogic.highScorePanel.setValue(!blackJackLogic.highScorePanel.getValue());
-//        highScoreList.setVisible(blackJackLogic.highScorePanel.getValue());
-//        highScorePane.setVisible(!highScorePane.isVisible());
-        buttonHighScore.setText(highScorePane.isVisible() ? "RESUME" : "HIGHSCORE");
-//        buttonHighScore.toFront();
-//        highScoreList.toFront();
+        highScore.setText(highScorePane.isVisible() ? "RESUME" : "HIGHSCORE");
     }
 
-    /**
-     *
-     */
     private void buttonHighScoreSubmitAction() {
         if (textFieldHS.getText().isEmpty()) {
             highScoreNotice.setText("Must enter name to submit!");
             highScoreNotice.setStyle("-fx-text-fill: pink");
         } else if (textFieldHS.getText().length() > 30) {
-            highScoreNotice.setText("A bit too long, ey? Keep it under 30");
+            highScoreNotice.setText("A bit too long, ey? Keep it under 30 characters.");
             highScoreNotice.setStyle("-fx-text-fill: pink");
             textFieldHS.clear();
         } else {
@@ -355,14 +290,14 @@ public class GameBoardController {
      */
     private void welcomeAnimation() {
         Group gr = new Group();
-        gr.getChildren().add(new CardGraph("diamonds","king",true));
-        gr.getChildren().add(new CardGraph("spades","ace",true));
-        gr.getChildren().add(new CardGraph("hearts","queen",true));
-        gr.setTranslateX(welcome.getPrefWidth()/2-50);
-        gr.setTranslateY(welcome.getPrefHeight()/2);
+        gr.getChildren().add(new CardGraph("diamonds", "king", true));
+        gr.getChildren().add(new CardGraph("spades", "ace", true));
+        gr.getChildren().add(new CardGraph("hearts", "queen", true));
+        gr.setTranslateX(welcome.getPrefWidth() / 2 - 50);
+        gr.setTranslateY(welcome.getPrefHeight() / 2);
         welcome.getChildren().add(gr);
 
-        infiniteFade=new FadeTransition();
+        infiniteFade = new FadeTransition();
         FadeTransition ft = new FadeTransition();
         ft.setDuration(Duration.seconds(0.5));
         ft.setNode(clickToPlay);
@@ -374,24 +309,24 @@ public class GameBoardController {
 
         TranslateTransition ts = new TranslateTransition(Duration.seconds(2), gr);
         ts.setFromY(400);
-        ts.setByY(gr.getTranslateY()-500);
+        ts.setByY(gr.getTranslateY() - 500);
         ts.setAutoReverse(false);
         ts.play();
-       // ts.setOnFinished(e -> circleSeq());
-        rotateTransition(gr.getChildren().get(0),-30);
-        rotateTransition(gr.getChildren().get(2),30);
+        rotateTransition(gr.getChildren().get(0), -30);
+        rotateTransition(gr.getChildren().get(2), 30);
     }
 
     /**
      * animation to use with cards in welcomeAnimation
-     * @param node the card to animate
+     *
+     * @param node  the card to animate
      * @param angle the angle to rotate
      */
-    private void rotateTransition(Node node,double angle){
-       node.getTransforms().add(new Rotate(0,30,0));
-        RotateTransition rt=new RotateTransition();
+    private void rotateTransition(Node node, double angle) {
+        node.getTransforms().add(new Rotate(0, 30, 0));
+        RotateTransition rt = new RotateTransition();
         rt.setNode(node);
-        rt.setAxis(new Point3D(0,0,10));
+        rt.setAxis(new Point3D(0, 0, 10));
         rt.setToAngle(angle);
         rt.setDuration(Duration.seconds(2));
         rt.play();
@@ -401,17 +336,20 @@ public class GameBoardController {
     /**
      * scale animation when welcome pane is clicked
      */
-    private void welcomeClose(){
-        ScaleTransition sc=new ScaleTransition();
+    private void welcomeClose() {
+        ScaleTransition sc = new ScaleTransition();
         sc.setNode(welcome);
         sc.setToX(0);
         sc.setToY(0);
         sc.setDuration(Duration.seconds(1));
         sc.play();
-        sc.setOnFinished(e->{welcome.setVisible(false);infiniteFade.stop();});
+        sc.setOnFinished(e -> {
+            welcome.setVisible(false);
+            infiniteFade.stop();
+        });
     }
 
-    public void setGameOverPanelListener() {
+    private void setGameOverPanelListener() {
         blackJackLogic.gameOverPanel.addListener(new ChangeListener<Boolean>() {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {

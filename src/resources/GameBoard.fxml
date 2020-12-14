@@ -51,7 +51,7 @@
         <Button fx:id="stay" layoutX="730.0" layoutY="650.0" mnemonicParsing="false" styleClass="buttons" text="STAY" />
         <Button fx:id="rules" layoutX="1163.0" layoutY="67.0" mnemonicParsing="false" styleClass="buttons" text="RULES" />
         <Button fx:id="end" layoutX="1163.0" layoutY="18.0" mnemonicParsing="false" styleClass="buttons" text="END" />
-        <Button fx:id="buttonHighScore" layoutX="1163.0" layoutY="116.0" mnemonicParsing="false" styleClass="buttons" text="HIGHSCORE" />
+        <Button fx:id="highScore" layoutX="1163.0" layoutY="116.0" mnemonicParsing="false" styleClass="buttons" text="HIGHSCORE" />
         <Label fx:id="balance" layoutX="874.0" layoutY="18.0" text="Balance: " textFill="#ffdc08">
             <font>
                 <Font size="41.0"/>
@@ -96,7 +96,7 @@
                 <Font name="System Bold" size="12.0"/>
             </font>
         </Label>
-        <DialogPane fx:id="rulesPanel" layoutX="665.0" layoutY="97.0" prefHeight="620.0" prefWidth="600.0" styleClass="rulesPanel" />
+        <DialogPane fx:id="rulesPanel" layoutX="665.0" layoutY="97.0" prefHeight="620.0" prefWidth="600.0" styleClass="rulesPanel" visible="false" />
         <AnchorPane fx:id="highScorePane" prefHeight="720" prefWidth="1280" styleClass="popupBackground" visible="false">
             <children>
                 <GridPane layoutX="390.0" layoutY="60.0" prefHeight="600.0" prefWidth="500.0" styleClass="popupPanel">
@@ -119,7 +119,7 @@
                                         <Pane prefHeight="28.0" prefWidth="120.0" />
                                         <TextField fx:id="textFieldHS" alignment="CENTER" prefWidth="180" promptText="Enter name" styleClass="textFieldHighScore" />
                                         <Pane prefHeight="28.0" prefWidth="50.0" />
-                                        <Button fx:id="buttonHighScoreSubmit" alignment="CENTER" mnemonicParsing="false" styleClass="buttons" text="Submit" />
+                                        <Button fx:id="highScoreSubmit" alignment="CENTER" mnemonicParsing="false" styleClass="buttons" text="Submit" />
                                     </children>
                                 </HBox>
                                 <Label fx:id="highScoreNotice" alignment="CENTER" prefHeight="17.0" prefWidth="459.0" styleClass="highScoreNotice" text="Adding highscore ends current game." />
@@ -165,7 +165,7 @@
             <children>
                 <Pane layoutX="163.0" layoutY="120.0" prefHeight="509.0" prefWidth="966.0" styleClass="popupPanel">
                     <children>
-                        <Label fx:id="labelGameOver" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="49.0" prefWidth="940.0" styleClass="popupPanelTitle" text="Game over!" />
+                        <Label fx:id="gameOverTitle" alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="49.0" prefWidth="940.0" styleClass="popupPanelTitle" text="Game over!" />
                         <Button fx:id="buttonQuit" layoutX="558.0" layoutY="417.0" styleClass="buttons" text="QUIT" />
                         <Button fx:id="buttonResume" layoutX="311.0" layoutY="417.0" styleClass="buttons" text="RESUME" />
                     </children>
@@ -176,9 +176,9 @@
          <children>
                   <HBox layoutX="466.0" layoutY="180.0" prefHeight="350.0" prefWidth="348.0">
                       <children>
-                          <Label fx:id="labelHSDate" alignment="CENTER_RIGHT" prefHeight="467.0" prefWidth="120.0" styleClass="popupPanelMediumText" text="Label" />
-                          <Label fx:id="labelHSName" alignment="CENTER" prefHeight="467.0" prefWidth="191.0" styleClass="popupPanelMediumText" text="Label" />
-                          <Label fx:id="labelHSScore" prefHeight="467.0" prefWidth="117.0" styleClass="popupPanelMediumText" text="Label" />
+                          <Label fx:id="highScoreDate" alignment="CENTER_RIGHT" prefHeight="467.0" prefWidth="120.0" styleClass="popupPanelMediumText" text="Label" />
+                          <Label fx:id="highScoreName" alignment="CENTER" prefHeight="467.0" prefWidth="191.0" styleClass="popupPanelMediumText" text="Label" />
+                          <Label fx:id="highScoreScore" prefHeight="467.0" prefWidth="117.0" styleClass="popupPanelMediumText" text="Label" />
                       </children>
                   </HBox>
          </children>

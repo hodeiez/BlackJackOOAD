@@ -73,7 +73,7 @@
 
 .bettingButtons{
     -fx-font-family: Monospaced;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 50;
     -fx-background-radius: 10;
