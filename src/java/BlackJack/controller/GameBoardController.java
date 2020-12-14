@@ -24,10 +24,9 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 public class GameBoardController {
+
     @FXML
     public Button hit;
-    public Label welcomeText;
-
     public Pane welcome;
     public Label clickToPlay;
 
