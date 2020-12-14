@@ -1,11 +1,14 @@
 package BlackJack;
 
-import javafx.animation.FadeTransition;
+import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Point3D;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
@@ -15,7 +18,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
+
+import java.util.Objects;
+import java.util.Random;
 
 /**
  * Created by Hodei Eceiza
@@ -54,6 +61,10 @@ public class GameBoardController {
     public Button Bet;
     public Label BettingText;
     public Label BetAmount;
+    public Pane welcome;
+    public Label welcomeText;
+    public FadeTransition infiniteFade;
+    public Label clickToPlay;
     public Button buttonHighScore;
     public AnchorPane gameOver;
     public Button buttonQuit;
@@ -81,6 +92,8 @@ public class GameBoardController {
 
 
     public void initialize() {
+        welcomeAnimation();
+
         setListener(blackJackLogic.activePlayer.handObs, activePlayer);
 
         setListener(blackJackLogic.dealer1.handObs, dealerBox);
@@ -136,9 +149,10 @@ public class GameBoardController {
 
         buttonQuit.setOnAction(e -> buttonQuitAction());
         buttonResume.setOnAction(e -> buttonResumeAction());
+        welcome.setOnMouseClicked(e -> welcomeClose());
     }
 
-    public void changeBalance(String string) {
+    public void changeBalance(String string){
         balance.setText(string);
     }
 
@@ -215,7 +229,7 @@ public class GameBoardController {
     /**
      * sets up the rulesPanel
      */
-    private void rulesPanelSettings() {
+    private void rulesPanelSettings(){
         rulesPanel.setVisible(false);
         Label rules = new Label("Rules");
         rules.setStyle("-fx-font-size: 40px; -fx-background-radius: 10px; -fx-text-fill: white");
@@ -250,12 +264,12 @@ public class GameBoardController {
 
     }
 
-    public void plus() {
-        if (!(tempBet >= 1000) && !(tempBet >= Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1)))) { //1000 is max bet
+    public void plus(){
+        if(!(tempBet >= 1000) && !(tempBet >= Integer.parseInt(balance.getText().substring(balance.getText().indexOf(" ") + 1)))){ //1000 is max bet
             tempBet = tempBet + 100; //adds 100 to tempBet
-            BetAmount.setText("" + tempBet);
-        } else {
-            if (tempBet >= 1000) {
+            BetAmount.setText(""+tempBet);
+        }else {
+            if(tempBet >= 1000){
                 BettingText.setText("Set your Bet! \n Max bet is 1000");
             } else {
                 BettingText.setText("Set your Bet! \n Bet to large for balance");
@@ -264,27 +278,27 @@ public class GameBoardController {
         }
     }
 
-    public void minus() {
-        if (!(tempBet <= 100)) { //100 is min bet
+    public void minus(){
+        if(!(tempBet <= 100)){ //100 is min bet
             tempBet = tempBet - 100;
-            BetAmount.setText("" + tempBet);
+            BetAmount.setText(""+tempBet);
         } else {
             BettingText.setText("Set your Bet! \n Min bet is 100");
         }
     }
 
-    public void betted() {
+    public void betted(){
 
         BlackJackLogic.actionQueue.add(tempBet);
-        bet.setText("Bet: " + tempBet);
+        bet.setText("Bet: "+tempBet);
         BettingScreen.setVisible(false);
         tempBet = 100; //resets the bet to 100
-        BetAmount.setText("" + tempBet); //sets the bet amount to 100
+        BetAmount.setText(""+tempBet); //sets the bet amount to 100
 
     }
 
-    private void fadeTransition(CardGraph c) {
-        FadeTransition ft = new FadeTransition();
+    private void fadeTransition(CardGraph c){
+        FadeTransition ft=new FadeTransition();
         ft.setDuration(Duration.seconds(0.5));
         ft.setNode(c);
         ft.setFromValue(0);
@@ -310,7 +324,7 @@ public class GameBoardController {
         if (textFieldHS.getText().isEmpty()) {
             highScoreNotice.setText("Must enter name to submit!");
             highScoreNotice.setStyle("-fx-text-fill: pink");
-        } else if (textFieldHS.getText().length() > 30) {
+        } else if(textFieldHS.getText().length() > 30){
             highScoreNotice.setText("A bit too long, ey? Keep it under 30");
             highScoreNotice.setStyle("-fx-text-fill: pink");
             textFieldHS.clear();
@@ -319,6 +333,67 @@ public class GameBoardController {
             BlackJackLogic.actionQueue.add(textFieldHS.getText());
             textFieldHS.clear();
         }
+    }
+
+    /**
+     * animation for welcome panel adds cards, animates them and starts "click here" animation.
+     */
+    private void welcomeAnimation() {
+        Group gr = new Group();
+        gr.getChildren().add(new CardGraph("diamonds","king",true));
+        gr.getChildren().add(new CardGraph("spades","ace",true));
+        gr.getChildren().add(new CardGraph("hearts","queen",true));
+        gr.setTranslateX(welcome.getPrefWidth()/2-50);
+        gr.setTranslateY(welcome.getPrefHeight()/2);
+        welcome.getChildren().add(gr);
+
+        infiniteFade=new FadeTransition();
+        FadeTransition ft = new FadeTransition();
+        ft.setDuration(Duration.seconds(0.5));
+        ft.setNode(clickToPlay);
+        ft.setFromValue(0);
+        ft.setToValue(100);
+        ft.setAutoReverse(true);
+        ft.setCycleCount(Animation.INDEFINITE);
+        ft.play();
+
+        TranslateTransition ts = new TranslateTransition(Duration.seconds(2), gr);
+        ts.setFromY(400);
+        ts.setByY(gr.getTranslateY()-500);
+        ts.setAutoReverse(false);
+        ts.play();
+       // ts.setOnFinished(e -> circleSeq());
+        rotateTransition(gr.getChildren().get(0),-30);
+        rotateTransition(gr.getChildren().get(2),30);
+    }
+
+    /**
+     * animation to use with cards in welcomeAnimation
+     * @param node the card to animate
+     * @param angle the angle to rotate
+     */
+    private void rotateTransition(Node node,double angle){
+       node.getTransforms().add(new Rotate(0,30,0));
+        RotateTransition rt=new RotateTransition();
+        rt.setNode(node);
+        rt.setAxis(new Point3D(0,0,10));
+        rt.setToAngle(angle);
+        rt.setDuration(Duration.seconds(2));
+        rt.play();
+
+    }
+
+    /**
+     * scale animation when welcome pane is clicked
+     */
+    private void welcomeClose(){
+        ScaleTransition sc=new ScaleTransition();
+        sc.setNode(welcome);
+        sc.setToX(0);
+        sc.setToY(0);
+        sc.setDuration(Duration.seconds(1));
+        sc.play();
+        sc.setOnFinished(e->{welcome.setVisible(false);infiniteFade.stop();});
     }
 
     public void setGameOverPanelListener() {
