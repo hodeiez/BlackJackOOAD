@@ -1,5 +1,10 @@
-package BlackJack;
+package BlackJack.controller;
 
+import BlackJack.model.Dealer;
+import BlackJack.model.Deck;
+import BlackJack.model.HighScore;
+import BlackJack.model.Player;
+import BlackJack.view.Messages;
 import javafx.application.Platform;
 import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.BooleanProperty;
@@ -14,17 +19,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class BlackJackLogic implements Runnable {
     private List<Player> players = new ArrayList<>();
-    Dealer dealer1 = new Dealer();
+    public Dealer dealer1 = new Dealer();
     private Deck deck1 = new Deck(6);
-    Player activePlayer = new Player();
-    BooleanProperty disableButtons = new SimpleBooleanProperty(false);
-    BooleanProperty bettingScreen = new SimpleBooleanProperty(true);
-    BooleanProperty gameOverPanel = new SimpleBooleanProperty(false);
+    public Player activePlayer = new Player();
+    public BooleanProperty disableButtons = new SimpleBooleanProperty(false);
+    public BooleanProperty bettingScreen = new SimpleBooleanProperty(true);
+    public BooleanProperty gameOverPanel = new SimpleBooleanProperty(false);
     boolean humanBust;
     boolean highScoreSet;
     public static BlockingQueue<Object> actionQueue = new LinkedBlockingQueue();
-    StringProperty messages = new SimpleStringProperty();
-    HighScore highScore = HighScore.getInstance();
+    public StringProperty messages = new SimpleStringProperty();
+    public HighScore highScore = HighScore.getInstance();
 
     private void setUpGame() throws InterruptedException {
         players.add(activePlayer);
@@ -43,7 +48,6 @@ public class BlackJackLogic implements Runnable {
         while (true) {
             isItTimeToShuffle();
 
-
             placeBets();
 
             dealHands();
@@ -52,9 +56,6 @@ public class BlackJackLogic implements Runnable {
 //          computerPlayerTurn(players.get(1));
 //          computerPlayerTurn(players.get(2));
             dealerTurn();
-
-
-
             isGameOver();
         }
     }
@@ -90,21 +91,18 @@ public class BlackJackLogic implements Runnable {
 
     private void placeBets() throws InterruptedException {
 
+        Platform.runLater(() -> bettingScreen.setValue(true));
 
+        updateGraphicBalance();
 
-            Platform.runLater(() -> bettingScreen.setValue(true));
+        Integer bet =  (Integer) actionQueue.take();
 
-            updateGraphicBalance();
+        activePlayer.setCurrentBet(bet);
 
-            Integer bet = (Integer) actionQueue.take();
+        //sets the bot bet to players bet
+        updateGraphicBalance();
 
-            activePlayer.setCurrentBet(bet);
-
-            //sets the bot bet to players bet
-            updateGraphicBalance();
-
-            Platform.runLater(() -> bettingScreen.setValue(false));
-
+        Platform.runLater(() -> bettingScreen.setValue(false));
 
     }
 
@@ -212,8 +210,8 @@ public class BlackJackLogic implements Runnable {
                     dealer1.updateHandValue();
                 }
                 if (dealer1.getHandValue() > 21) {
-                  //  System.out.println("Dealern är bust! Du vinner.");
-                    printMessage(String.format(Messages.BUST.print(),"Dealer"));
+                    //  System.out.println("Dealern är bust! Du vinner.");
+                    printMessage(String.format(Messages.BUST.print(), "Dealer"));
                     activePlayer.increaseBalance();
                     activePlayer.increaseBalance();
                 } else if (dealer1.getHandValue() > activePlayer.getHandValue()) {
@@ -222,7 +220,7 @@ public class BlackJackLogic implements Runnable {
                     printMessage(String.format(Messages.WON.print(),"Dealer"));
 
                 } else if (dealer1.getHandValue() == activePlayer.getHandValue()) {
-                   System.out.println("Oavgjort!");
+                    System.out.println("Oavgjort!");
                     printMessage(Messages.DRAW.print());
                     activePlayer.setBalance(activePlayer.getBalance() + activePlayer.getCurrentBet());
                 } else if (dealer1.getHandValue() < activePlayer.getHandValue()) {
@@ -249,9 +247,9 @@ public class BlackJackLogic implements Runnable {
 
     public void isGameOver() {
         if (activePlayer.isBroke()) {
-            if(highScoreSet){
+            if (highScoreSet) {
                 printMessage("You made the highscore!");
-            } else{
+            } else {
                 System.out.println("LOOOOOOOOOSEEERRRR!!!!!!!!");
                 printMessage("LOOOOOOOOOSEEERRRR!!!!!!!!");
             }

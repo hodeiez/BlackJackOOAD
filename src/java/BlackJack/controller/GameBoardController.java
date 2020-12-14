@@ -1,5 +1,8 @@
-package BlackJack;
+package BlackJack.controller;
 
+import BlackJack.model.Card;
+import BlackJack.view.CardGraph;
+import BlackJack.view.Messages;
 import javafx.animation.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -20,17 +23,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-
 import java.util.Objects;
 import java.util.Random;
 
-/**
- * Created by Hodei Eceiza
- * Date: 11/30/2020
- * Time: 15:50
- * Project: BlackJackOOAD
- * Copyright: MIT
- */
 public class GameBoardController {
     @FXML
     public Button hit;

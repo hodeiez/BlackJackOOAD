@@ -1,4 +1,4 @@
-package BlackJack;
+package BlackJack.model;
 
 import javafx.application.Platform;
 import javafx.beans.Observable;
@@ -11,17 +11,10 @@ import javafx.util.Callback;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Lukas Aronsson
- * Date: 01/12/2020
- * Time: 16:22
- * Project: BlackJackOOAD
- * Copyright: MIT
- **/
 public abstract class Hand {
 
-    ArrayList<Card> hand = new ArrayList();
-    ObservableList handObs = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {
+    public ArrayList<Card> hand = new ArrayList();
+    public ObservableList handObs = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {
         @Override
         public Observable[] call(Card card) {
             return new Observable[]{
@@ -29,7 +22,6 @@ public abstract class Hand {
             };
         }
     });
-
 
 
     StringProperty handValueSP = new SimpleStringProperty("0");
@@ -40,7 +32,7 @@ public abstract class Hand {
      *
      * @return the total value of the current hand
      */
-    synchronized int getHandValue() {
+    public synchronized int getHandValue() {
         List<Integer> aces = new ArrayList<>();
         int result = 0;
         for (Card card : hand) {
@@ -60,7 +52,7 @@ public abstract class Hand {
     }
 
     public void clearHand() {
-       hand.clear();
+        hand.clear();
         Platform.runLater(() -> handObs.clear());
 
     }
@@ -68,16 +60,17 @@ public abstract class Hand {
     public void addCard(Card card) {
         hand.add(card);
         Platform.runLater(() -> handObs.add(card));
-       // System.out.println(card);
-      //  System.out.println((hand.size()>0)?"What is the first element?"+ hand.get(0).toString():"Observable is empty");
+        // System.out.println(card);
+        //  System.out.println((hand.size()>0)?"What is the first element?"+ hand.get(0).toString():"Observable is empty");
     }
 
     /**
      * adds card selecting the faceUp state
-     * @param card the card sent to the list
+     *
+     * @param card   the card sent to the list
      * @param faceUp sets the face state, true is faceUp
      */
-    public void addCard(Card card,boolean faceUp){
+    public void addCard(Card card, boolean faceUp) {
         card.setFaceUp(faceUp);
         hand.add(card);
         Platform.runLater(() -> handObs.add(card));
@@ -97,12 +90,13 @@ public abstract class Hand {
 
     /**
      * gets the card from observableList and changes face state
+     *
      * @param index to select index of the card
      * @param state to select state, true is faceUp
      */
-    public void setObsFaceUp(int index, boolean state){
+    public void setObsFaceUp(int index, boolean state) {
         if (handObs.size() > 0) {
-            Platform.runLater(()->((Card)handObs.get(index)).setIsFaceUp(state));
+            Platform.runLater(() -> ((Card) handObs.get(index)).setIsFaceUp(state));
         }
         //  System.out.println( handObs.get(0).getClass());
     }

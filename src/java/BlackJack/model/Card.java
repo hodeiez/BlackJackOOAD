@@ -1,4 +1,4 @@
-package BlackJack;
+package BlackJack.model;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;

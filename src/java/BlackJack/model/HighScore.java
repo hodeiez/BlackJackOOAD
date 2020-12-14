@@ -1,4 +1,4 @@
-package BlackJack;
+package BlackJack.model;
 
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -9,13 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by David Hedman <br>
- * Date: 2020-12-03 <br>
- * Time: 13:23 <br>
- * Project: BlackJackOOAD <br>
- * Copyright: Nackademin <br>
- */
 public class HighScore {
     private static HighScore instance;
     private List<HighScoreObject> list;
@@ -29,11 +22,11 @@ public class HighScore {
         updateStrings();
     }
 
-    private void updateStrings(){
+    private void updateStrings() {
         String names = "";
         String scores = "";
         String dates = "";
-        for(var a: list){
+        for (var a : list) {
             names += a.getName() + "\n";
             scores += a.getScore() + "\n";
             dates += a.getDate() + "\n";
@@ -41,9 +34,9 @@ public class HighScore {
         String finalNames = names;
         String finalScores = scores;
         String finalDates = dates;
-        Platform.runLater(()-> this.names.set(finalNames));
-        Platform.runLater(()-> this.scores.set(finalScores));
-        Platform.runLater(()-> this.dates.set(finalDates));
+        Platform.runLater(() -> this.names.set(finalNames));
+        Platform.runLater(() -> this.scores.set(finalScores));
+        Platform.runLater(() -> this.dates.set(finalDates));
     }
 
 
@@ -85,7 +78,7 @@ public class HighScore {
             int score = Integer.parseInt(s.substring(0, index));
             index++;
             String name = s.substring(index, s.indexOf("|", index));
-            index = s.indexOf("|" , index) +1;
+            index = s.indexOf("|", index) + 1;
             LocalDate date = LocalDate.parse(s.substring(index));
             list.add(new HighScoreObject(name, score, date));
         }
