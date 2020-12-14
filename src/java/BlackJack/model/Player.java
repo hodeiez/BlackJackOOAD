@@ -98,6 +98,7 @@ public class Player extends Hand {
      * @return if the ComputerPlayer is all out of balance (gets removed form the game)
      */
     public boolean isBroke() {
+        setBroke(this.getBalance() <= 0 && this.getCurrentBet() <= 0);
         return broke;
     }
 

@@ -217,6 +217,7 @@ public class BlackJackLogic implements Runnable {
                 } else if (dealer1.getHandValue() > activePlayer.getHandValue()) {
                     System.out.println("Dealern vinner!");
                     activePlayer.setCurrentBet(0);
+                    updateGraphicBalance();
                     printMessage(String.format(Messages.WON.print(),"Dealer"));
 
                 } else if (dealer1.getHandValue() == activePlayer.getHandValue()) {
@@ -230,7 +231,7 @@ public class BlackJackLogic implements Runnable {
                 }
             }
         }
-        Thread.sleep(1000);
+        Thread.sleep(3000);
         System.out.println("RENSA");
         activePlayer.clearHand();
         dealer1.clearHand();
