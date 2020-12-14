@@ -19,6 +19,7 @@ public class BlackJackLogic implements Runnable {
     Player activePlayer = new Player();
     BooleanProperty disableButtons = new SimpleBooleanProperty(false);
     BooleanProperty bettingScreen = new SimpleBooleanProperty(true);
+    BooleanProperty gameOverPanel = new SimpleBooleanProperty(false);
     boolean humanBust;
     boolean highScoreSet;
     public static BlockingQueue<Object> actionQueue = new LinkedBlockingQueue();
@@ -242,6 +243,7 @@ public class BlackJackLogic implements Runnable {
             }
             activePlayer.clearHand();
             dealer1.clearHand();
+            Platform.runLater(()-> gameOverPanel.set(true));
             activePlayer.setBalance(1000);
             activePlayer.setBroke(false);
         }
