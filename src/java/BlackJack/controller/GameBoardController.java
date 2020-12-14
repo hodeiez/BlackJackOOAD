@@ -122,7 +122,7 @@ public class GameBoardController {
         //hit.setOnAction(e->blackJackLogic.hitListener());
         hit.setOnAction(e -> BlackJackLogic.actionQueue.add(1));
 //        end.setOnAction(e -> player2.getChildren().add(new CardGraph("clubs", "ace", true)));
-//        end.setOnAction(e -> endButtonAction());
+        end.setOnAction(e -> System.exit(0));
         buttonHighScore.setOnAction(e -> buttonHighScoreAction());
 
         stay.setOnAction(e -> BlackJackLogic.actionQueue.add(0));
@@ -188,7 +188,6 @@ public class GameBoardController {
             public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
                 hit.setDisable(newValue);
                 stay.setDisable(newValue);
-                end.setDisable(newValue);
                 buttonHighScoreSubmit.setDisable(newValue);
             }
         });
@@ -429,7 +428,6 @@ public class GameBoardController {
 
     private void buttonResumeAction() {
         BlackJackLogic.actionQueue.add(0);
-        // gameOver.setVisible(false);
         blackJackLogic.gameOverPanel.setValue(false);
         highScoreList.setVisible(gameOver.isVisible());
     }
