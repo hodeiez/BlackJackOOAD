@@ -150,7 +150,9 @@ public class BlackJackLogic implements Runnable {
                         break hitLoop;
                     }
                     case 1 -> { //hit
-                        activePlayer.addCard(deck1.drawCard());
+                        Card card= deck1.drawCard();
+                        notifyObs("Player takes card:\n"+card.toString());
+                        activePlayer.addCard(card);
                         activePlayer.updateHandValue();
                     }
                     case 9 -> { //Pressed submit on highscore
