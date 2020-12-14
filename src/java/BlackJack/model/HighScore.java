@@ -84,6 +84,9 @@ public class HighScore {
         }
         Collections.sort(list);
         Collections.reverse(list);
+        while(list.size() > maxListLength){
+            list.remove(list.size()-1);
+        }
     }
 
     public void writeHighScoreToFile() {
