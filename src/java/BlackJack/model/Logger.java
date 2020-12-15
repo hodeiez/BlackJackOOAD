@@ -11,19 +11,23 @@ import java.util.List;
  * Copyright: MIT
  */
 public class Logger {
-    private List<IlogObserver> observers=new ArrayList();
+    private List<IlogObserver> observers = new ArrayList();
     private String text;
-    public String getState(){
+
+    public String getState() {
         return this.text;
     }
-    public void setState(String text){
-        this.text=text;
+
+    public void setState(String text) {
+        this.text = text;
     }
-    public void attach(IlogObserver o){
+
+    public void attach(IlogObserver o) {
         observers.add(o);
     }
-    public void notifyObservers(){
-        for(IlogObserver o:observers)
+
+    public void notifyObservers() {
+        for (IlogObserver o : observers)
             o.update(this.text);
     }
 }

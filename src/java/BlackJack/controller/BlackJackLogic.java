@@ -152,6 +152,7 @@ public class BlackJackLogic implements Runnable {
                     case 1 -> { //hit
                         Card card= deck1.drawCard();
                         notifyObs("Player takes card:\n"+card.toString());
+
                         activePlayer.addCard(card);
                         activePlayer.updateHandValue();
                     }
