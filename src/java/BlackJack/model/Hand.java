@@ -6,26 +6,17 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.util.Callback;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Hand {
-
-    public ArrayList<Card> hand = new ArrayList();
-    public ObservableList handObs = FXCollections.observableArrayList(new Callback<Card, Observable[]>() {
-        @Override
-        public Observable[] call(Card card) {
-            return new Observable[]{
-                    card.isFaceUpProp()
-            };
-        }
+    public ArrayList<Card> hand = new ArrayList<>();
+    public ObservableList<Card> handObs = FXCollections.observableArrayList(card -> new Observable[]{
+            card.isFaceUpProp()
     });
 
-
     StringProperty handValueSP = new SimpleStringProperty("0");
-
 
     /**
      * Calculates and returns the value of the current hand
@@ -46,22 +37,25 @@ public abstract class Hand {
             result -= 10;
             aces.remove(0);
         }
-
-
         return result;
     }
 
+    /**
+     * Clears the hand
+     */
     public void clearHand() {
         hand.clear();
         Platform.runLater(() -> handObs.clear());
-
     }
 
+    /**
+     * adds a card to the hand
+     *
+     * @param card a playing card
+     */
     public void addCard(Card card) {
         hand.add(card);
         Platform.runLater(() -> handObs.add(card));
-        // System.out.println(card);
-        //  System.out.println((hand.size()>0)?"What is the first element?"+ hand.get(0).toString():"Observable is empty");
     }
 
     /**
@@ -76,14 +70,20 @@ public abstract class Hand {
         Platform.runLater(() -> handObs.add(card));
     }
 
+    /**
+     * the value of the hand but stored in a StringProperty
+     *
+     * @return StringProperty that stores handValue
+     */
     public StringProperty handValueSPProperty() {
         return handValueSP;
     }
 
-    public String getHandValueSP() {
-        return handValueSPProperty().get();
-    }
-
+    /**
+     * set the value of the hand but stored in a StringProperty
+     *
+     * @param handValue StringProperty that stores handValue
+     */
     public void setHandValueSP(String handValue) {
         handValueSPProperty().set(handValue);
     }
@@ -96,12 +96,15 @@ public abstract class Hand {
      */
     public void setObsFaceUp(int index, boolean state) {
         if (hand.size() > 0) {
-            Platform.runLater(() -> ((Card) handObs.get(index)).setIsFaceUp(state));
+            Platform.runLater(() -> (handObs.get(index)).setIsFaceUp(state));
         }
-        //  System.out.println( handObs.get(0).getClass());
     }
-    public void updateHandValue(){
-        Platform.runLater(() -> setHandValueSP(getHandValue()+""));
+
+    /**
+     * calls on setHandValueSp and gives it a string version of getHandValue
+     */
+    public void updateHandValue() {
+        Platform.runLater(() -> setHandValueSP(getHandValue() + ""));
     }
 
 

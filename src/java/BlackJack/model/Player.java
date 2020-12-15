@@ -1,34 +1,25 @@
 package BlackJack.model;
-
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.ArrayList;
-
 public class Player extends Hand {
-    private String name = "Player"; //the players name
     public int balance = 1000; //the amount of balance the player has currently
-    private int currentBet = 0; //the amount of balance the player have decided to bet this round
-    private boolean broke = false;
     public StringProperty balanceValueProperty = new SimpleStringProperty();
+    private int currentBet = 0; //the amount of balance the player have decided to bet this round
+    private boolean broke = false; //if player ran out of money
 
+    /**
+     * constructor gives player a hand
+     */
     public Player() {
-        ArrayList<Card> hand = new ArrayList<>();
     }
 
     /**
      * Increases the players balance
      */
     public void increaseBalance() {
-        setBalance(getBalance() + (getCurrentBet()*2));
-
+        setBalance(getBalance() + (getCurrentBet() * 2));
         setCurrentBet(0);
-    }
-    /**
-     * sets the currentBet based on user input
-     */
-    public void bet(int bet) {
-        setCurrentBet(bet);
     }
 
     /**
@@ -37,16 +28,8 @@ public class Player extends Hand {
      * @return the players name
      */
     public String getName() {
-        return name;
-    }
-
-    /**
-     * Setter for the name
-     *
-     * @param name the name of the player
-     */
-    public void setName(String name) {
-        this.name = name;
+        //the players name
+        return "Player";
     }
 
     /**
@@ -82,7 +65,6 @@ public class Player extends Hand {
      * @param currentBet the amount of balance the player has decided to bet this round
      */
     public void setCurrentBet(int currentBet) {
-
         if (currentBet <= balance) {
             this.currentBet = currentBet;
             balance -= currentBet;

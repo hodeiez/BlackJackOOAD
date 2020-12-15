@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class HighScoreObject implements Comparable<HighScoreObject> {
-    private String name;
-    private int score;
-    private LocalDate date; //maybe for later use?
+    private final String name;
+    private final int score;
+    private final LocalDate date;
 
     HighScoreObject(String name, int score) {
         this.name = name;
