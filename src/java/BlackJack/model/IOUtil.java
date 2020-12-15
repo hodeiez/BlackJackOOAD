@@ -29,8 +29,4 @@ public class IOUtil {
         }
         return true;
     }
-
-    public static boolean writeHighScoreToFile(HighScore highScore) {
-        return true;
-    }
 }
