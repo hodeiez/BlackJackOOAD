@@ -3,12 +3,12 @@ package BlackJack.controller;
 import BlackJack.model.*;
 import BlackJack.view.Messages;
 import javafx.application.Platform;
-import javafx.beans.binding.ObjectBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -29,15 +29,16 @@ public class BlackJackLogic implements Runnable {
     public static BlockingQueue<Object> actionQueue = new LinkedBlockingQueue();
     public StringProperty messages = new SimpleStringProperty();
     public HighScore highScore = HighScore.getInstance();
-    Logger logger=new Logger();
+    Notifier notifier =new Notifier();
     long startTime;
+    long endTime;
     IlogObserver consoleObs=new LogToConsole();
     IlogObserver encryptObs=new LogEncrypted();
 
     private void setUpGame() throws InterruptedException {
-        logger.attach(consoleObs);
-        logger.attach(encryptObs);
-        startTime=System.currentTimeMillis();
+        notifier.attach(consoleObs);
+        notifier.attach(encryptObs);
+
         players.add(activePlayer);
         setStartingBalance(1000);
         playRound();
@@ -53,14 +54,16 @@ public class BlackJackLogic implements Runnable {
     private void playRound() throws InterruptedException {
 
 
+        //startTime= System.currentTimeMillis();
         printMessage(Messages.WELCOME.print());
         while (true) {
             isItTimeToShuffle();
+
             placeBets();
 
 
-            notifyObs("Player bet amount: " +activePlayer.getCurrentBet()+"");
-            notifyObs(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-startTime)+" seconds");
+            notifyObs("AT START\n" + LocalTime.now() +"\nPlayer Balance\n" +
+                    activePlayer.getBalance()+"\nPlayer bet amount\n" +activePlayer.getCurrentBet()+"\n"+ getPassedSecs());
 
 
             dealHands();
@@ -78,17 +81,7 @@ public class BlackJackLogic implements Runnable {
         String balance = "Balance: " + activePlayer.getBalance();
         Platform.runLater(() -> activePlayer.balanceValueProperty.set(balance));
     }
-// Används inte just nu
-    public void playRoundConsoleVersion() throws InterruptedException {
-        Deck deck1 = new Deck(1);
-        players.add(activePlayer);
-        while (true) {
-            isItTimeToShuffle();
-            dealHands();
-            humanPlayerTurn();
-            dealerTurn();
-        }
-    }
+
 
     private void isPlayerBroke() {
         if (activePlayer.getBalance() <= 0 && activePlayer.getCurrentBet() <= 0) {
@@ -97,6 +90,10 @@ public class BlackJackLogic implements Runnable {
     }
 
     private void placeBets() throws InterruptedException {
+
+        startTime= System.currentTimeMillis();
+
+
         Platform.runLater(() -> bettingScreen.setValue(true));
         updateGraphicBalance();
         Integer bet = (Integer) actionQueue.take();
@@ -128,33 +125,43 @@ public class BlackJackLogic implements Runnable {
             }
             dealer1.updateHandValue();
         }
-        notifyObs("Cards at round start\n"+"dealer\n"+ dealer1.hand.toString()+ "\nPlayer\n"+activePlayer.hand.toString());
+        notifyObs("Cards at round start\n"+"dealer\n"+ dealer1.hand.toString()+"\ndealer hand value\n"+dealer1.getHandValue()
+                + "\nPlayer\n"+activePlayer.hand.toString()+"\nplayer hand value\n"+ activePlayer.getHandValue());
+
     }
 
     private void humanPlayerTurn() throws InterruptedException {
+        startTime=System.currentTimeMillis();
+
         printMessage(String.format(Messages.PLAYER_TURN.print(), activePlayer.getName()));
         isPlayerBroke();
         if (activePlayer.isBroke()) {
             printMessage(Messages.YOU_BROKE.print());
             //Game Over
         } else {
+            notifyObs("PLAYER DECIDING");
             int choice = 0;
             hitLoop:
             while (true) {
+                startTime=System.currentTimeMillis();
                 boolean hit = false;
                 Platform.runLater(() -> disableButtons.setValue(false));
                 choice = (int) BlackJackLogic.actionQueue.take();
                 Platform.runLater(() -> disableButtons.setValue(true));
                 switch (choice) {
                     case 0 -> { //stay, do nothing
+                        notifyObs("STAYS\n"+"Player hand value\n"+ activePlayer.getHandValue()+"\n"+getPassedSecs());
                         break hitLoop;
                     }
                     case 1 -> { //hit
                         Card card= deck1.drawCard();
-                        notifyObs("Player takes card:\n"+card.toString());
+                        notifyObs("TAKES CARD:\n"+card.toString());
+
 
                         activePlayer.addCard(card);
                         activePlayer.updateHandValue();
+                        notifyObs("Hand Value:\n"+activePlayer.getHandValue());
+                        notifyObs("\n"+getPassedSecs());
                     }
                     case 9 -> { //Pressed submit on highscore
                         String name = (String) BlackJackLogic.actionQueue.take();
@@ -175,6 +182,7 @@ public class BlackJackLogic implements Runnable {
                 }
             }
         }
+
     }
 
     private void dealerTurn() throws InterruptedException {
@@ -197,23 +205,41 @@ public class BlackJackLogic implements Runnable {
                 printMessage(String.format(Messages.BUST.print(), "Dealer"));
                 activePlayer.increaseBalance();
                 activePlayer.increaseBalance();
+
+                notifyObs("WON");
+
             } else if (dealer1.getHandValue() > activePlayer.getHandValue() && !dealerBust) { //Dealern hade högre, du förlorar.
+
+                notifyObs("LOST");
+
                 updateGraphicBalance();
                 printMessage(String.format(Messages.WON.print(), "Dealer"));
             } else if (dealer1.getHandValue() == activePlayer.getHandValue()) { // oavgjort
+
+                notifyObs("DRAW");
+
                 printMessage(Messages.DRAW.print());
                 activePlayer.setBalance(activePlayer.getBalance() + activePlayer.getCurrentBet());
             } else if (dealer1.getHandValue() < activePlayer.getHandValue()) { //Du vinner
                 printMessage(String.format(Messages.WON.print(), "You"));
+
+                notifyObs("WON");
+
                 int tempBet = activePlayer.getCurrentBet();
                 activePlayer.increaseBalance();
                 if(activePlayer.getHandValue() == 21){ //Blackjack!
                     activePlayer.setBalance(activePlayer.getBalance()+tempBet);
+
+                    notifyObs("WON");
                 }
             }
         } else {
             printMessage(Messages.YOU_BUST.print());
+            notifyObs("LOST");
         }
+            notifyObs("RESULTS\nDealer cards\n"+dealer1.hand.toString()+"\nDealer hand value\n"+dealer1.getHandValue()+"\nPlayer Cards\n"
+                   + activePlayer.hand.toString()+"\nPlayer hand value\n"+activePlayer.getHandValue());
+
 
         humanBust = false;
         activePlayer.setCurrentBet(0);
@@ -252,10 +278,12 @@ public class BlackJackLogic implements Runnable {
 
 
     private void notifyObs(String text){
-        logger.setState(text);
-        logger.notifyObservers();
+        notifier.setMessage(text);
+        notifier.notifyObservers();
     }
-
+    private String getPassedSecs(){
+        return "Time to decide\n"+TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()-startTime);
+    }
     @Override
     public void run() {
         try {

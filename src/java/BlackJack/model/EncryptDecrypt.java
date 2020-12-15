@@ -16,8 +16,8 @@ import java.util.Base64;
  * Copyright: MIT
  */
 public class EncryptDecrypt {
-    String KEY = "pasahitza";
-    String encryptText(String toEncrypt) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException {
+    private static final String KEY = "pasahitza";
+    protected String encryptText(String toEncrypt) throws InvalidKeyException, NoSuchAlgorithmException, InvalidKeySpecException, NoSuchPaddingException, UnsupportedEncodingException, BadPaddingException, IllegalBlockSizeException {
 
        DESKeySpec dks = new DESKeySpec(KEY.getBytes());
         SecretKey desKey = SecretKeyFactory.getInstance("DES").generateSecret(dks);
@@ -30,7 +30,7 @@ public class EncryptDecrypt {
 
     }
 
-    private String decryptText(String toDecrypt) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException, InvalidKeySpecException, UnsupportedEncodingException {
+    protected String decryptText(String toDecrypt) throws NoSuchPaddingException, NoSuchAlgorithmException, BadPaddingException, IllegalBlockSizeException, InvalidKeyException, InvalidKeySpecException, UnsupportedEncodingException {
         DESKeySpec dks = new DESKeySpec(KEY.getBytes());
         SecretKey desKey = SecretKeyFactory.getInstance("DES").generateSecret(dks);
         Cipher decrypt = Cipher.getInstance("DES");

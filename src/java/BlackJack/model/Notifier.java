@@ -10,7 +10,7 @@ import java.util.List;
  * Project: BlackJackOOAD
  * Copyright: MIT
  */
-public class Logger {
+public class Notifier {
     private List<IlogObserver> observers = new ArrayList();
     private String text;
 
@@ -18,7 +18,7 @@ public class Logger {
         return this.text;
     }
 
-    public void setState(String text) {
+    public void setMessage(String text) {
         this.text = text;
     }
 
