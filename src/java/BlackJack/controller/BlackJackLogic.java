@@ -8,6 +8,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +30,10 @@ public class BlackJackLogic implements Runnable {
     public static BlockingQueue<Object> actionQueue = new LinkedBlockingQueue();
     public StringProperty messages = new SimpleStringProperty();
     public HighScore highScore = HighScore.getInstance();
-    Notifier notifier =new Notifier();
+    private Notifier notifier =new Notifier();
     long startTime;
-    long endTime;
-    IlogObserver consoleObs=new LogToConsole();
-    IlogObserver encryptObs=new LogEncrypted();
+    private IlogObserver consoleObs=new LogToConsole();
+    private IlogObserver encryptObs=new LogEncrypted();
 
     private void setUpGame() throws InterruptedException {
         notifier.attach(consoleObs);
@@ -62,7 +62,7 @@ public class BlackJackLogic implements Runnable {
             placeBets();
 
 
-            notifyObs("AT START\n" + LocalTime.now() +"\nPlayer Balance\n" +
+            notifyObs("AT START\n" + LocalDateTime.now() +"\nPlayer Balance\n" +
                     activePlayer.getBalance()+"\nPlayer bet amount\n" +activePlayer.getCurrentBet()+"\n"+ getPassedSecs());
 
 

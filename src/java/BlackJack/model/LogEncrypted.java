@@ -25,7 +25,7 @@ public class LogEncrypted extends EncryptDecrypt implements IlogObserver  {
     public void update(String text) {
 
         try {
-            FileWriter file=new FileWriter("log.txt",true);
+            FileWriter file=new FileWriter("userData.txt",true);
             file.write(encryptText(text)+"\n");
             file.close();
            // System.out.println(encryptText(text));
