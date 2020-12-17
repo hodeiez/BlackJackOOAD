@@ -5,12 +5,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Deck {
-
     List<Card> cardDeck = new LinkedList<>();
-    private int numberOfCompleteDecks;
 
     public Deck(int numberOfCompleteDecks) {
-        this.numberOfCompleteDecks = numberOfCompleteDecks;
         for (int i = 0; i < numberOfCompleteDecks; i++) {
             generateDeck();
         }
@@ -36,9 +33,5 @@ public class Deck {
 
     public List<Card> getCardDeck() {
         return cardDeck;
-    }
-
-    public boolean isDeckEmpty() {
-        return cardDeck.isEmpty();
     }
 }
